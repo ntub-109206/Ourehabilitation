@@ -93,4 +93,12 @@
         app:layout_constraintEnd_toEndOf="@+id/imageButton3"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3"
         app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <Button
+        android:id="@+id/btn_statics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看統計圖表"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="613dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

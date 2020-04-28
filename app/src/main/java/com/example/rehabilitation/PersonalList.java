@@ -7,19 +7,19 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RegisterationPage extends AppCompatActivity {
+public class PersonalList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registeration_page);
+        setContentView(R.layout.activity_personallist);
 
-        Button mbtnlogin=(Button)findViewById(R.id.mbtn_identify);
-        mbtnlogin.setOnClickListener(new View.OnClickListener(){
+        Button mbtnlogin03=(Button)findViewById(R.id.btn_login);
+        mbtnlogin03.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
-                intent.setClass(RegisterationPage.this, PersonalList.class);
+                intent.setClass(PersonalList.this,HomePage.class);
                 startActivity(intent);
             }
         });

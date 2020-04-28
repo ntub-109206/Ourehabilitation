@@ -19,7 +19,7 @@ public class WelcomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
-                intent.setClass(WelcomePage.this, LoginPage.class);
+                intent.setClass(WelcomePage.this, PersonalList.class);
                 startActivity(intent);
             }
         });

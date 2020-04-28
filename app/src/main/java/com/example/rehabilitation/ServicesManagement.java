@@ -1,14 +1,14 @@
 package com.example.rehabilitation;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginPage extends AppCompatActivity {
+import android.os.Bundle;
+
+public class ServicesManagement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_in_page);
+        setContentView(R.layout.activity_services_management);
     }
 }

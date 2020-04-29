@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">rehabilitation</string>
+    <string name="menuItemChangeInfo">更改個人資料</string>
+    <string name="menuItemServiceMng">服務管理</string>
+    <string name="menuItemAbout">關於這個App...</string>
+    <string name="menuItemExit">結束</string>
+
 </resources>

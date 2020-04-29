@@ -6,13 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".HomePage">
 
+    <!-- 使用AppBarLayout讓Toolbar下方產生陰影效果 -->
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-5dp">
+
+        <!-- 用Toolbar模擬ActionBar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
         tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="77dp" />
+        tools:layout_editor_absoluteY="77dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView10"
@@ -20,7 +41,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="173dp" />
+        tools:layout_editor_absoluteY="173dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView11"
@@ -28,7 +50,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="216dp" />
+        tools:layout_editor_absoluteY="216dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView12"
@@ -36,7 +59,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_editor_absoluteX="204dp"
-        tools:layout_editor_absoluteY="211dp" />
+        tools:layout_editor_absoluteY="211dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -47,7 +71,8 @@
         app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -56,7 +81,9 @@
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
         app:layout_constraintTop_toTopOf="@+id/imageButton"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_marginLeft="24dp"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -65,7 +92,9 @@
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toEndOf="@+id/imageButton2"
         app:layout_constraintTop_toTopOf="@+id/imageButton2"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_marginLeft="24dp"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -74,7 +103,9 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton5"
         app:layout_constraintEnd_toStartOf="@+id/imageButton5"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_marginRight="24dp"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/imageButton5"
@@ -83,7 +114,9 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton6"
         app:layout_constraintEnd_toStartOf="@+id/imageButton6"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_marginRight="24dp"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/imageButton6"
@@ -92,7 +125,8 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="@+id/imageButton3"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:ignore="VectorDrawableCompat" />
 
     <Button
         android:id="@+id/btn_statics"
@@ -100,5 +134,6 @@
         android:layout_height="wrap_content"
         android:text="查看統計圖表"
         tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="613dp" />
+        tools:layout_editor_absoluteY="613dp"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

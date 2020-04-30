@@ -25,7 +25,8 @@
         android:text="服務管理"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="261dp" />
+        tools:layout_editor_absoluteY="261dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button3"

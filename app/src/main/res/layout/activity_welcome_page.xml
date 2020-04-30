@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DDFF77"
+    android:background="@drawable/bg_general"
     tools:context=".WelcomePage">
 
     <androidx.constraintlayout.widget.Guideline
@@ -33,6 +33,7 @@
         android:layout_marginTop="32dp"
         android:ellipsize="none"
         android:text="註冊"
+        android:background="@drawable/btn_round"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_generalxml"
     tools:context=".PersonalList">
 
     <EditText
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="帳號"
+        android:padding="16dp"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +28,8 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="密碼"
+        android:padding="16dp"
+        android:background="@color/login_form_details_light"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/editText"
         app:layout_constraintHorizontal_bias="0.0"
@@ -50,6 +54,7 @@
         android:layout_marginTop="130dp"
         android:text="登入"
         android:textSize="24sp"
+        android:background="@drawable/btn_bg"
         app:layout_constraintEnd_toEndOf="@+id/editText2"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/editText2"

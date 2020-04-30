@@ -14,8 +14,8 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
 
-        Button mbtnlogin01=(Button)findViewById(R.id.btn_visiterlogin);
-        mbtnlogin01.setOnClickListener(new View.OnClickListener(){
+        Button mbtnvisit=(Button)findViewById(R.id.btn_visiterlogin);
+        mbtnvisit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
@@ -24,12 +24,22 @@ public class WelcomePage extends AppCompatActivity {
             }
         });
 
-        Button mbtnregistr02=(Button)findViewById(R.id.registerarion_button);
-        mbtnregistr02.setOnClickListener(new View.OnClickListener(){
+        Button mbtnregistr=(Button)findViewById(R.id.registerarion_button);
+        mbtnregistr.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
                 intent.setClass(WelcomePage.this,RegisterationPage.class);
+                startActivity(intent);
+            }
+        });
+
+        Button mbtnlogin=(Button)findViewById(R.id.login_button);
+        mbtnlogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(WelcomePage.this,LoginPage.class);
                 startActivity(intent);
             }
         });

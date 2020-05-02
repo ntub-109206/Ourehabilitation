@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_general"
-    tools:context=".WelcomePage">
+    tools:context=".WelcomePage_MainActivity"
+    android:background="@drawable/bg_general">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

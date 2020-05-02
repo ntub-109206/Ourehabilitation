@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_general"
-    tools:context=".PersonalList">
+    tools:context=".LoginPage">
 
     <EditText
         android:id="@+id/editText"
@@ -29,7 +29,6 @@
         android:ems="10"
         android:hint="密碼"
         android:padding="16dp"
-        android:background="@color/login_form_details_light"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/editText"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,11 +53,9 @@
         android:layout_marginTop="130dp"
         android:text="登入"
         android:textSize="24sp"
-        android:background="@drawable/btn_bg"
         app:layout_constraintEnd_toEndOf="@+id/editText2"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
-        tools:text="登入" />
+        app:layout_constraintTop_toBottomOf="@+id/editText2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

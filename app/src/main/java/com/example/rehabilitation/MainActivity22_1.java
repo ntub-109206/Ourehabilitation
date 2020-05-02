@@ -1,9 +1,9 @@
 package com.example.rehabilitation;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.rehabilitation.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class MainActivity22_1 extends AppCompatActivity {
 

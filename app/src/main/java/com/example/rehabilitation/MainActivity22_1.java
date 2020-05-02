@@ -1,5 +1,4 @@
-package com.example.page_0426;
-
+package com.example.rehabilitation;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;

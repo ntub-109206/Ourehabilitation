@@ -33,7 +33,6 @@
         android:layout_marginTop="32dp"
         android:ellipsize="none"
         android:text="註冊"
-        android:background="@drawable/btn_round"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"

@@ -12,7 +12,7 @@ public class WelcomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_page);
+        setContentView(R.layout.page_welcome);
 
         Button mbtnvisit=(Button)findViewById(R.id.btn_visiterlogin);
         mbtnvisit.setOnClickListener(new View.OnClickListener(){

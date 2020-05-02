@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_generalxml"
+    android:background="@drawable/bg_general"
     tools:context=".PersonalList">
 
     <EditText
@@ -60,4 +60,5 @@
         app:layout_constraintStart_toStartOf="@+id/editText2"
         app:layout_constraintTop_toBottomOf="@+id/editText2"
         tools:text="登入" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

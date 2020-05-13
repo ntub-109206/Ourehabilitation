@@ -4,15 +4,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HomePage extends AppCompatActivity {
-
+public class FunctionPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_home);
-
-
-
+        setContentView(R.layout.activity_function_page);
     }
 }

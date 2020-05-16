@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">rehabilitation</string>
+    <string name="menuItemHomePage">主頁</string>
+
+    <string name="menuItemInfo">個人資料</string>
     <string name="menuItemChangeInfo">更改個人資料</string>
     <string name="menuItemServiceMng">服務管理</string>
     <string name="menuItemAbout">關於這個App...</string>
@@ -19,5 +22,6 @@
     <string name="home_second">Home Second</string>
 
     <string name="your_gender">我是</string>
+    <string name="title_activity_side_drawer">SideDrawer</string>
 
 </resources>

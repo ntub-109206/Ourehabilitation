@@ -1,6 +1,7 @@
 package com.example.rehabilitation;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginPage extends AppCompatActivity {
-    Button login;
+    Button login,visitlogin;
     EditText username, password;
     ProgressBar progressBar;
 
@@ -33,6 +34,7 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.page_login);
 
         login = findViewById(R.id.login_button);
+        visitlogin = findViewById(R.id.btn_visit);
         username = findViewById(R.id.edtEmailLogin);
         password = findViewById(R.id.editPasswordLogin);
         progressBar = findViewById(R.id.progressBar);
@@ -52,8 +54,14 @@ public class LoginPage extends AppCompatActivity {
             }
         }));
 
+        visitlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginPage.this, HomePage_SideDrawer.class);
+                startActivity(intent);
 
-
+            }
+        });
     }
 
 

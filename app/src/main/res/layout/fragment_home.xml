@@ -5,15 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDF2E5"
-    tools:context=".HomePage">
+    tools:context="com.example.rehabilitation.ui.home.HomeFragment">
 
     <ImageView
         android:id="@+id/imgbtn_pspic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_statics"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112"
         app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="77dp"
         tools:ignore="MissingConstraints" />
 
     <TextView

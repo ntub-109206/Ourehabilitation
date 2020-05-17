@@ -1,4 +1,4 @@
-package com.example.rehabilitation.ui.PersonalInformation;
+package com.example.rehabilitation.ui.FragmentHomePage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,19 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.rehabilitation.R;
 
-public class PsInfoFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_psinformationpage, container, false);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
         return root;
     }
 }

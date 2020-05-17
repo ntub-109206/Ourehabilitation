@@ -3,41 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/menuItemHome">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.rehabilitation.ui.home.HomeFragment"
+        android:id="@+id/menuItemHome"
+        android:name="com.example.rehabilitation.ui.FragmentHomePage.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
     <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.example.rehabilitation.ui.home.HomeFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/psInformation"
-        android:name="com.example.rehabilitation.ui.PersonalInformation.PsInfoFragment"
-        android:label="@string/menuItemInfo"
+        android:id="@+id/menuItemInfo"
+        android:name="com.example.rehabilitation.ui.FragmentHomePage.PsInfoFragment"
+        android:label="fragment_psinformationpage"
         tools:layout="@layout/fragment_psinformationpage" />
-
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.rehabilitation.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/menuItemServiceMng"
+        android:name="com.example.rehabilitation.ui.FragmentHomePage.ServiceMng"
+        android:label="ServiceMng" />
+    <fragment
+        android:id="@+id/menuItemAbout"
+        android:name="com.example.rehabilitation.ui.FragmentHomePage.AboutUs"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" />
+
+
 </navigation>

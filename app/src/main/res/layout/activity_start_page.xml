@@ -12,4 +12,5 @@
         android:text="開始"
         tools:layout_editor_absoluteX="147dp"
         tools:layout_editor_absoluteY="341dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

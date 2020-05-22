@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
+=======
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>>>>>>> origin/Ting
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FunctionPage"
+<<<<<<< HEAD
     android:background="#7DF1CB">
 
     <TextView
@@ -13,14 +18,33 @@
         android:text="部位"
         tools:layout_editor_absoluteX="166dp"
         tools:layout_editor_absoluteY="178dp" />
+=======
+    android:background="@drawable/bg_general">
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="115dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        android:text="部位"
+        android:textSize="36sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="137dp" />
+>>>>>>> origin/Ting
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+<<<<<<< HEAD
         tools:layout_editor_absoluteX="166dp"
         tools:layout_editor_absoluteY="233dp" />
+=======
+        app:layout_constraintBottom_toTopOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        tools:layout_editor_absoluteX="166dp" />
+>>>>>>> origin/Ting
 
     <EditText
         android:id="@+id/editText5"

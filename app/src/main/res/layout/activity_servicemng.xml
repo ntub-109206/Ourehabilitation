@@ -3,11 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+=======
+    android:background="@drawable/bg_general"
+>>>>>>> origin/Ting
     tools:context=".ServiceMng">
 
     <ScrollView
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="match_parent">
+=======
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+>>>>>>> origin/Ting
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="服務管理"
                     android:textAlignment="center"
+<<<<<<< HEAD
                     android:textSize="36sp"/>
 
             </LinearLayout>
@@ -33,6 +44,17 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+=======
+                    android:textSize="36sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+>>>>>>> origin/Ting
 
                 <Switch
                     android:id="@+id/switch1"
@@ -40,15 +62,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Switch"
+<<<<<<< HEAD
                     android:textSize="24dp"/>
+=======
+                    android:textSize="24dp" />
+>>>>>>> origin/Ting
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+=======
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+>>>>>>> origin/Ting
 
                 <Switch
                     android:id="@+id/switch2"
@@ -56,14 +87,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Switch"
+<<<<<<< HEAD
                     android:textSize="24dp"/>
+=======
+                    android:textSize="24dp" />
+>>>>>>> origin/Ting
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+=======
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+>>>>>>> origin/Ting
 
                 <Switch
                     android:id="@+id/switch3"
@@ -71,14 +111,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Switch"
+<<<<<<< HEAD
                     android:textSize="24dp"/>
+=======
+                    android:textSize="24dp" />
+>>>>>>> origin/Ting
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+=======
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+>>>>>>> origin/Ting
 
                 <Switch
                     android:id="@+id/switch4"
@@ -86,14 +135,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Switch"
+<<<<<<< HEAD
                     android:textSize="24dp"/>
+=======
+                    android:textSize="24dp" />
+>>>>>>> origin/Ting
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+=======
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+>>>>>>> origin/Ting
 
                 <Switch
                     android:id="@+id/switch5"
@@ -101,14 +159,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Switch"
+<<<<<<< HEAD
                     android:textSize="24dp"/>
+=======
+                    android:textSize="24dp" />
+>>>>>>> origin/Ting
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+=======
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+>>>>>>> origin/Ting
 
                 <Switch
                     android:id="@+id/switch6"
@@ -116,7 +183,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Switch"
+<<<<<<< HEAD
                     android:textSize="24dp"/>
+=======
+                    android:textSize="24dp" />
+>>>>>>> origin/Ting
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

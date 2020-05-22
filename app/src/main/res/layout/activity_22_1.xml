@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+=======
+    android:background="@drawable/bg_general"
+>>>>>>> origin/Ting
     tools:context=".MainActivity22_1">
 
     <LinearLayout

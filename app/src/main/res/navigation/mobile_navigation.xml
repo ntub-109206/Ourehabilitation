@@ -8,22 +8,22 @@
     <fragment
         android:id="@+id/menuItemHome"
         android:name="com.example.rehabilitation.ui.FragmentHomePage.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/mdrin_home"
         tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/menuItemInfo"
         android:name="com.example.rehabilitation.ui.FragmentHomePage.PsInfoFragment"
-        android:label="fragment_psinformationpage"
+        android:label="@string/mdrin_psnlinfo"
         tools:layout="@layout/fragment_psinformationpage" />
     <fragment
         android:id="@+id/menuItemServiceMng"
         android:name="com.example.rehabilitation.ui.FragmentHomePage.ServiceMng"
-        android:label="ServiceMng" />
+        android:label="@string/mdrin_srvc" />
     <fragment
         android:id="@+id/menuItemAbout"
         android:name="com.example.rehabilitation.ui.FragmentHomePage.AboutUs"
-        android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" />
+        android:label="@string/mdrin_aboutus"
+        tools:layout="@layout/fragment_about_us"/>
 
 
 </navigation>

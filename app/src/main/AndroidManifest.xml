@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rehabilitation">
 
@@ -7,14 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-=======
-
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rehabilitation">
-    <uses-permission xmlns:tools="http://schemas.android.com/tools"
-        android:name="android.permission.INTERNET"
-        tools:ignore="WrongManifestParent" />
->>>>>>> origin/Ting
     <application
 
         android:allowBackup="true"
@@ -32,7 +23,6 @@
         <activity android:name=".MainActivity22_2" />
         <activity android:name=".RegisterPage" />
         <activity android:name=".StartPage" />
-        <activity android:name=".FunctionPage" />
         <activity android:name=".ServiceMng" />
         <activity android:name=".PsInfoChange" />
         <activity android:name=".UsersDbOpenHelper" />

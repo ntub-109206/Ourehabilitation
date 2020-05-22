@@ -29,8 +29,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imgbtn_pspic"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/imgbtn_pspic"
-        app:layout_constraintTop_toBottomOf="@+id/imgbtn_pspic"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn_pspic" />
 
     <TextView
         android:id="@+id/textView11"
@@ -62,7 +61,7 @@
         app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic" />
 
     <ImageButton
         android:id="@+id/imageButton2"

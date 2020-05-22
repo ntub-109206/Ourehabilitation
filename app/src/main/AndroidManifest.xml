@@ -23,7 +23,6 @@
         <activity android:name=".MainActivity22_2" />
         <activity android:name=".RegisterPage" />
         <activity android:name=".StartPage" />
-        <activity android:name=".ServiceMng" />
         <activity android:name=".PsInfoChange" />
         <activity android:name=".UsersDbOpenHelper" />
         <activity android:name=".LoginPage">

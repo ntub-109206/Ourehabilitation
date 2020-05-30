@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginPage extends AppCompatActivity {
-    Button login,visitlogin;
+    Button login,visitlogin,register;
     EditText username, password;
     ProgressBar progressBar;
 
@@ -42,6 +42,7 @@ public class LoginPage extends AppCompatActivity {
         username = findViewById(R.id.edtEmailLogin);
         password = findViewById(R.id.editPasswordLogin);
         progressBar = findViewById(R.id.progressBar);
+        register = findViewById(R.id.registerar_button);
 
         progressBar.setVisibility(View.GONE);
 
@@ -64,6 +65,14 @@ public class LoginPage extends AppCompatActivity {
                 Intent intent = new Intent(LoginPage.this,Main.class);
                 startActivity(intent);
 
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_registr = new Intent(LoginPage.this, RegisterationPage.class);
+                startActivity(intent_registr);
             }
         });
     }

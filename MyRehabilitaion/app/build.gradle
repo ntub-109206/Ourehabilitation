@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.myrehabilitaion"
-        useLibrary'org.apache.http.legacy'
+        useLibrary 'org.apache.http.legacy'
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

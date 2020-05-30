@@ -5,30 +5,169 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/aboutuspage"
     tools:context="com.example.myrehabilitaion.FragmentHomePage.AboutUs">
 
     <ImageView
-        android:layout_width="198dp"
-        android:layout_height="198dp"
-        android:src="@drawable/logo"
+        android:layout_width="215dp"
+        android:layout_height="208dp"
+        android:src="@drawable/logo_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintHorizontal_bias="0.918"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
+        app:layout_constraintVertical_bias="0.097" />
 
     <TextView
-        android:id="@+id/textView15"
-        android:layout_width="326dp"
-        android:layout_height="193dp"
-        android:text="關於我們"
+        android:id="@+id/txt_subject01"
+        android:layout_width="50dp"
+        android:layout_height="152dp"
+        android:text="恆念"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#004B97"
+        android:textSize="42sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintVertical_bias="0.184" />
+
+    <TextView
+        android:id="@+id/txt_subject02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="復"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#004B97"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <TextView
+        android:id="@+id/txt_subject05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="健"
+        android:textColor="#004B97"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.302"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.167" />
+
+
+    <TextView
+        android:id="@+id/txt_subject06"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="，"
+        android:textColor="#004B97"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.341"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.077" />
+
+    <TextView
+        android:id="@+id/txt_subject07"
+        android:layout_width="49dp"
+        android:layout_height="120dp"
+        android:text="步飛"
+        android:textColor="#004B97"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.328"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.31" />
+
+    <ScrollView
+        android:layout_width="300dp"
+        android:layout_height="215dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.988">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="#BF111111"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.961">
+
+            <TextView
+                android:id="@+id/txt_content01"
+                android:layout_width="300dp"
+                android:layout_height="114dp"
+                android:text="親愛的使用者您好，我們是台北商業大學資訊管理系的109206專題組團隊，藉由科技應用提升自己的生活品質，更高效的利用自己的時間!"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.352"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.748" />
+
+            <TextView
+                android:id="@+id/txt_content02"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="&quot;The first and best victory is to conquer self&quot;"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.352"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.748" />
+
+            <TextView
+                android:id="@+id/txt_content03"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="-Plato, Greek philosopher"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.352"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.748" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

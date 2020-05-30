@@ -8,96 +8,43 @@
     tools:context="com.example.myrehabilitaion.FragmentHomePage.HomeFragment">
 
     <ImageButton
-        android:id="@+id/imageButton01"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/btn_design02"
-        android:padding="20dp"
-        android:scaleType="centerInside"
+        android:id="@+id/img_article"
+        android:layout_width="454dp"
+        android:layout_height="290dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerCrop"
+        android:src="@drawable/example_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565"
-        app:srcCompat="@drawable/target" />
+        app:layout_constraintVertical_bias="0.07" />
 
-    <ImageButton
-        android:id="@+id/imageButton02"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/btn_design02"
-        android:padding="20dp"
-        android:scaleType="centerInside"
-        app:layout_constraintStart_toEndOf="@+id/imageButton01"
-        app:layout_constraintTop_toTopOf="@+id/imageButton01"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton01"
-        app:srcCompat="@drawable/target" />
-
-    <ImageButton
-        android:id="@+id/imageButton03"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="12dp"
-        android:background="@drawable/btn_design02"
-        android:padding="20dp"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton02"
-        app:layout_constraintStart_toEndOf="@+id/imageButton02"
-        app:layout_constraintTop_toTopOf="@+id/imageButton02"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/target" />
-
-    <ImageButton
-        android:id="@+id/imageButton04"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3"
-        android:padding="20dp"
-        android:background="@drawable/btn_design02"
-        app:srcCompat="@drawable/target"
-        android:scaleType="centerInside"/>
-
-    <ImageButton
-        android:id="@+id/imageButton05"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
-        android:padding="20dp"
-        android:background="@drawable/btn_design02"
-        app:srcCompat="@drawable/target"
-        android:scaleType="centerInside"/>
-
-    <ImageButton
-        android:id="@+id/imageButton06"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/btn_design02"
-        android:padding="20dp"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton5"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton5"
-        app:srcCompat="@drawable/target" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="376dp"
-        android:layout_height="192dp"
-        android:src="@drawable/ic_menu_slideshow"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_home"
+        android:layout_width="349dp"
+        android:layout_height="163dp"
+        android:background="#80111111"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.259" />
+        app:layout_constraintVertical_bias="0.661">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btn_addcase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_design07"
+        android:text="新增目標"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.991" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,19 +8,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logo"
+        android:label="健步飛"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main"/>
+        <activity android:name=".CardInformation"></activity>
+        <activity android:name=".RecordMain" />
+        <activity android:name=".InforCard" />
+        <activity android:name=".Main" />
         <activity android:name=".MainActivity22_1" />
         <activity android:name=".MainActivity22_2" />
-        <activity android:name=".StartPage" />
-        <activity android:name=".HomePage" />
-        <activity android:name=".FunctionPage" />
-        <activity android:name=".ServiceMng" />
-        <activity android:name=".PsInfoChange" />
+        <activity android:name=".RegisterationPage" />
+        <activity android:name=".FragmentHomePage.StartRecord" />
         <activity android:name=".UsersDbOpenHelper" />
         <activity android:name=".LoginPage">
             <intent-filter>

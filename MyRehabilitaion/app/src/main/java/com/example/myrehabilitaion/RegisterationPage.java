@@ -31,7 +31,6 @@ public class RegisterationPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_registeration);
-        
 
         name = (EditText)findViewById(R.id.edtName);
         email = (EditText)findViewById(R.id.edtEmail);
@@ -44,10 +43,10 @@ public class RegisterationPage extends AppCompatActivity {
             public void onClick(View v) {
                 Registeruser registr = new Registeruser();
                 registr.execute("");
-
             }
         });
     }
+
     public class Registeruser extends AsyncTask<String, String , String> {
 
         String z = "";
@@ -105,6 +104,4 @@ public class RegisterationPage extends AppCompatActivity {
 
         return connection;
     }
-
-
 }

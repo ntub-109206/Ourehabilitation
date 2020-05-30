@@ -41,19 +41,19 @@ public class Main extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
 
 
-        final FloatingActionButton fab01 = findViewById(R.id.fab01);
-        final FloatingActionButton fab02 = findViewById(R.id.fab02);
-        fab02.setVisibility(View.INVISIBLE);
-        fab01.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //final FloatingActionButton fab01 = findViewById(R.id.fab01);
+        //final FloatingActionButton fab02 = findViewById(R.id.fab02);
+        //fab02.setVisibility(View.INVISIBLE);
+        //fab01.setOnClickListener(new View.OnClickListener() {
+           // @Override
+            //public void onClick(View v) {
 
-                fab01.setVisibility(View.INVISIBLE);
-                fab02.setVisibility(View.VISIBLE);
+                //fab01.setVisibility(View.INVISIBLE);
+                //fab02.setVisibility(View.VISIBLE);
 
-                fab02.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                //fab02.setOnClickListener(new View.OnClickListener() {
+                    //@Override
+                    //public void onClick(View view) {
 //                Snackbar.make(view, "開啟統計頁面", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 /*
                 Intent intent = new Intent(Main.this,HomePage.class);
@@ -61,12 +61,12 @@ public class Main extends AppCompatActivity {
 */
                         //Main.this.showStatisticsFragment();
 
-                        fab02.setVisibility(View.INVISIBLE);
-                        fab01.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        });
+                      //  fab02.setVisibility(View.INVISIBLE);
+                       // fab01.setVisibility(View.VISIBLE);
+                //    }
+               // });
+        //    }
+       // });
 
 
         mDrawerLayout = findViewById(R.id.drawer_layout);

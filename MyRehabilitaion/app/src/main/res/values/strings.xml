@@ -32,4 +32,15 @@
 
     <string name="keeplogin">保持登入</string>
 
+
+    <string-array name="info_icon_list">
+        <item>R.drawable.example</item>
+        <item>R.drawable.example</item>
+        <item>R.drawable.example</item>
+        <item>R.drawable.example</item>
+        <item>R.drawable.example</item>
+        <item>R.drawable.example</item>
+    </string-array>
+
+
 </resources>

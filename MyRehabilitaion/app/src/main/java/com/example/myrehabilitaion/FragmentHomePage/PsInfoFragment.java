@@ -15,7 +15,7 @@ import com.example.myrehabilitaion.R;
 import com.example.myrehabilitaion.RecordMain;
 
 public class PsInfoFragment extends Fragment {
-    ImageButton imgbtncard;
+    private ImageButton imgbtncard;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

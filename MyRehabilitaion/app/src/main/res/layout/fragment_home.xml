@@ -1,50 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/simplepg"
     tools:context="com.example.myrehabilitaion.FragmentHomePage.HomeFragment">
 
-    <ImageButton
-        android:id="@+id/img_article"
-        android:layout_width="454dp"
-        android:layout_height="290dp"
-        android:background="#00FFFFFF"
-        android:scaleType="centerCrop"
-        android:src="@drawable/example_info"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="#BFA6C2CE" />
+
+    <LinearLayout
+        android:id="@+id/pointgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BFA6C2CE"
+        android:gravity="end"
+        android:orientation="horizontal" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_home"
-        android:layout_width="349dp"
-        android:layout_height="163dp"
-        android:background="#80111111"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.661">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#80111111"/>
 
     <Button
         android:id="@+id/btn_addcase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_design07"
-        android:text="新增目標"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.991" />
+        android:text="新增目標" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

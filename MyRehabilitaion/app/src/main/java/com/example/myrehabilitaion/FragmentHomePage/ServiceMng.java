@@ -27,13 +27,6 @@ public class ServiceMng extends Fragment {
     RecyclerView recyclerView;
     Button btnaddtarget ;
     Dialog mDlog;
-    String mSyncTarget;
-
-    public String Syc(){
-        return mSyncTarget;
-    };
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +34,7 @@ public class ServiceMng extends Fragment {
 
         // 把項目清單準備好，放在一個List物件裏頭
         List<String> listStr = new ArrayList<String>();
-        for (int i = 0; i < 6 ; i++) {
+        for (int i = 0; i < 3 ; i++) {
             listStr.add( "目標"+ String.valueOf(i+1));
         }
 
@@ -61,7 +54,7 @@ public class ServiceMng extends Fragment {
         // 把Adapter物件傳給RecyclerView
         recyclerView.setAdapter(adapter_mng);
 
-
+/*
         btnaddtarget = root.findViewById(R.id.btn_addcase);
         btnaddtarget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +84,8 @@ public class ServiceMng extends Fragment {
                 });
             }
         });
+
+ */
 /*
         floatingbtn = root.findViewById(R.id.floatingActionButton);
         floatingbtn.setOnClickListener(new View.OnClickListener() {

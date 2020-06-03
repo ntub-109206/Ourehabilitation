@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp"
-    android:background="@drawable/simplepg"
+    android:background="@drawable/registerpage"
     tools:context=".RegisterationPage">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#80FFFFFF"
+        android:background="#80111111"
         android:padding="30dp">
 
         <LinearLayout
@@ -190,21 +190,11 @@
             android:orientation="horizontal">
             <Button
                 android:id="@+id/mbtnRegistr"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:background="#DADCBA"
+                android:background="@drawable/btn_design05"
                 android:text="確認" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="36dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/TextStatus"
-                android:gravity="center"
-                android:text="無狀態"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

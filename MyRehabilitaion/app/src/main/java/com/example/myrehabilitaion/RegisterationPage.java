@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,7 +37,6 @@ public class RegisterationPage extends AppCompatActivity {
         email = (EditText)findViewById(R.id.edtEmail);
         password = (EditText)findViewById(R.id.edtPassword);
         registerbtn = (Button)findViewById(R.id.mbtnRegistr);
-        status = (TextView)findViewById(R.id.TextStatus);
 
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,12 +54,12 @@ public class RegisterationPage extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            status.setText("Sending Data to Database");
+            Toast.makeText(RegisterationPage.this, "Sending Data to Database", Toast.LENGTH_LONG).show();
         }
 
         @Override
         protected void onPostExecute(String s) {
-            status.setText("Registration Successful");
+            Toast.makeText(RegisterationPage.this, "Registration Successful", Toast.LENGTH_LONG).show();
             name.setText("");
             email.setText("");
             password.setText("");

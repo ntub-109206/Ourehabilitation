@@ -94,6 +94,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             mDlog_case.dismiss();
                         }
                     });
+                    Button btncanceledit = mDlog_case.findViewById(R.id.btn_cancelbox);
+                    btncanceledit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDlog_case.dismiss();
+                        }
+                    });
+
+                    Button btndeltarget =mDlog_case.findViewById(R.id.btn_deltbox);
+                    btndeltarget.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            removeItem(getAdapterPosition());
+                        }
+                    });
                 }
             });
         }
@@ -106,7 +121,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     // 建構式，用來接收外部程式傳入的項目資料。
-    public RecyclerViewAdapter(List< String> listString) {
+    public RecyclerViewAdapter(List<String> listString) {
 
         mListString = listString;
     }

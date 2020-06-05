@@ -30,7 +30,7 @@ public class LoginPage extends AppCompatActivity {
     ProgressBar progressBar;
 
     Connection con;
-    String un, pass, db, ip;
+    String ip, db,un, pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +98,12 @@ public class LoginPage extends AppCompatActivity {
             }
             else{
                 try{
-                    con = connectionclass(un, pass, db, ip);
+                    con = connectionclass( ip, db,un, pass);
                     if(con == null){
                         z = "Check Your Internet Access!";
                     }
                     else{
-                        String query = "select * from dbo.login where user_name='" + usernam.toString() + "' and pass_word ='" + passwordd.toString();
+                        String query = "select * from dbo.registered where user_name='" + usernam.toString() + "' and pass_word ='" + passwordd.toString();
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
                         if(rs.next()){

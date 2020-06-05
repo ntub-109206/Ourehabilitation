@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myrehabilitaion.FragmentHomePage.HomeFragment;
-import com.example.myrehabilitaion.Main;
+import com.example.myrehabilitaion.FragmentHomePage.*;
+import com.example.myrehabilitaion.*;
 import com.example.myrehabilitaion.R;
 
 import java.sql.Connection;
@@ -90,20 +90,20 @@ public class LoginPage extends AppCompatActivity {
 
         @Override
         protected  String doInBackground(String...params){
-            String usernam = username.getText().toString();
-            String  passwordd = password.getText().toString();
+            String user_name = username.getText().toString();
+            String  pass_word = password.getText().toString();
 
-            if(usernam.trim().equals("") || passwordd.trim().equals("")){
+            if(user_name.trim().equals("") || pass_word.trim().equals("")){
                 z = "Please enter Username and Password";
             }
             else{
                 try{
-                    con = connectionclass(un, pass, db, ip);
+                    con = connectionclass("140.131.114.241", "109-rehabilitation", "case210906", "1@case206");
                     if(con == null){
                         z = "Check Your Internet Access!";
                     }
                     else{
-                        String query = "select * from dbo.login where user_name='" + usernam.toString() + "' and pass_word ='" + passwordd.toString();
+                        String query = "select user_name,pass_word from dbo.registered where username='" + user_name.toString() + "' and password ='" + pass_word.toString();
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
                         if(rs.next()){
@@ -139,14 +139,14 @@ public class LoginPage extends AppCompatActivity {
     }
 
     @SuppressLint("NewApi")
-    public Connection connectionclass(String user, String password, String database, String server) {
+    public Connection connectionclass(String ip, String db, String un, String pass) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         Connection connection = null;
         String ConnectionURL = null;
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Drvier");
-            ConnectionURL = "jdbc:jtds:sqlserver://" + server + database + ";user" + user + ";password=" + password + ";";
+            ConnectionURL = "jdbc:jtds:sqlserver://" + ip + db + ";user" + un + ";password=" + pass + ";";
             connection = DriverManager.getConnection(ConnectionURL);
         } catch (SQLException se) {
             Log.e("error here 1 : ", se.getMessage());

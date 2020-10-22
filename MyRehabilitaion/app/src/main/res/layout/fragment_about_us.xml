@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/aboutuspage"
-    tools:context="com.example.myrehabilitaion.FragmentHomePage.AboutUs">
+    tools:context="com.example.myrehabilitaion.Frag_AboutUs">
 
     <ImageView
         android:layout_width="215dp"
         android:layout_height="208dp"
-        android:src="@drawable/logo_round"
+        android:src="@drawable/new_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.918"

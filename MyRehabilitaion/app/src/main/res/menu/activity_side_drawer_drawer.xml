@@ -8,15 +8,9 @@
         <item android:id="@+id/menuItemHome"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="主頁" />
-        <item android:id="@+id/menuItemInfo"
-            android:icon="@drawable/ic_person_pin_black_24dp"
-            android:title="@string/menuItemInfo" />
-        <item android:id="@+id/menuItemServiceMng"
-            android:icon="@drawable/ic_format_list_bulleted_black_24dp"
-            android:title="@string/menuItemServiceMng" />
-        <item android:id="@+id/menuItemStatistics"
-            android:icon="@drawable/ic_pie_chart_black_24dp"
-            android:title="@string/mdrin_statistics" />
+<!--        <item android:id="@+id/menuItemBluetooth"-->
+<!--            android:icon="@drawable/ic_baseline_bluetooth_24"-->
+<!--            android:title="藍芽連接" />-->
     </group>
     <item android:title="相關資訊">
         <menu>

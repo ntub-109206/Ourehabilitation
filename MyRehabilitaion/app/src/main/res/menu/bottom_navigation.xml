@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_pie"
+        android:icon="@drawable/ic_pie_chart_black_24dp"
+        android:title="Pie Chart" />
+<!--    <item-->
+<!--        android:id="@+id/nav_bar"-->
+<!--        android:icon="@drawable/side_nav_bar"-->
+<!--        android:title="Bar Chart" />-->
+    <item
+        android:id="@+id/nav_line"
+        android:icon="@drawable/ic_show_chart_black_24dp"
+        android:title="Line Chart" />
+
+</menu>

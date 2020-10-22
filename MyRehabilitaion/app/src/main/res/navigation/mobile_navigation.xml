@@ -5,29 +5,39 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/menuItemHome">
 
+<!--    <fragment-->
+<!--        android:id="@+id/menuItemHome"-->
+<!--        android:name="com.example.myrehabilitaion.Frag_Home"-->
+<!--        android:label="@string/mdrin_home"-->
+<!--        tools:layout="@layout/fragment_home"/>-->
     <fragment
         android:id="@+id/menuItemHome"
-        android:name="com.example.myrehabilitaion.FragmentHomePage.HomeFragment"
+        android:name="com.example.myrehabilitaion.Frag_NewHome"
         android:label="@string/mdrin_home"
-        tools:layout="@layout/fragment_home"/>
-    <fragment
-        android:id="@+id/menuItemInfo"
-        android:name="com.example.myrehabilitaion.FragmentHomePage.PsInfoFragment"
-        android:label="@string/mdrin_psnlinfo"
-        tools:layout="@layout/fragment_psinformationpage" />
-    <fragment
-        android:id="@+id/menuItemServiceMng"
-        android:name="com.example.myrehabilitaion.FragmentHomePage.ServiceMng"
-        android:label="@string/mdrin_srvc" />
+        tools:layout="@layout/fragment_newhome"/>
+<!--    <fragment-->
+<!--        android:id="@+id/menuItemBluetooth"-->
+<!--        android:name="com.example.myrehabilitaion.BT_Test"-->
+<!--        android:label="藍芽連接"-->
+<!--        tools:layout="@layout/bt_test_activity" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/menuItemInfo"-->
+<!--        android:name="com.example.myrehabilitaion.FragmentHomePage.Frag_PrivateInfo"-->
+<!--        android:label="@string/mdrin_psnlinfo"-->
+<!--        tools:layout="@layout/fragment_psinformationpage" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/menuItemServiceMng"-->
+<!--        android:name="com.example.myrehabilitaion.Frag_TargetMng"-->
+<!--        android:label="@string/mdrin_srvc" />-->
     <fragment
         android:id="@+id/menuItemAbout"
-        android:name="com.example.myrehabilitaion.FragmentHomePage.AboutUs"
+        android:name="com.example.myrehabilitaion.Frag_AboutUs"
         android:label="@string/mdrin_aboutus"
         tools:layout="@layout/fragment_about_us"/>
-    <fragment
-        android:id="@+id/menuItemStatistics"
-        android:name="com.example.myrehabilitaion.FragmentHomePage.Statistics"
-        android:label="統計頁面"
-        tools:layout="@layout/fragment_statistics" />
+<!--    <fragment-->
+<!--        android:id="@+id/menuItemStatistics"-->
+<!--        android:name="com.example.myrehabilitaion.ui.Stastics.Frag_Statistics"-->
+<!--        android:label="統計頁面"-->
+<!--        tools:layout="@layout/fragment_statistics" />-->
 
 </navigation>

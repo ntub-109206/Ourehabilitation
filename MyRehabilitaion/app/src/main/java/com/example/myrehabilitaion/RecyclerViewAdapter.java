@@ -2,7 +2,6 @@ package com.example.myrehabilitaion;
 
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +15,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myrehabilitaion.FragmentHomePage.HomeFragment;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Dialog mDlog_case;
     Dialog mDlog;
-    HomeFragment homeFragment;
+    Frag_Home homeFragment;
 
 
 
@@ -107,6 +102,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         @Override
                         public void onClick(View v) {
                             removeItem(getAdapterPosition());
+                            mDlog_case.dismiss();
                         }
                     });
                 }

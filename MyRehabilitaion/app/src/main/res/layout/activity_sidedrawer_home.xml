@@ -18,6 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemIconTint="#ffffff"
+        app:itemRippleColor="#ffffff"
+        app:itemTextColor="#ffffff"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_side_drawer"
         app:menu="@menu/activity_side_drawer_drawer" />

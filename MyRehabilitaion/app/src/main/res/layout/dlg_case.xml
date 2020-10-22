@@ -3,17 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/btn_design05"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
+        android:background="@drawable/btn_design01"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:padding="10dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,14 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498">
-
-        <TextView
-            android:id="@+id/targetset"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="目標編輯"
-            android:textSize="30sp" />
+            android:background="@drawable/btn_design09"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/targetset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="目標編輯"
+                android:textSize="30sp" />
 
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,41 +44,18 @@
                 android:id="@+id/casename"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="目標名稱"
-                android:textSize="24sp" />
+                android:text="復健部位"
+                android:textSize="20sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edt_updatetargetname"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="目標名稱"
+                android:textSize="20sp"
+                android:text="復健部位"
+                android:textColor="#80ffffff"
                 android:textAlignment="center" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/bodypart"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="部位"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/edt_bodypart"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="復健部位"
-                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,41 +69,17 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="建立時間"
-                android:textSize="24sp" />
+                android:text="預計完成"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/edt_date"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:hint="建立時間"
-                android:textAlignment="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/whichunit"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="紀錄單位"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/edt_unit"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="單位"
+                android:textSize="20sp"
+                android:textColor="#80ffffff"
+                android:text="目標時間"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -136,15 +94,16 @@
                 android:id="@+id/targetime"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="預計完成"
-                android:textSize="24sp" />
+                android:text="建立時間"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txt_targetdate"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="目標日期"
+                android:textSize="20sp"
+                android:text="建立時間"
+                android:textColor="#80ffffff"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -157,28 +116,32 @@
             <Button
                 android:id="@+id/btn_updatetargt"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FF8000"
-                android:text="儲存"
-                android:textSize="32sp" />
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_design07"
+                android:text="完成"
+                android:textSize="28sp" />
 
             <Button
                 android:id="@+id/btn_cancelbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_design05"
                 android:text="取消"
-                android:textSize="32sp" />
+                android:textSize="28sp" />
 
             <Button
                 android:id="@+id/btn_deltbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FF0000"
-                android:text="刪除"
-                android:textSize="32sp" />
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_design09"
+                android:text="終止"
+                android:textSize="28sp" />
 
         </LinearLayout>
 

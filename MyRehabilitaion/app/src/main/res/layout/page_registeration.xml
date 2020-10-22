@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
-    android:background="@drawable/registerpage"
-    tools:context=".RegisterationPage">
+    android:padding="10dp"
+    android:background="@drawable/bg_05"
+    tools:context=".Class_Registeration">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#80111111"
-        android:padding="30dp">
+        android:background="@drawable/btn_design01"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_design04"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -26,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="註冊"
+                android:textColor="#ffffff"
                 android:textSize="36sp" />
         </LinearLayout>
 
@@ -33,153 +35,172 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="end"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="姓名"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
 
             <EditText
                 android:id="@+id/edtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#ffffff"
+                android:textColor="#ffffff"
                 android:ems="10"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="end"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="密碼"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
             <EditText
                 android:id="@+id/edtPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:textColor="#ffffff"
+                android:backgroundTint="#ffffff"
                 android:ems="10"
                 android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="end"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="確認密碼"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
+
             <EditText
                 android:id="@+id/edtPasswordConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#ffffff"
+                android:textColor="#ffffff"
                 android:ems="10"
                 android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="end"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="手機"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
             <EditText
                 android:id="@+id/edtPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
                 android:ems="10"
+                android:backgroundTint="#ffffff"
+                android:textColor="#ffffff"
                 android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="end"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="E-mail"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
             <EditText
                 android:id="@+id/edtEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#ffffff"
+                android:textColor="#ffffff"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="start"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="性別"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
             <CheckBox
                 android:id="@+id/chkman"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_height="match_parent"
+                android:textColor="#ffffff"
                 android:text="男" />
             <CheckBox
                 android:id="@+id/chkwmn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#ffffff"
                 android:layout_marginStart="32dp"
                 android:text="女" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end"
             android:layout_marginTop="20dp">
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:text="生日"
-                android:textSize="24dp" />
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="22dp" />
+
             <EditText
                 android:id="@+id/edtBirthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#ffffff"
                 android:ems="10"
-                android:inputType="date"/>
+                android:focusable="false"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
@@ -191,6 +212,7 @@
             <Button
                 android:id="@+id/mbtnRegistr"
                 android:layout_width="150dp"
+                android:textColor="#111111"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_design05"
                 android:text="確認" />

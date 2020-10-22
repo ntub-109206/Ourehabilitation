@@ -7,4 +7,11 @@
     <color name="login_form_details">#ccffffff</color>
     <color name="login_form_details_light">#1affffff</color>
     <color name="login_form_details_medium">#66ffffff</color>
+    <color name="green">#00A600</color>
+
+    <color name="btn_bg_normal">#ff0000</color>
+    <color name="btn_bg_pressed">#990000</color>
+
+    <color name="tab_checked">#FF4081</color>
+    <color name="tab_unchecked">#757575</color>
 </resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_stastics"
+        android:icon="@drawable/ic_pie_chart_black_24dp"
+        android:title="數據統計" />
+
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/ic_baseline_play_circle_filled_24"
+        android:title="開始記錄" />
+
+
+    <item
+        android:id="@+id/navigation_psinfo"
+        android:icon="@drawable/ic_person_pin_black_24dp"
+        android:title="個人資料" />
+
+</menu>

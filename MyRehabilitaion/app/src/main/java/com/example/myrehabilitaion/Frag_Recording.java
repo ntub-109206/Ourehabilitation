@@ -10,10 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.myrehabilitaion.R;
-import com.example.myrehabilitaion.Variables;
-
-
 public class Frag_Recording extends Fragment {
     private static Variables Variables = new Variables();
     TextView txt_timesget;

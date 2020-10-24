@@ -7,12 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.myrehabilitaion.BT_Test;
-import com.example.myrehabilitaion.R;
-import com.example.myrehabilitaion.RecordMain;
-import com.example.myrehabilitaion.Variables;
 
 
 public class Frag_RecordFinished extends Fragment {

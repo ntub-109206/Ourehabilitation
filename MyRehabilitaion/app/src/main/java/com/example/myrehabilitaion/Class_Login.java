@@ -155,7 +155,7 @@ public class Class_Login extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try {
-                String sql = "SELECT * FROM dbo.registered WHERE email = '" + edt_email.getText() + "' AND password = '" + edt_password.getText() + "';";
+                String sql = "SELECT * FROM dbo.registered WHERE user_id = '" + edt_email.getText() + "' AND password = '" + edt_password.getText() + "';";
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
 

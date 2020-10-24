@@ -29,13 +29,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.myrehabilitaion.Class_Login;
-import com.example.myrehabilitaion.Class_Registeration;
+
 import com.example.myrehabilitaion.GlobalVariable;
-import com.example.myrehabilitaion.Main;
+
 import com.example.myrehabilitaion.R;
+
 import com.example.myrehabilitaion.RecyclerExampleViewAdapter;
-import com.example.myrehabilitaion.RecyclerInfoAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -77,7 +76,7 @@ public class RecordFragment extends Fragment {
     Statement statement = null;
 
 
-    private RecyclerExampleViewAdapter adapter_exampler;
+    RecyclerExampleViewAdapter adapter_exampler;
     RecyclerView recyclerexample;
     Dialog mDlog01;
 
@@ -100,10 +99,6 @@ public class RecordFragment extends Fragment {
     ProgressBar progressBar;
 
 
-
-
-    private RecyclerInfoAdapter infoadapter;
-    RecyclerView recyclerInfo;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_frag__record, container, false);
@@ -375,7 +370,7 @@ public class RecordFragment extends Fragment {
                 try{
                     sync_name = gv.getUserEmail();
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.service (email,body,date) VALUES ('"+sync_name.toString().trim()+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
+                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date) VALUES ('"+sync_name.toString().trim()+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -411,14 +406,14 @@ public class RecordFragment extends Fragment {
 
             ArrayList<String> array_sync01 = new ArrayList<String>();
             ArrayList<String> array_sync02 = new ArrayList<String>();
+
             sync_name = gv.getUserEmail();
 
             if (connection!=null){
-                Log.d("vin123", "抓資料");
+
                 try{
                     statement = connection.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT body, date FROM dbo.service WHERE email ='"+sync_name.toString().trim()+"';");
-                    Log.d("vin456", String.valueOf(result));
+                    ResultSet result = statement.executeQuery("SELECT body, date FROM dbo.service WHERE user_id ='"+sync_name.toString().trim()+"';");
 
                     while (result.next()) {
                         array_sync01.add(result.getString(1).toString().trim());
@@ -427,9 +422,9 @@ public class RecordFragment extends Fragment {
                     for (int i = 0; i < array_sync01.size(); i++) {
                         listStr01.add((String) array_sync01.get(i));
                         listStr02.add(array_sync02.get(i));
-                        double r =Math.random()*3;
-                        int image[]  = {R.drawable.bg_04, R.drawable.bg_03, R.drawable.bg_07};
-                        listImg.add(image[Integer.valueOf((int) r)]);
+//                        double r =Math.random()*3;
+//                        int image[]  = {R.drawable.bg_04, R.drawable.bg_03, R.drawable.bg_07};
+                        listImg.add(R.drawable.bg_06);
                     }
                     Log.d("text02", String.valueOf(listStr01));
                 }catch (Exception e){

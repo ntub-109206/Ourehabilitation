@@ -43,6 +43,10 @@ import java.util.List;
 
 public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExampleViewAdapter.ViewHolder> {
 
+
+    public String sync_name;
+    public String sync_servicename;
+
     private List<String> mListString01;
     private List<String> mListString02;
     private List<String> mListString03 ;
@@ -55,6 +59,8 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
     Context context;
     Activity activity;
 
+    GlobalVariable gv;
+
     public void addItem(String text01, String text02) {
         // 為了示範效果，固定新增在位置3。若要新增在最前面就把3改成0
         mListString01.add(text01);
@@ -64,14 +70,11 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
     }
 
 //    public void updateItem(int position){
-//
 //         updatetargetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
 //
 //        mListString01.set(position, updatetargetname.getText().toString().trim());//修改值
 //        notifyDataSetChanged();//刷新版列表权
 //    }
-
-
 
     // 刪除項目
     public void removeItem(int position){
@@ -101,7 +104,7 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            gv = (GlobalVariable) activity.getApplicationContext();
 
             mImgView = (ImageView) itemView.findViewById(R.id.img_target);
             mTxt = (TextView) itemView.findViewById(R.id.txt_target);
@@ -150,8 +153,9 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
                     btndeltarget.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            gv.setServiceName(mListString01.get(getAdapterPosition()));
+//                            Log.d("text01", String.valueOf(getAdapterPosition()));
                             removeItem(getAdapterPosition());
-
                             mDlog_case.dismiss();
                         }
                     });
@@ -163,14 +167,12 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
         @Override
         public void onClick(View v) {
-            GlobalVariable gv = (GlobalVariable) v.getContext().getApplicationContext();
             gv.setServiceName(mListString01.get(getAdapterPosition()));
 
             Intent intent = new Intent(v.getContext(),RecordMain.class);
             v.getContext().startActivity(intent);
         }
     }
-
 
     // RecyclerView會呼叫這個方法，我們必須建立好項目的ViewHolder物件，
     // 然後傳回給RecyclerView。
@@ -191,32 +193,11 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
         // 把資料設定給 ViewHolder。
         viewHolder.mImgView.setImageResource(mListImage.get(i));
         viewHolder.mTxt.setText(mListString01.get(i));
-
     }
 
     // RecyclerView會呼叫這個方法，我們要傳回總共有幾個項目。
     @Override
     public int getItemCount() {
-
-//        if(mListString01.size()==0){
-//            getItemCount();
-//        }
-//        for(i =0;i<10;i++){
-//            if(mListString01.size()==0){
-//                getItemCount();
-//            }
-//            else if(mListString01.size()>0){
-//                break;
-//            }
-//        }
-
-        //Log.d("vincentCount02", String.valueOf(count));
-        //count=0;
-
-//        Log.d("text01", String.valueOf(mListString01));
-//        Log.d("text01", String.valueOf(mListString01.size()));
-        Log.d("test08", String.valueOf(this.mListImage));
-
         return this.mListString01.size();
     }
 
@@ -234,26 +215,11 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
         Statement statement = null;
 
-        public String sync_name;
-        public String sync_servicename;
-
-
         String z = "";
         Boolean isSuccess = false;
 
         @Override
         protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-        }
-
-
-        @Override
-        protected String doInBackground(String... strings) {
 
             ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
 
@@ -266,11 +232,21 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
 
-            } catch (
-                    SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
-
             }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
             GlobalVariable gv = (GlobalVariable) context.getApplicationContext();
 
             if (connection!=null){
@@ -279,8 +255,7 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
                     sync_name = gv.getUserEmail();
                     sync_servicename = gv.getServiceName();
                     statement = connection.createStatement();
-                    statement.executeQuery("DELETE FROM dbo.service WHERE email ='"+sync_name.toString().trim()+"' AND body ='"+sync_servicename.toString().trim()+ "' ;");
-
+                    statement.executeQuery("DELETE FROM dbo.service WHERE user_id ='"+sync_name.toString().trim()+"' AND body ='"+sync_servicename.toString().trim()+ "';");
 
                 }catch (Exception e){
                     isSuccess = false;

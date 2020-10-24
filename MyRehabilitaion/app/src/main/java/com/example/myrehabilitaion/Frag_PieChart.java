@@ -43,8 +43,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-import static com.example.myrehabilitaion.DemoBase.parties;
-
 public class Frag_PieChart extends Fragment implements OnChartValueSelectedListener{
 
     private PieChart chart;

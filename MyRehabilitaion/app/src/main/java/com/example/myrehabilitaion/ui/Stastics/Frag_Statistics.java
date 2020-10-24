@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.myrehabilitaion.Frag_BarChart;
 import com.example.myrehabilitaion.Frag_PieChart;
 import com.example.myrehabilitaion.R;
 import com.example.myrehabilitaion.Frag_LineChart;

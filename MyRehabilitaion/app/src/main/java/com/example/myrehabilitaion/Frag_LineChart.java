@@ -1,10 +1,15 @@
 package com.example.myrehabilitaion;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,7 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -35,8 +42,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Frag_LineChart extends Fragment implements OnChartGestureListener, OnChartValueSelectedListener {
@@ -46,38 +59,110 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
     private TextView mTxtR;
     private ListView mListViewRegion;
 
+
+    private static String ip = "140.131.114.241";
+    private static String port = "1433";
+    private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
+    private static String database = "109-rehabilitation";
+    private static String username = "case210906";
+    private static String password = "1@case206";
+    private static String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
+
+    private Connection connection = null;
+
+    Statement statement = null;
+
+    GlobalVariable gv ;
+
+    public List<String> listStr01;
+    public List<String> listStr02;
+    public List<String> xValue;
+    public List<String> listStr04;
+
+    String sInfo;
+
+    linedata_sync_fromdb linedata_sync_fromdb;
+    ArrayAdapter<String> spinnerArrayAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancestate) {
         View root = inflater.inflate(R.layout.fragment_line_chart, container, false);
 
+        listStr01 = new ArrayList<String>();
+        listStr02 = new ArrayList<String>();
+        xValue = new ArrayList<String>();
+        listStr04 = new ArrayList<String>();
+
+        gv = (GlobalVariable)getActivity().getApplicationContext();
+
+        ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        try {
+            Class.forName(Classes);
+            connection = DriverManager.getConnection(url, username,password);
+            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+
+        linedata_sync_fromdb =new linedata_sync_fromdb();
+        linedata_sync_fromdb.execute();
+
+        try {
+            Thread.sleep(100);
+            System.out.print("    執行緒睡眠0.01秒！\n");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+//        Spinner spinner =root.findViewById(R.id.spinner);
+//        spinnerArrayAdapter = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_spinner_item, listStr04);
+//        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+//        spinner.setAdapter(spinnerArrayAdapter);
+//        spinner.setOnItemClickListener((AdapterView.OnItemClickListener) spnOnItemSelected);
+
+        // Application of the Array to the Spinner
+
         chart = root.findViewById(R.id.chart1);
         chart.setOnChartValueSelectedListener(this);
 //------------------------------------------建立數據------------------------------------------
         ArrayList<Entry> values01 = new ArrayList<>();
-        values01.add(new Entry(1, 1));
-        values01.add(new Entry(2, 3));
-        values01.add(new Entry(3, 6));
-        values01.add(new Entry(4, 4));
+
+        for(int i=0;i < listStr02.size();i++){
+//            values01.add(new Entry(Integer.valueOf(listStr02.get(i)), Integer.valueOf(listStr01.get(i))));
+        }
 
         ArrayList<Entry> values02 = new ArrayList<>();
-        values02.add(new Entry(1, 4));
-        values02.add(new Entry(2, 8));
-        values02.add(new Entry(3, 4));
-        values02.add(new Entry(4, 5));
-        values02.add(new Entry(5, 9));
+
+        for(int i=0;i < listStr02.size();i++){
+//            values01.add(new Entry(Integer.valueOf(listStr02.get(i)), Integer.valueOf(listStr01.get(i))));
+
+        }
 
         // greenLine
         ArrayList<Entry> values01_end = new ArrayList<>();
-        values01_end.add(new Entry(5, 0));
+//        values01_end.add(new Entry(Integer.valueOf(listStr02.get(listStr02.size()))-1, Integer.valueOf(listStr01.get(listStr01.size()-1))));
 //yellowLine
         ArrayList<Entry> values02_end = new ArrayList<>();
-        values02_end.add(new Entry(6, 6));
+//        values02_end.add(new Entry(Integer.valueOf(listStr02.get(listStr02.size()))-1, Integer.valueOf(listStr01.get(listStr01.size()-1))));
 
-        initX();
-        initY();
-        initDataSet(values01, values02, values01_end, values02_end);
-        initChartFormat();
+//        initX();
+//        initY();
+//        initDataSet(values01, values02, values01_end, values02_end);
+//        initChartFormat();
 
 //        LineDataSet d = new LineDataSet(dataSet01, "DataSet01" );
 //        d.setLineWidth(2.5f);
@@ -140,6 +225,20 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
 
     }
 
+    private  AdapterView.OnItemSelectedListener spnOnItemSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int position, long content) {
+            // 選項有選取時的動作
+//            String sPos=String.valueOf(position);
+            sInfo=parent.getItemAtPosition(position).toString();
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // 沒有選取時的動作
+        }
+    };
+
     private final int[] colors = new int[] {
             ColorTemplate.VORDIPLOM_COLORS[0],
             ColorTemplate.VORDIPLOM_COLORS[1],
@@ -161,55 +260,10 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
 //
 //    }
 
-    @Override
-    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-        Log.i("Gesture", "START, x: " + me.getX() + ", y: " + me.getY());
-    }
-
-    @Override
-    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-        Log.i("Gesture", "END, lastGesture: " + lastPerformedGesture);
-
-        // un-highlight values after the gesture is finished and no single-tap
-        if(lastPerformedGesture != ChartTouchListener.ChartGesture.SINGLE_TAP)
-            chart.highlightValues(null); // or highlightTouch(null) for callback to onNothingSelected(...)
-    }
-
-    @Override
-    public void onChartLongPressed(MotionEvent me) {
-        Log.i("LongPress", "Chart long pressed.");
-    }
-
-    @Override
-    public void onChartDoubleTapped(MotionEvent me) {
-        Log.i("DoubleTap", "Chart double-tapped.");
-    }
-
-    @Override
-    public void onChartSingleTapped(MotionEvent me) {
-        Log.i("SingleTap", "Chart single-tapped.");
-    }
-
-    @Override
-    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-        Log.i("Fling", "Chart fling. VelocityX: " + velocityX + ", VelocityY: " + velocityY);
-    }
-
-    @Override
-    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-        Log.i("Scale / Zoom", "ScaleX: " + scaleX + ", ScaleY: " + scaleY);
-    }
-
-    @Override
-    public void onChartTranslate(MotionEvent me, float dX, float dY) {
-        Log.i("Translate / Move", "dX: " + dX + ", dY: " + dY);
-    }
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        Log.i("VAL SELECTED",
-                "Value: " + e.getY() + ", xIndex: " + e.getX()
-                        + ", DataSet index: " + h.getDataSetIndex());
+
     }
 
     @Override
@@ -233,7 +287,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         set_end.setCircleRadius(4);//圓點大小
         set_end.setDrawCircleHole(false);//圓點為實心(預設空心)
         set_end.setDrawValues(false);//不顯示座標點對應Y軸的數字(預設顯示)
-        
+
 
         /**
          * yellowLine及其最後的圓點設定可比照如上greenLine設定，不再列示
@@ -258,13 +312,11 @@ HORIZONTAL_BEZIER水平曲線
         set.setHighlightLineWidth(2);//高亮線寬度
         set.setHighLightColor(Color.RED);//高亮線顏色
 
-
 //理解爲多條線的集合
         LineData data = new LineData(set, set_end);
         chart.setData(data);//一定要放在最後
         chart.invalidate();//繪製圖表
     }
-
     private void initX() {
         XAxis xAxis = chart.getXAxis();
 
@@ -278,28 +330,14 @@ HORIZONTAL_BEZIER水平曲線
 
         xAxis.setDrawGridLines(false);//不顯示每個座標點對應X軸的線 (預設顯示)
 
-
-        xAxis.setEnabled(false);//不顯示X軸 (預設顯示，如為false則以下設定均無效)
-        xAxis.setDrawAxisLine(false);//不顯示X軸的線 (預設顯示)
-        xAxis.setAxisLineColor(Color.GREEN);//X軸線顏色
-        xAxis.setAxisLineWidth(2f);//X軸線寬度
-
-        xAxis.setDrawLabels(false);//不顯示X軸的對應標籤 (預設顯示)
-        xAxis.setAxisMinimum(1);//X軸標籤最小值
-        xAxis.setAxisMaximum(10);//X軸標籤最大值
-        xAxis.setLabelRotationAngle(-25);//X軸數字旋轉角度
-
-        xAxis.enableGridDashedLine(5f, 5f, 0f); //格線以虛線顯示，可設定虛線長度、間距等，如setDrawGridLines(false)則此設定無效
-        xAxis.setGridLineWidth(2f);//格線寬度
-        xAxis.setGridColor(Color.RED);//格線顏色
-
         //設定所需特定標籤資料
-        String[] xValue = new String[]{"", "1/3", "1/10", "1/17", "1/24", "1/31", "2/7"};
-        List<String> xList = new ArrayList<>();
-        for (int i = 0; i < xValue.length; i++) {
-            xList.add(xValue[i]);
-//            xList.add(String.valueOf(i +1).concat("月"));
+        List<String> xList = new ArrayList<String>();
+
+        for (int i = 0; i < 10; i++) {
+//            xList.add("3/" + i);
+            xList.add(listStr02.get(i));
         }
+
         /**
          * 格式化軸標籤二種方式：
          * 1、用圖表庫已寫好的類_如下X 軸使用
@@ -308,33 +346,70 @@ HORIZONTAL_BEZIER水平曲線
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xList));
     }
 
+
+
     private void initY() {
         YAxis rightAxis = chart.getAxisRight();//獲取右側的軸線
         rightAxis.setEnabled(false);//不顯示右側Y軸
         YAxis leftAxis = chart.getAxisLeft();//獲取左側的軸線
 
-        leftAxis.setLabelCount(10);//Y軸標籤個數
+        leftAxis.setLabelCount(4);//Y軸標籤個數
         leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色
         leftAxis.setTextSize(12);//Y軸標籤大小
 
         leftAxis.setAxisMinimum(0);//Y軸標籤最小值
-        leftAxis.setAxisMaximum(10);//Y軸標籤最大值
+        leftAxis.setAxisMaximum(20);//Y軸標籤最大值
+
+        leftAxis.enableGridDashedLine(5f, 5f, 0f);//格線以虛線顯示，可設定虛線長度、間距等
 
         /**
          * 格式化軸標籤二種方式：
          * 1、用圖表庫已寫好的類_如上一步驟中X 軸使用
          * 2、自己實現接口_如下Y 軸使用
          * */
-
-
-        leftAxis.setGranularity(1);//Y軸數值的間隔
-        leftAxis.setDrawTopYLabelEntry(false);//不顯示Y軸最上方數值 (預設顯示)
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);//Y軸標籤顯示位置
-        leftAxis.setXOffset(10f);//單位dp，Y數值與Y軸間的空隙寬度
-
-        leftAxis.enableGridDashedLine(1, 1, 1);//格線以虛線顯示，可設定虛線長度、間距等
         leftAxis.setValueFormatter(new MyYAxisValueFormatter());
     }
+
+    @Override
+    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+    }
+
+    @Override
+    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+    }
+
+    @Override
+    public void onChartLongPressed(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartDoubleTapped(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartSingleTapped(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+    }
+
+    @Override
+    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+    }
+
+    @Override
+    public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+    }
+
 
     class MyYAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
 
@@ -350,6 +425,7 @@ HORIZONTAL_BEZIER水平曲線
             return mFormat.format(value);
         }
     }
+
     private void initChartFormat() {
         //右下方description label：設置圖表資訊
         Description description = chart.getDescription();
@@ -357,13 +433,84 @@ HORIZONTAL_BEZIER水平曲線
 
         //左下方Legend：圖例數據資料
         Legend legend = chart.getLegend();
-        legend.setEnabled(false);//不顯示圖例 (預設顯示)
+        legend.setEnabled(true);//不顯示圖例 (預設顯示)
 
         chart.setBackgroundColor(Color.WHITE);//顯示整個圖表背景顏色 (預設灰底)
 
         //設定沒資料時顯示的內容
         chart.setNoDataText("暫時沒有數據");
         chart.setNoDataTextColor(Color.BLUE);//文字顏色
+        description.setPosition(680, 80);//顯示位置座標 (預設右下方)
+    }
+
+    public class linedata_sync_fromdb extends AsyncTask<String, String , String> {
+
+        String z = "";
+        Boolean isSuccess = false;
+
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(getContext(),"目標數據同步成功", Toast.LENGTH_SHORT).show();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<String> array_sync01 = new ArrayList<String>();
+            ArrayList<String> array_sync02 = new ArrayList<String>();
+            ArrayList<String> array_sync03 = new ArrayList<String>();
+            ArrayList<String> array_sync04 = new ArrayList<String>();
+
+            String  sync_name = gv.getUserEmail();
+//            String sync_servicename = gv.getServiceName();
+            String sync_servicename = "大腦";
+//            String sync_casename = gv.getCaseName();
+            String sync_casename = "測試01";
+
+
+            if (connection!=null){
+
+                try{
+
+                    statement = connection.createStatement();
+                    ResultSet result01 = statement.executeQuery("SELECT timeortimes, builddate FROM dbo.case_data WHERE user_id ='"+sync_name.toString().trim()+"' AND body = '" + sync_servicename.toString().trim() + "' AND case_name = '" + sync_casename.toString().trim() + "';");
+                    ResultSet result02 = statement.executeQuery("SELECT body FROM dbo.service WHERE user_id ='" + sync_name.toString().trim() + "'; ");
+
+                    while (result01.next()) {
+                        array_sync01.add(result01.getString(1).toString().trim());
+                        array_sync02.add(result01.getString(2).toString().trim());
+                        array_sync03.add(result01.getString(2).toString().trim());
+                    }
+
+
+                    while (result02.next()) {
+                        array_sync04.add(result01.getString(1).toString().trim());
+                    }
+                    for (int i = 0; i < array_sync01.size(); i++) {
+                        listStr01.add((String) array_sync01.get(i));
+                        listStr02.add(array_sync02.get(i));
+                        xValue.add(String.valueOf(array_sync02.get(i)));
+                        listStr04.add((String) array_sync04.get(i));
+                    }
+
+                }catch (Exception e){
+                    isSuccess = false;
+                    z = e.getMessage();
+                }
+
+            }
+            else {
+                Toast toast = Toast.makeText(getContext(),"目標數據同步失敗", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            return z;
+        }
     }
 
 }

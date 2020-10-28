@@ -1,6 +1,7 @@
 package com.example.myrehabilitaion;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myrehabilitaion.ui.PersonalInfo.PersonalInfoFragment;
 import com.example.myrehabilitaion.ui.Record.RecordFragment;
+import com.example.myrehabilitaion.ui.Record.RecordFragment_Main;
+import com.example.myrehabilitaion.ui.Stastics.Frag_LineChart;
 import com.example.myrehabilitaion.ui.Stastics.Frag_Statistics;
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Frag_NewHome extends Fragment {
@@ -33,7 +37,7 @@ public class Frag_NewHome extends Fragment {
         BottomNavigationView bottomNav = root.findViewById(R.id.nav_view);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        getChildFragmentManager().beginTransaction().replace(R.id.nav_home_container,new Frag_Statistics()).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.nav_home_container,new Frag_LineChart()).commit();
 
         return root;
     }
@@ -42,17 +46,20 @@ public class Frag_NewHome extends Fragment {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
 
+
             switch(item.getItemId()){
-                case R.id.navigation_record:
-                    selectedFragment = new RecordFragment();
+                case R.id.navigation_record_main:
+                    selectedFragment = new RecordFragment_Main();
                     break;
                 case R.id.navigation_stastics:
-                    selectedFragment = new Frag_Statistics();
+                    selectedFragment = new Frag_LineChart();
                     break;
                 case R.id.navigation_psinfo:
                     selectedFragment = new PersonalInfoFragment();
+
                     break;
             }
+
             getChildFragmentManager().beginTransaction().replace(R.id.nav_home_container,selectedFragment).commit();
 
             return true;

@@ -74,8 +74,7 @@ public class PersonalInfoFragment extends Fragment {
     Statement statement = null;
 
     GlobalVariable gv;
-    String memail;
-    String mpasswd;
+    String userid;
 
 //---------------------SQL---------------------
 
@@ -122,15 +121,15 @@ public class PersonalInfoFragment extends Fragment {
         if (connection!=null){
             try {
                 gv = (GlobalVariable)getActivity().getApplicationContext();
-                memail = gv.getUserEmail();
-                mpasswd = gv.getUserPassword();
+
+                userid = gv.getUserID();
 
                 statement = connection.createStatement();
-                ResultSet resultSet01 = statement.executeQuery("SELECT username FROM dbo.registered WHERE email = '" + memail + "' AND password = '" + mpasswd + "';");
+                ResultSet resultSet01 = statement.executeQuery("SELECT username FROM dbo.registered WHERE user_id = '" + userid +"';");
                 while (resultSet01.next()){
                     psinfo_name.setText(resultSet01.getString(1).toString().trim());
                 }
-                ResultSet resultSet02 = statement.executeQuery("SELECT email FROM dbo.registered WHERE email = '" + memail + "' AND password = '" + mpasswd + "';");
+                ResultSet resultSet02 = statement.executeQuery("SELECT email FROM dbo.registered WHERE user_id = '" + userid + "';");
                 while (resultSet02.next()){
                     psinfo_email.setText(resultSet02.getString(1).toString().trim());
                 }

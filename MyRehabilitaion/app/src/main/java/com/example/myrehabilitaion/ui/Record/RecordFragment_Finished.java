@@ -1,72 +1,42 @@
 package com.example.myrehabilitaion.ui.Record;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 
 import com.example.myrehabilitaion.GlobalVariable;
-
 import com.example.myrehabilitaion.R;
-
 import com.example.myrehabilitaion.RecyclerExampleViewAdapter;
+import com.example.myrehabilitaion.RecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.ref.WeakReference;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
-public class RecordFragment extends Fragment {
-    private static class StaticHandler extends Handler{
-        private final WeakReference <RecordFragment> mRecordFragment;
-        public StaticHandler(RecordFragment recordFragment){
-            mRecordFragment = new WeakReference<RecordFragment>(recordFragment);
-        }
-    }
-
-    Runnable r = new Runnable() {
-        @Override
-        public void run() {
-
-        }
-    };
-
-    public final StaticHandler mHandler =new StaticHandler(this);
-
+public class RecordFragment_Finished extends Fragment {
     private static String ip = "140.131.114.241";
     private static String port = "1433";
     private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
@@ -80,7 +50,7 @@ public class RecordFragment extends Fragment {
     Statement statement = null;
 
 
-    RecyclerExampleViewAdapter adapter_exampler;
+    RecyclerViewAdapter adapter_exampler;
     RecyclerView recyclerexample;
     Dialog mDlog01;
 
@@ -94,21 +64,20 @@ public class RecordFragment extends Fragment {
     public List<String> listStr05;
     public List<Integer> listImg;
 
-    service_sync_todb service_sync_todb;
-    service_sync_fromdb service_sync_fromdb;
+    RecordFragment_Finished.service_sync_todb service_sync_todb;
+    RecordFragment_Finished.service_sync_fromdb service_sync_fromdb;
 
     public String userid;
     public String sync_servicename;
 
     GlobalVariable gv ;
 
-    ProgressBar progressBar;
 
-
-
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_frag__record, container, false);
-        userid = gv.getUserEmail();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root =  inflater.inflate(R.layout.fragment_record__finished, container, false);
 
         listStr01 = new ArrayList<String>();
         listStr02 = new ArrayList<String>();
@@ -154,7 +123,7 @@ public class RecordFragment extends Fragment {
         recyclerexample.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager.VERTICAL));
 
-        adapter_exampler = new RecyclerExampleViewAdapter(RecordFragment.super.getActivity(),RecordFragment.super.getActivity().getApplicationContext(), listStr01, listStr02,listStr03, listStr04, listStr05,listImg);
+        adapter_exampler = new RecyclerViewAdapter(RecordFragment_Finished.super.getActivity(),RecordFragment_Finished.super.getActivity().getApplicationContext(), listStr01, listStr02, listStr03, listStr04, listStr05 ,listImg);
         //adapter_home.addItem(sercmng.Syc());
 
         try {
@@ -272,28 +241,11 @@ public class RecordFragment extends Fragment {
 //        viewPager.addOnPageChangeListener(new GuidePageChangeListener(tips, pageview));
 
         final FloatingActionButton fab01 = root.findViewById(R.id.floatingActionButton);
-//        final FloatingActionButton fab02 = root.findViewById(R.id.fab02);
-//        fab02.setVisibility(View.INVISIBLE);
 
         fab01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                fab01.setVisibility(View.INVISIBLE);
-//                fab02.setVisibility(View.VISIBLE);
-//
-//                fab02.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Snackbar.make(view, "開啟統計頁面", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//
-//                Intent intent = new Intent(getContext(),HomePage.class);
-//                startActivity(intent);
-//
-//                        Main.this.showStatisticsFragment();
-//
-//                        fab02.setVisibility(View.INVISIBLE);
-//                        fab01.setVisibility(View.VISIBLE);
                 mDlog01 = new Dialog(v.getContext());
                 mDlog01.setContentView(R.layout.dlg_addtarget);
                 mDlog01.setCancelable(true);
@@ -331,7 +283,7 @@ public class RecordFragment extends Fragment {
                     public void onClick(View v) {
 //                        adapter_exampler.addItem(edttargetname.getText().toString().trim());
 
-                        service_sync_todb = new service_sync_todb();
+                        service_sync_todb = new RecordFragment_Finished.service_sync_todb();
                         service_sync_todb.execute();
 
                         mDlog01.dismiss();
@@ -342,7 +294,6 @@ public class RecordFragment extends Fragment {
 
         return root;
     }
-
     private DatePickerDialog.OnDateSetListener datePickerDlgOnDataSet = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -377,9 +328,9 @@ public class RecordFragment extends Fragment {
             if (connection!=null){
 
                 try{
-
+                    userid = gv.getUserID();
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.service (userid,body,date) VALUES ('"+userid.toString().trim()+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
+                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date) VALUES ('"+userid.toString().trim()+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -419,11 +370,15 @@ public class RecordFragment extends Fragment {
             ArrayList<String> array_sync04 = new ArrayList<String>();
             ArrayList<String> array_sync05 = new ArrayList<String>();
 
+
+
+            userid = gv.getUserID();
+
             if (connection!=null){
 
                 try{
                     statement = connection.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT body, date, progress, target, service_id FROM dbo.service WHERE user_id ='"+userid.toString().trim()+"' AND progress/target < 1;");
+                    ResultSet result = statement.executeQuery("SELECT body, date, progress, target, service_id FROM dbo.service WHERE user_id ='"+userid.toString().trim()+"' AND progress/target = 1;");
 
                     while (result.next()) {
                         array_sync01.add(result.getString(1).toString().trim());

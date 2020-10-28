@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/navigation_stastics"
-        android:icon="@drawable/ic_pie_chart_black_24dp"
+        android:icon="@drawable/ic_show_chart_black_24dp"
         android:title="數據統計" />
 
     <item
-        android:id="@+id/navigation_record"
+        android:id="@+id/navigation_record_main"
         android:icon="@drawable/ic_baseline_play_circle_filled_24"
-        android:title="開始記錄" />
+        android:title="目標管理" />
 
 
     <item

@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="目標編輯"
+                android:text="詳細資訊"
                 android:textSize="30sp" />
 
         </LinearLayout>
@@ -113,15 +113,15 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_updatetargt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:background="@drawable/btn_design07"
-                android:text="完成"
-                android:textSize="28sp" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_updatetargt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:background="@drawable/btn_design07"-->
+<!--                android:text="完成"-->
+<!--                android:textSize="28sp" />-->
 
             <Button
                 android:id="@+id/btn_cancelbox"
@@ -130,7 +130,7 @@
                 android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:background="@drawable/btn_design05"
-                android:text="取消"
+                android:text="確認"
                 android:textSize="28sp" />
 
             <Button
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
-                android:background="@drawable/btn_design09"
+                android:background="@drawable/btn_design02"
                 android:text="終止"
                 android:textSize="28sp" />
 

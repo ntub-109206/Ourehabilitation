@@ -4,35 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     app:cardCornerRadius="6dp"
     app:cardBackgroundColor="#00FFFFFF"
     android:layout_gravity="center"
     android:layout_margin="5dp">
 
 <!--    </LinearLayout>-->
-    <FrameLayout
+    <ImageView
+        android:id="@+id/img_target"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background = "@drawable/bg_07">
+        android:background="@drawable/bg_07"
+        android:scaleType="centerCrop" />
 
-        <ImageView
-            android:id="@+id/img_target"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background = "@drawable/bg_07"
-            android:scaleType="centerCrop" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:textAlignment="textEnd"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="復健部位"
             android:textColor="	#ffffff"
-            android:layout_margin="10dp"
-            android:textSize="20sp"
-            tools:ignore="RtlCompat" />
-    </FrameLayout>
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/bg_07"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ProgressBar
+                    android:id="@+id/reacord_progressBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/txt_onbar"
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:text="TextView" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/reacord_startbutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/btn_design09"
+                android:text="開始" />
+
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

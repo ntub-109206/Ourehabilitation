@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,12 +45,14 @@ import java.util.List;
 public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExampleViewAdapter.ViewHolder> {
 
 
-    public String sync_name;
-    public String sync_servicename;
+    public String userid;
+    public String sync_serviceid;
 
     private List<String> mListString01;
     private List<String> mListString02;
     private List<String> mListString03 ;
+    private List<String> mListString04 ;
+    private List<String> mListString05 ;
     private List<Integer> mListImage;
 
     Dialog mDlog_case;
@@ -61,13 +64,13 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
     GlobalVariable gv;
 
-    public void addItem(String text01, String text02) {
-        // 為了示範效果，固定新增在位置3。若要新增在最前面就把3改成0
-        mListString01.add(text01);
-        mListString02.add(text02);
-        mListImage.add(R.drawable.bg_07);
-        notifyItemInserted(mListString01.size());
-    }
+//    public void addItem(String text01, String text02) {
+//        // 為了示範效果，固定新增在位置3。若要新增在最前面就把3改成0
+//        mListString01.add(text01);
+//        mListString02.add(text02);
+//        mListImage.add(R.drawable.bg_07);
+//        notifyItemInserted(mListString01.size());
+//    }
 
 //    public void updateItem(int position){
 //         updatetargetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
@@ -81,16 +84,19 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
         service_delete_todb service_delete_todb = new service_delete_todb();
         service_delete_todb.execute();
 
-        mListString01.remove(position);
+        mListString05.remove(position);
         notifyItemRemoved(position);
     }
 
     // 建構式，用來接收外部程式傳入的項目資料。
-    public RecyclerExampleViewAdapter(Activity activity,Context context, List<String> listString01, List<String> listString02, List<Integer> listImg) {
+    public RecyclerExampleViewAdapter(Activity activity,Context context, List<String> listString01, List<String> listString02,List<String> ListString03 ,List<String> ListString04 ,List<String> ListString05 ,List<Integer> listImg) {
 
         this.mListString01 =  listString01;
         this.mListString02 =  listString02;
-//        mListString03 = listString03;
+        this.mListString03 = ListString03;
+        this.mListString04 = ListString04;
+        this.mListString05 = ListString05;
+
         this.mListImage =  listImg;
         this.context=context;
         this.activity = activity;
@@ -100,7 +106,9 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView mImgView;
         public TextView mTxt;
-        public ImageButton mEditImgPen;
+        public TextView mtxtonbar;
+        public ProgressBar mrecord_progressbar;
+        public Button mstartrecord_btn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -108,6 +116,19 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
             mImgView = (ImageView) itemView.findViewById(R.id.img_target);
             mTxt = (TextView) itemView.findViewById(R.id.txt_target);
+            mtxtonbar = itemView.findViewById(R.id.txt_onbar);
+            mrecord_progressbar = itemView.findViewById(R.id.reacord_progressBar);
+            mstartrecord_btn = itemView.findViewById(R.id.reacord_startbutton);
+            mstartrecord_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    gv.setServiceName(mListString05.get(getAdapterPosition()));
+
+                    Intent intent = new Intent(v.getContext(),RecordMain.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
+
             // 處理按下的事件。
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -128,19 +149,18 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 //                    updatetargetfinishtime.setText(mListString03.get(getAdapterPosition()).toString().trim());
                     //------------------設定dlg目標部位名稱------------------------
 
-                    Button btnupdatetargt =  mDlog_case.findViewById(R.id.btn_updatetargt);
-
-                    btnupdatetargt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+//                    Button btnupdatetargt =  mDlog_case.findViewById(R.id.btn_updatetargt);
+//                    btnupdatetargt.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
 //                            updateItem(getAdapterPosition());
-
-                            Toast.makeText(v.getContext(),
-                                    "您更新了目標", Toast.LENGTH_SHORT).show();
-
-                            mDlog_case.dismiss();
-                        }
-                    });
+//
+//                            Toast.makeText(v.getContext(),
+//                                    "您更新了目標", Toast.LENGTH_SHORT).show();
+//
+//                            mDlog_case.dismiss();
+//                        }
+//                    });
                     Button btncanceledit = mDlog_case.findViewById(R.id.btn_cancelbox);
                     btncanceledit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -153,8 +173,8 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
                     btndeltarget.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gv.setServiceName(mListString01.get(getAdapterPosition()));
-//                            Log.d("text01", String.valueOf(getAdapterPosition()));
+                            gv.setServiceID(mListString01.get(getAdapterPosition()));
+
                             removeItem(getAdapterPosition());
                             mDlog_case.dismiss();
                         }
@@ -167,10 +187,7 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
         @Override
         public void onClick(View v) {
-            gv.setServiceName(mListString01.get(getAdapterPosition()));
 
-            Intent intent = new Intent(v.getContext(),RecordMain.class);
-            v.getContext().startActivity(intent);
         }
     }
 
@@ -193,12 +210,17 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
         // 把資料設定給 ViewHolder。
         viewHolder.mImgView.setImageResource(mListImage.get(i));
         viewHolder.mTxt.setText(mListString01.get(i));
+
+        int p = 100 * Integer.valueOf(mListString03.get(i))/Integer.valueOf(mListString04.get(i));
+
+        viewHolder.mrecord_progressbar.setProgress(p);
+        viewHolder.mtxtonbar.setText(String.valueOf(mListString03.get(i)) + "   /   " + String.valueOf(mListString04.get(i)));
     }
 
     // RecyclerView會呼叫這個方法，我們要傳回總共有幾個項目。
     @Override
     public int getItemCount() {
-        return this.mListString01.size();
+        return this.mListString05.size();
     }
 
     public class service_delete_todb  extends AsyncTask<String, String , String> {
@@ -252,10 +274,10 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
             if (connection!=null){
                 try{
 
-                    sync_name = gv.getUserEmail();
-                    sync_servicename = gv.getServiceName();
+                    userid = gv.getUserID();
+                    sync_serviceid = gv.getServiceID();
                     statement = connection.createStatement();
-                    statement.executeQuery("DELETE FROM dbo.service WHERE user_id ='"+sync_name.toString().trim()+"' AND body ='"+sync_servicename.toString().trim()+ "';");
+                    statement.executeQuery("DELETE FROM dbo.service WHERE user_id ='"+userid.toString().trim()+"' AND service_id ='"+sync_serviceid.toString().trim()+ "';");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -267,5 +289,4 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
             return z;
         }
     }
-
 }

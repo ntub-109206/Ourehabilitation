@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Frag_StartRecord"
-    android:background="@drawable/bg_05"
-    android:clickable="true">
+    android:background="@drawable/legtrain"
+    android:clickable="true"
+    tools:context=".Frag_StartRecord">
 
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:background="@drawable/btn_design02"
         android:orientation="vertical"
-        android:background="@drawable/btn_design01"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,15 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
             android:background="@drawable/btn_design08"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.224">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,18 +49,13 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/btn_design05"
+            android:background="@drawable/btn_design01"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.541">
+            android:padding="20dp">
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="90dp"
                 android:orientation="vertical">
 
@@ -75,22 +63,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="單位"
-                    android:textColor="#111111"
                     android:textAlignment="center"
+                    android:textColor="#ffffff"
                     android:textSize="32sp" />
 
                 <Spinner
                     android:id="@+id/spin_unit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#111111"
-                    android:textAlignment="center"
                     android:layout_weight="1"
-                    android:entries="@array/unit_list" />
+                    android:minWidth="10sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="90dp"
                 android:orientation="vertical">
 
@@ -98,17 +84,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:text="目標"
-                    android:textColor="#111111"
                     android:textAlignment="center"
+                    android:textColor="#ffffff"
                     android:textSize="32sp" />
 
                 <NumberPicker
                     android:id="@+id/numPickerAge"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:textColor="#111111"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#111111" />
 
             </LinearLayout>
         </LinearLayout>
@@ -119,20 +104,19 @@
             android:layout_height="63dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_design07"
+            android:text="確認"
             android:textAlignment="center"
-            android:textSize="25sp"
-            android:text="確認" />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/btn_cancelstartpage"
             android:layout_width="match_parent"
             android:layout_height="63dp"
-            android:textAlignment="center"
-            android:textSize="25sp"
             android:background="@drawable/btn_design01"
-            android:text="取消" />
+            android:text="取消"
+            android:textAlignment="center"
+            android:textSize="25sp" />
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Class_Login extends AppCompatActivity {
 
@@ -119,6 +120,8 @@ public class Class_Login extends AppCompatActivity {
                 checkLogin checkLogin = new checkLogin();
                 checkLogin.execute();
 
+                Log.d("Class_Login",  "Class_Login結束");
+
             }
         });
 
@@ -155,11 +158,14 @@ public class Class_Login extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try {
-                String sql = "SELECT * FROM dbo.registered WHERE user_id = '" + edt_email.getText() + "' AND password = '" + edt_password.getText() + "';";
+                String sql = "SELECT * FROM dbo.registered WHERE email = '" + edt_email.getText() + "' AND password = '" + edt_password.getText() + "';";
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
 
                 if (rs.next()) {
+
+                    gv.setUserID(rs.getString(1).toString().trim());
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

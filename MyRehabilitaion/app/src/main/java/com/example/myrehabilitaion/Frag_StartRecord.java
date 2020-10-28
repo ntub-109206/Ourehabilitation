@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -29,6 +31,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.myrehabilitaion.R.id.spnStyle;
 
 public class Frag_StartRecord extends Fragment {
 
@@ -78,7 +84,24 @@ public class Frag_StartRecord extends Fragment {
             toast.show();
 
         }
+
         Spinner spnUnit = root.findViewById(R.id.spin_unit);
+
+        final List<String> unit=new ArrayList<String>();
+        unit.add("計次");
+        unit.add("計時");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, unit);
+        spnUnit.setAdapter(adapter);
+        spnUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "您選擇了:" + unit.get(position), Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
 
         mNumPickerAge = root.findViewById(R.id.numPickerAge);
         mNumPickerAge.setMaxValue(200);
@@ -101,6 +124,8 @@ public class Frag_StartRecord extends Fragment {
                 mDlog.setCancelable(true);
                 mDlog.show();
 
+                TextView txtview_bodypart= mDlog.findViewById(R.id.txt_bodypart);
+                txtview_bodypart.setText(gv.getServiceName().toString());
                 Button btnstarttargt = mDlog.findViewById(R.id.btn_checkconfirm);
                 Button btncancel = mDlog.findViewById(R.id.btn_checkcancel);
 

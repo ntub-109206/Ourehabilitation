@@ -7,6 +7,9 @@ public class GlobalVariable extends Application {
     private String Password;         //User 年紀
     private String ServiceName;
     private String CaseName;
+    private String UserID;
+    private String ServiceID;
+    private String CaseID;
 
     //修改 變數値
     public void setUserEmail(String email){
@@ -16,7 +19,9 @@ public class GlobalVariable extends Application {
         this.Password = passwd;
     }
     public void setServiceName(String servicename){ this.ServiceName = servicename; }
-    public void setCaseName(String casename){ this.CaseName = casename; }
+    public void setUserID(String userid){ this.UserID = userid; }
+    public void setServiceID(String serviceid){ this.ServiceID = serviceid; }
+    public void setCaseID(String caseid){ this.CaseID = caseid; }
 
     //取得 變數值
     public String getUserEmail() {
@@ -27,5 +32,12 @@ public class GlobalVariable extends Application {
     }
     public String getServiceName(){return ServiceName; }
     public String getCaseName(){return CaseName; }
+    public String getUserID() { return UserID; }
+    public String getServiceID() {
+        return ServiceID;
+    }
+    public String getCaseID() {
+        return CaseID;
+    }
 
 }

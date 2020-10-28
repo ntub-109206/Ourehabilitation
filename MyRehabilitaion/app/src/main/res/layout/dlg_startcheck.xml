@@ -3,13 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/btn_design05">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_design01"
+        android:background="@drawable/btn_design02"
         android:padding="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +33,7 @@
                 android:textColor="#ffffff" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/txt_bodypart"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:background="#00FFFFFF"

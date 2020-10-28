@@ -23,9 +23,6 @@
         android:roundIcon="@drawable/new_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".UsersDbOpenHelper"
-            tools:ignore="Instantiatable" />
         <activity android:name=".RecordMain" />
         <activity android:name=".Main" />
         <activity android:name=".Class_Registeration" />

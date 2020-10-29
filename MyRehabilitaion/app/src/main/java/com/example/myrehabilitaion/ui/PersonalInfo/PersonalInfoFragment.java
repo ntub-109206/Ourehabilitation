@@ -1,10 +1,7 @@
 package com.example.myrehabilitaion.ui.PersonalInfo;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,11 +12,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -27,29 +21,35 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
-import com.example.myrehabilitaion.Class_Login;
-import com.example.myrehabilitaion.Class_Registeration;
+import com.example.myrehabilitaion.ColorfulActivity;
 import com.example.myrehabilitaion.GlobalVariable;
+import com.example.myrehabilitaion.MainActivity_Calendar;
 import com.example.myrehabilitaion.R;
+import com.example.myrehabilitaion.SubInfoFragment;
+import com.example.myrehabilitaion.ui.Record.RecordFragment;
+import com.example.myrehabilitaion.ui.Record.RecordFragment_Finished;
+import com.example.myrehabilitaion.ui.Record.RecordFragment_Main;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -71,10 +71,15 @@ public class PersonalInfoFragment extends Fragment {
 
     TextView psinfo_name;
     TextView psinfo_email;
+    TextView psinfo_birthday;
     Statement statement = null;
+
+    Button btn;
 
     GlobalVariable gv;
     String userid;
+
+
 
 //---------------------SQL---------------------
 
@@ -91,32 +96,40 @@ public class PersonalInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragement_personalinformationpage, container, false);
+        PersonalInfoFragment.InnerPagerStateAdapter pagerAdapter = new PersonalInfoFragment.InnerPagerStateAdapter(getActivity().getSupportFragmentManager());
 
+        ViewPager viewPager = root.findViewById(R.id.viewPager);
+
+        viewPager.setAdapter(pagerAdapter);
+
+        TabLayout tableLayout = root.findViewById(R.id.tabLayout);
+        tableLayout.setupWithViewPager(viewPager);
 
 //--------------------SQL--------------------
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
         psinfo_name = root.findViewById(R.id.psinfo_name);
         psinfo_email = root.findViewById(R.id.psinfo_email);
+        psinfo_birthday = root.findViewById(R.id.info_birthday);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
 
-        try {
-            Class.forName(Classes);
-            connection = DriverManager.getConnection(url, username,password);
-            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
-            toast.show();
-
-        }
+//        try {
+//            Class.forName(Classes);
+//            connection = DriverManager.getConnection(url, username,password);
+//            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
+//            toast.show();
+//
+//        }
 
         if (connection!=null){
             try {
@@ -125,13 +138,11 @@ public class PersonalInfoFragment extends Fragment {
                 userid = gv.getUserID();
 
                 statement = connection.createStatement();
-                ResultSet resultSet01 = statement.executeQuery("SELECT username FROM dbo.registered WHERE user_id = '" + userid +"';");
+                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, birthday  FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
                 while (resultSet01.next()){
                     psinfo_name.setText(resultSet01.getString(1).toString().trim());
-                }
-                ResultSet resultSet02 = statement.executeQuery("SELECT email FROM dbo.registered WHERE user_id = '" + userid + "';");
-                while (resultSet02.next()){
-                    psinfo_email.setText(resultSet02.getString(1).toString().trim());
+                    psinfo_email.setText(resultSet01.getString(2).toString().trim());
+                    psinfo_birthday.setText(resultSet01.getString(2).toString().trim());
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -262,19 +273,19 @@ public class PersonalInfoFragment extends Fragment {
                 //讀取照片，型態為Bitmap
                 BitmapFactory.Options mOptions = new BitmapFactory.Options();
 //Size=2為將原始圖片縮小1/2，Size=4為1/4，以此類推
-                mOptions.inSampleSize = 2;
+                mOptions.inSampleSize = 1;
                 Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri),null,mOptions);
 
                 //判斷照片為橫向或者為直向，並進入ScalePic判斷圖片是否要進行縮放
                 if(bitmap.getWidth()>bitmap.getHeight()) {
-                    ScalePic(bitmap, mPhone.heightPixels);
-                    Bitmap bm = toRoundBitmap(bitmap);
-                    bigPic.setImageBitmap(bm);
+//                    ScalePic(bitmap, mPhone.heightPixels);
+//                    Bitmap bm = toRoundBitmap(bitmap);
+                    bigPic.setImageBitmap(bitmap);
                 }
                 else {
-                    ScalePic(bitmap, mPhone.widthPixels);
-                    Bitmap bm = toRoundBitmap(bitmap);
-                    bigPic.setImageBitmap(bm);
+//                    ScalePic(bitmap, mPhone.widthPixels);
+//                    Bitmap bm = toRoundBitmap(bitmap);
+                    bigPic.setImageBitmap(bitmap);
                 }
             }
             catch (FileNotFoundException e)
@@ -317,6 +328,59 @@ public class PersonalInfoFragment extends Fragment {
         }
         else bigPic.setImageBitmap(bitmap);
     }
+    public class InnerPagerStateAdapter extends FragmentStatePagerAdapter {
+        public InnerPagerStateAdapter(FragmentManager fm){
+            super(fm);
+        }
 
 
+        @Override
+        public CharSequence getPageTitle(int postion){
+            switch (postion){
+                case 0:
+                    return "看診紀錄(細項)";
+                case 1:
+                    return "看診日程紀錄日程";
+                default:
+                    return null;
+            }
+        }
+
+
+        @Override
+        public Fragment getItem(int position){
+
+            Fragment fragment = null;
+
+            switch (position){
+                case 0:
+                    fragment = new SubInfoFragment();
+
+                    break;
+                case 1:
+                    fragment = new ColorfulActivity();
+
+
+                    break;
+            }
+
+            return fragment;
+
+        }
+
+
+        @Override
+        public int getCount(){
+            return 2;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+
+            FragmentManager manager = ((Fragment) object).getFragmentManager();
+            FragmentTransaction trans = manager.beginTransaction();
+            trans.remove((Fragment) object);
+            trans.commit();
+        }
+    }
 }

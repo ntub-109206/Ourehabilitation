@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 
+import com.example.myrehabilitaion.Frag_RecordFinished;
 import com.example.myrehabilitaion.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,7 +30,7 @@ public class RecordFragment_Main extends Fragment {
         // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_record__main, container, false);
 
-        InnerPagerAdapter pagerAdapter = new InnerPagerAdapter(getActivity().getSupportFragmentManager());
+        InnerPagerStateAdapter pagerAdapter = new InnerPagerStateAdapter(RecordFragment_Main.super.getActivity().getSupportFragmentManager());
 
         ViewPager viewPager = root.findViewById(R.id.viewPager);
 
@@ -40,10 +43,24 @@ public class RecordFragment_Main extends Fragment {
 
     }
 
-    class InnerPagerAdapter extends FragmentPagerAdapter{
-        public InnerPagerAdapter(FragmentManager fm){
+    public class InnerPagerStateAdapter extends FragmentStatePagerAdapter{
+        public InnerPagerStateAdapter(FragmentManager fm){
             super(fm);
         }
+
+
+        @Override
+        public CharSequence getPageTitle(int postion){
+            switch (postion){
+                case 0:
+                    return "已完成的復健";
+                case 1:
+                    return "正在進行的復健";
+                default:
+                    return null;
+            }
+        }
+
 
         @Override
         public Fragment getItem(int position){
@@ -57,12 +74,16 @@ public class RecordFragment_Main extends Fragment {
                     break;
                 case 1:
                     fragment = new RecordFragment();
+
+
                     break;
             }
+            Log.d("test09", String.valueOf(position));
 
             return fragment;
 
         }
+
 
         @Override
         public int getCount(){
@@ -70,15 +91,14 @@ public class RecordFragment_Main extends Fragment {
         }
 
         @Override
-        public CharSequence getPageTitle(int postion){
-            switch (postion){
-                case 0:
-                    return "已完成的復健";
-                case 1:
-                    return "正在進行的復健";
-                default:
-                    return null;
-            }
+        public void destroyItem(ViewGroup container, int position, Object object) {
+
+            FragmentManager manager = ((Fragment) object).getFragmentManager();
+            FragmentTransaction trans = manager.beginTransaction();
+            trans.remove((Fragment) object);
+            trans.commit();
         }
+
+
     }
 }

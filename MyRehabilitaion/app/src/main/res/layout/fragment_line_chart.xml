@@ -2,25 +2,49 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <Spinner
-        android:id="@+id/spinner"
+    <LinearLayout
+        android:id="@+id/layout_02"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/bg_06"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title_bodypartlist"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:textAlignment="textStart"
+            android:background="@drawable/bg_06"
+            android:text="請選取您要查看的復健部位" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:layout_below="@+id/title_bodypartlist"/>
+
+    </LinearLayout>
+
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart1"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:padding="10dp"
-        android:layout_below="@+id/spinner">
+        android:layout_height="250dp"
+        android:layout_below="@+id/layout_02">
     </com.github.mikephil.charting.charts.LineChart>
 
     <LinearLayout
         android:id="@+id/layout_01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:orientation="vertical"
         android:background="@drawable/bg_06"
         android:layout_below="@id/chart1">
@@ -30,15 +54,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:layout_marginStart="10dp"
-            android:textSize="18sp"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:background="@drawable/bg_06"
+            android:textSize="20sp"
             android:textColor="#ffffff"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_06"
+            android:background="@drawable/bg_04"
+            android:padding="5dp"
             android:orientation="horizontal">
 
             <TextView

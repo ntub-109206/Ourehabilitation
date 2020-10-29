@@ -126,7 +126,7 @@ public class Class_Registeration extends AppCompatActivity  {
 
                 try {
                     Thread.sleep(100);
-                    System.out.print("    執行緒睡眠0.01秒！\n");
+                    System.out.print(" 執行緒睡眠0.01秒！\n");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -171,16 +171,25 @@ public class Class_Registeration extends AppCompatActivity  {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(mpassword.length() <= 6){
+                    if(mpassword.length() < 6){
                         Toast.makeText(Class_Registeration.this, "密碼太短", Toast.LENGTH_SHORT).show();
                     }else{
-                        if(mpassword.getText() != mpasswordconfirm.getText() ){
+                        if(mpassword.getText().toString().trim().matches(mpasswordconfirm.getText().toString().trim())){
+                            registeruser registeruser =new registeruser();
+                            registeruser.execute();
+
+                            try {
+                                Thread.sleep(100);
+                                System.out.print("    執行緒睡眠0.01秒！\n");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else{
                             mpassword.setText("");
                             mpasswordconfirm.setText("");
                             Toast.makeText(Class_Registeration.this, "密碼輸入不一致", Toast.LENGTH_SHORT).show();
-                        }else{
-                            registeruser registeruser =new registeruser();
-                            registeruser.execute();
+
                         }
                     }
                 }
@@ -200,9 +209,8 @@ public class Class_Registeration extends AppCompatActivity  {
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
             mbirthday.setText(
-                    String.valueOf(year) + "年" + String.valueOf(month) + "月" + String.valueOf(dayOfMonth)
+                    String.valueOf(year) + "-" + String.valueOf(month +1) + "-" + String.valueOf(dayOfMonth)
             );
-
         }
     };
 
@@ -233,9 +241,9 @@ public class Class_Registeration extends AppCompatActivity  {
 
             if (connection!=null){
                 try{
-
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.registered (username,user_id,password,birthday) VALUES ('"+mname.getText().toString().trim()+"','"+memail.getText().toString().trim()+"','"+mpassword.getText().toString().trim()+"','"+chkgen.toString().trim()+"','"+mbirthday.getText().toString().trim()+"');");
+                    statement.executeQuery("INSERT INTO dbo.registered (username, email, password ,phone, gender, birthday) VALUES ('"+mname.getText().toString().trim()+"','"+memail.getText().toString().trim()+"','"+mpassword.getText().toString().trim()+"','"+mcellphone.getText().toString().trim()+"','"+chkgen.toString().trim()+"','"+mbirthday.getText().toString().trim()+"');");
+
                 }catch (Exception e){
                     isSuccess = false;
                     z = e.getMessage();
@@ -269,7 +277,7 @@ public class Class_Registeration extends AppCompatActivity  {
             if (connection!=null){
                 try{
                     statement = connection.createStatement();
-                    ResultSet rs = statement.executeQuery("SELECT * FROM dbo.registered WHERE user_id = '" + memail.getText().toString().trim() +  "';");
+                    ResultSet rs = statement.executeQuery("SELECT * FROM dbo.registered WHERE email = '" + memail.getText().toString().trim() +  "';");
 
 
                     if (rs.next()) {

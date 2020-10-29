@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.myrehabilitaion.ui.PersonalInfo.PersonalInfoFragment;
 import com.example.myrehabilitaion.ui.Record.RecordFragment;
@@ -18,30 +22,43 @@ import com.example.myrehabilitaion.ui.Stastics.Frag_LineChart;
 import com.example.myrehabilitaion.ui.Stastics.Frag_Statistics;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class Frag_NewHome extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancestate) {
         View root = inflater.inflate(R.layout.fragment_newhome, container, false);
+//----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
+//        Frag_NewHome.InnerPagerStateAdapter pagerAdapter = new Frag_NewHome.InnerPagerStateAdapter(getActivity().getSupportFragmentManager());
+//
+//        ViewPager viewPager = root.findViewById(R.id.viewPager);
+//
+//        viewPager.setAdapter(pagerAdapter);
+//
+//        TabLayout tableLayout = root.findViewById(R.id.tabLayout);
+//        tableLayout.setupWithViewPager(viewPager);
+//
+//        int[] tabIcons = {R.drawable.ic_show_chart_black_24dp, R.drawable.ic_baseline_play_circle_filled_24, R.drawable.ic_person_pin_black_24dp};
+//
+//
+//        tableLayout.getTabAt(0).setIcon(tabIcons[0]);
+//        tableLayout.getTabAt(1).setIcon(tabIcons[1]);
+//        tableLayout.getTabAt(2).setIcon(tabIcons[2]);
+//----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
 
-//        BottomNavigationView navView = root.findViewById(R.id.nav_view);
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.navigation_record, R.id.navigation_dashboard, R.id.navigation_notifications)
-//                .build();
-//        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_home_fragment);
-//        NavigationUI.setupActionBarWithNavController((AppCompatActivity) getActivity(), navController, appBarConfiguration);
-//        NavigationUI.setupWithNavController(navView, navController);
+//----------------------------------------ButtomNavigationView_第二版本-----------------------------------------------
 
         BottomNavigationView bottomNav = root.findViewById(R.id.nav_view);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         getChildFragmentManager().beginTransaction().replace(R.id.nav_home_container,new Frag_LineChart()).commit();
 
+//----------------------------------------ButtomNavigationView_第二版本-----------------------------------------------
         return root;
     }
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//----------------------------------------ButtomNavigationView_第二版本-----------------------------------------------
+
+        private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
@@ -64,6 +81,70 @@ public class Frag_NewHome extends Fragment {
 
             return true;
         }
+
     };
 
+//----------------------------------------ButtomNavigationView_第二版本-----------------------------------------------
+//----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
+//    class InnerPagerStateAdapter extends FragmentStatePagerAdapter {
+//        public InnerPagerStateAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//
+//        @Override
+//        public CharSequence getPageTitle(int postion) {
+//            switch (postion) {
+//                case 0:
+//                    return "數據統計";
+//                case 1:
+//                    return "目標管理";
+//                case 2:
+//                    return "個人資料";
+//                default:
+//                    return null;
+//            }
+//        }
+//
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//
+//            Fragment fragment = null;
+//
+//            switch (position) {
+//                case 0:
+//                    fragment = new Frag_LineChart();
+//
+//                    break;
+//                case 1:
+//                    fragment = new RecordFragment_Main();
+//
+//                    break;
+//                case 2:
+//                    fragment = new PersonalInfoFragment();
+//            }
+//
+//            return fragment;
+//
+//        }
+//
+//
+//        @Override
+//        public int getCount() {
+//            return 3;
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+//
+//            FragmentManager manager = ((Fragment) object).getFragmentManager();
+//            FragmentTransaction trans = manager.beginTransaction();
+//            trans.remove((Fragment) object);
+//            trans.commit();
+//        }
+//    }
+//----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
 }
+
+

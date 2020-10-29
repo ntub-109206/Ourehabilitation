@@ -92,21 +92,21 @@ public class RecordFragment_Finished extends Fragment {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        try {
-            Class.forName(Classes);
-            connection = DriverManager.getConnection(url, username,password);
-            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
-            toast.show();
-
-        }
+//        try {
+//            Class.forName(Classes);
+//            connection = DriverManager.getConnection(url, username,password);
+//            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
+//            toast.show();
+//
+//        }
         service_sync_fromdb = new service_sync_fromdb();
         service_sync_fromdb.execute();
 
@@ -409,8 +409,7 @@ public class RecordFragment_Finished extends Fragment {
 
             }
             else {
-                Toast toast = Toast.makeText(getContext(),"目標數據同步失敗", Toast.LENGTH_SHORT);
-                toast.show();
+
             }
             return z;
         }

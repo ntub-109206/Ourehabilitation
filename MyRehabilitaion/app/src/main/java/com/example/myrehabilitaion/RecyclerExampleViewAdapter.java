@@ -247,16 +247,16 @@ public class RecyclerExampleViewAdapter extends RecyclerView.Adapter<RecyclerExa
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            try {
-                Class.forName(Classes);
-                connection = DriverManager.getConnection(url, username,password);
-
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Class.forName(Classes);
+//                connection = DriverManager.getConnection(url, username,password);
+//
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
 
 
         }

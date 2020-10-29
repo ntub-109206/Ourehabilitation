@@ -55,35 +55,35 @@ public class Class_Login extends AppCompatActivity {
         edt_email= findViewById(R.id.edtEmailLogin);
         edt_password = findViewById(R.id.editPasswordLogin);
         register = findViewById(R.id.registerar_button);
-        remember = findViewById(R.id.checkBox);
+//        remember = findViewById(R.id.checkBox);
+//
+//        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(buttonView.isChecked()){
+//                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("remember","true");
+//                    editor.apply();
+//                    Toast.makeText(Class_Login.this, "Checked", Toast.LENGTH_SHORT).show();
+//                }else if (!buttonView.isChecked()){
+//                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("remember","false");
+//                    editor.apply();
+//                    Toast.makeText(Class_Login.this, "UnChecked", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//        });
+//        SharedPreferences preferences =getSharedPreferences("checkbox", MODE_PRIVATE);
+//        String checkbox = preferences.getString("remember","");
 
-        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember","true");
-                    editor.apply();
-                    Toast.makeText(Class_Login.this, "Checked", Toast.LENGTH_SHORT).show();
-                }else if (!buttonView.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember","false");
-                    editor.apply();
-                    Toast.makeText(Class_Login.this, "UnChecked", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-        SharedPreferences preferences =getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember","");
-
-        if(checkbox.equals(true)){
-
-        }else if(checkbox.equals(false)){
-            Toast.makeText(Class_Login.this, "Checked", Toast.LENGTH_SHORT).show();
-        }
+//        if(checkbox.equals(true)){
+//
+//        }else if(checkbox.equals(false)){
+//            Toast.makeText(Class_Login.this, "Checked", Toast.LENGTH_SHORT).show();
+//        }
 
         GlobalVariable gv = (GlobalVariable)getApplicationContext();
 
@@ -97,30 +97,32 @@ public class Class_Login extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        try {
-            Class.forName(Classes);
-            connection = DriverManager.getConnection(url, username,password);
-            Toast toast = Toast.makeText(Class_Login.this,"Success", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(Class_Login.this,"ERROR", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(Class_Login.this,"FAILURE", Toast.LENGTH_SHORT);
-            toast.show();
-
-        }
+//        try {
+//            Class.forName(Classes);
+//            connection = DriverManager.getConnection(url, username,password);
+//            Toast toast = Toast.makeText(Class_Login.this,"Success", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(Class_Login.this,"ERROR", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(Class_Login.this,"FAILURE", Toast.LENGTH_SHORT);
+//            toast.show();
+//
+//        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                checkLogin checkLogin = new checkLogin();
-                checkLogin.execute();
+//                checkLogin checkLogin = new checkLogin();
+//                checkLogin.execute();
 
-                Log.d("Class_Login",  "Class_Login結束");
+                Intent intent = new Intent(Class_Login.this, Main.class);
+                startActivity(intent);
+                finish();
 
             }
         });
@@ -163,7 +165,6 @@ public class Class_Login extends AppCompatActivity {
                 ResultSet rs = stmt.executeQuery(sql);
 
                 if (rs.next()) {
-
                     gv.setUserID(rs.getString(1).toString().trim());
 
                     runOnUiThread(new Runnable() {

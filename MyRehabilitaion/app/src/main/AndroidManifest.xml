@@ -26,6 +26,7 @@
         <activity android:name=".RecordMain" />
         <activity android:name=".Main" />
         <activity android:name=".Class_Registeration" />
+        <activity android:name=".MainActivity_Calendar" />
         <activity android:name=".Class_Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

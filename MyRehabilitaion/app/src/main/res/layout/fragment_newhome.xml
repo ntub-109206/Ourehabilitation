@@ -6,7 +6,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.example.myrehabilitaion.Frag_NewHome">>
 
     <LinearLayout
@@ -23,24 +22,32 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:background="#336699"
-            app:itemIconTint="#ffffff"
+            android:keepScreenOn="false"
+            app:itemIconTint="@drawable/btn_bg_selector"
             app:itemRippleColor="#ffffff"
-            app:itemTextColor="#ffffff"
+            app:itemTextColor="@drawable/btn_bg_selector"
             app:menu="@menu/bottom_homenav" />
     </LinearLayout>
 
-    <!--    <fragment-->
-<!--        android:id="@+id/nav_home_fragment"-->
-<!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
+<!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
-<!--        app:defaultNavHost="true"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/nav_view"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:navGraph="@navigation/buttom_homenavigation" />-->
+<!--        android:orientation="vertical">-->
+
+<!--        <androidx.viewpager.widget.ViewPager-->
+<!--            android:id="@+id/viewPager"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            android:id="@+id/tabLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/bg_04" />-->
+
+<!--    </LinearLayout>-->
 
 </RelativeLayout>

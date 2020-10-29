@@ -108,7 +108,9 @@ public class RecordFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_frag__record, container, false);
-        userid = gv.getUserEmail();
+
+        gv = (GlobalVariable)getActivity().getApplicationContext();
+        userid = gv.getUserID();
 
         listStr01 = new ArrayList<String>();
         listStr02 = new ArrayList<String>();
@@ -117,27 +119,25 @@ public class RecordFragment extends Fragment {
         listStr05 = new ArrayList<String>();
         listImg = new ArrayList<Integer>();
 
-        gv = (GlobalVariable)getActivity().getApplicationContext();
-
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        try {
-            Class.forName(Classes);
-            connection = DriverManager.getConnection(url, username,password);
-            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
-            toast.show();
-
-        }
+//        try {
+//            Class.forName(Classes);
+//            connection = DriverManager.getConnection(url, username,password);
+//            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
+//            toast.show();
+//
+//        }
         service_sync_fromdb = new service_sync_fromdb();
         service_sync_fromdb.execute();
 
@@ -379,7 +379,7 @@ public class RecordFragment extends Fragment {
                 try{
 
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.service (userid,body,date) VALUES ('"+userid.toString().trim()+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
+                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -423,7 +423,7 @@ public class RecordFragment extends Fragment {
 
                 try{
                     statement = connection.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT body, date, progress, target, service_id FROM dbo.service WHERE user_id ='"+userid.toString().trim()+"' AND progress/target < 1;");
+                    ResultSet result = statement.executeQuery("SELECT body, date, progress, target, service_id FROM dbo.service WHERE user_id ="+Integer.valueOf(userid)+" AND progress/target < 1;");
 
                     while (result.next()) {
                         array_sync01.add(result.getString(1).toString().trim());
@@ -454,8 +454,6 @@ public class RecordFragment extends Fragment {
 
             }
             else {
-                Toast toast = Toast.makeText(getContext(),"目標數據同步失敗", Toast.LENGTH_SHORT);
-                toast.show();
             }
             return z;
         }

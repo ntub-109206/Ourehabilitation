@@ -8,6 +8,8 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -29,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -64,11 +67,17 @@ public class Class_Registeration extends AppCompatActivity  {
     private Connection connection = null;
 
     Statement statement = null;
+    byte[] bArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_registeration);
+
+        Bitmap photo =  BitmapFactory.decodeResource(this.getResources(), R.drawable.man);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        bArray = bos.toByteArray();
 
         ActivityCompat.requestPermissions(Class_Registeration.this,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
 
@@ -77,16 +86,16 @@ public class Class_Registeration extends AppCompatActivity  {
         try {
             Class.forName(Classes);
             connection = DriverManager.getConnection(url, username,password);
-            Toast toast = Toast.makeText(Class_Registeration.this,"Success", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(Class_Registeration.this,"Success", Toast.LENGTH_SHORT);
+//            toast.show();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            Toast toast = Toast.makeText(Class_Registeration.this,"ERROR", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(Class_Registeration.this,"ERROR", Toast.LENGTH_SHORT);
+//            toast.show();
         } catch (SQLException e) {
             e.printStackTrace();
-            Toast toast = Toast.makeText(Class_Registeration.this,"FAILURE", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(Class_Registeration.this,"FAILURE", Toast.LENGTH_SHORT);
+//            toast.show();
 
         }
 
@@ -242,7 +251,7 @@ public class Class_Registeration extends AppCompatActivity  {
             if (connection!=null){
                 try{
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.registered (username, email, password ,phone, gender, birthday) VALUES ('"+mname.getText().toString().trim()+"','"+memail.getText().toString().trim()+"','"+mpassword.getText().toString().trim()+"','"+mcellphone.getText().toString().trim()+"','"+chkgen.toString().trim()+"','"+mbirthday.getText().toString().trim()+"');");
+                    statement.executeQuery("INSERT INTO dbo.registered (username, email, password ,phone, gender, birthday, pic) VALUES ('"+mname.getText().toString().trim()+"','"+memail.getText().toString().trim()+"','"+mpassword.getText().toString().trim()+"','"+mcellphone.getText().toString().trim()+"','"+chkgen.toString().trim()+"','"+mbirthday.getText().toString().trim()+"', CAST('"+bArray.toString().trim()+"' AS VARBINARY(MAX)));");
 
                 }catch (Exception e){
                     isSuccess = false;

@@ -3,24 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="@drawable/bg_05">
 
     <LinearLayout
         android:id="@+id/layout_02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/bg_06"
+        android:layout_margin="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/btn_design06"
         android:orientation="vertical">
         <TextView
             android:id="@+id/title_bodypartlist"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:padding="10dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:background="@drawable/bg_06"
             android:textColor="#ffffff"
             android:textAlignment="textStart"
-            android:background="@drawable/bg_06"
             android:text="請選取您要查看的復健部位" />
 
         <Spinner
@@ -30,24 +32,26 @@
             android:ems="10"
             android:layout_below="@+id/title_bodypartlist"/>
 
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart1"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:background="@drawable/btn_design03"
+            android:layout_below="@+id/spinner">
+        </com.github.mikephil.charting.charts.LineChart>
+
     </LinearLayout>
-
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart1"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@+id/layout_02">
-    </com.github.mikephil.charting.charts.LineChart>
 
     <LinearLayout
         android:id="@+id/layout_01"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:orientation="vertical"
-        android:background="@drawable/bg_06"
-        android:layout_below="@id/chart1">
+        android:background="@drawable/btn_design06"
+        android:layout_below="@id/layout_02">
 
         <TextView
             android:id="@+id/txtH"
@@ -57,7 +61,7 @@
             android:padding="5dp"
             android:textAlignment="center"
             android:background="@drawable/bg_06"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="#ffffff"
             />
 
@@ -76,7 +80,7 @@
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txth02"
@@ -86,7 +90,7 @@
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txth03"
@@ -96,51 +100,14 @@
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </LinearLayout>
-    </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_01">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ListView
+            android:id="@+id/caseListView"
             android:background="#ffffff"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/txth01_1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="TextView"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:textColor="#111111"
-                android:lineSpacingExtra="2sp"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/txth02_2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="TextView"
-                android:layout_weight="1"
-                android:textColor="#111111"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/txth03_3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="TextView"
-                android:layout_weight="1"
-                android:lineSpacingExtra="2sp"
-                android:textColor="#111111"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </ScrollView>
-
+    </LinearLayout>
 </RelativeLayout>

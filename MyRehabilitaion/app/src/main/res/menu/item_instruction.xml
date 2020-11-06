@@ -4,7 +4,7 @@
     <item
         android:id="@+id/item_instruct"
         android:title="TODO"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/bluetooth"
         app:showAsAction="ifRoom" />
 
 </menu>

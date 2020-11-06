@@ -23,7 +23,7 @@
         android:roundIcon="@drawable/new_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".RecordMain" />
+        <activity android:name=".Frag_InstantRecord" />
         <activity android:name=".Main" />
         <activity android:name=".Class_Registeration" />
         <activity android:name=".MainActivity_Calendar" />

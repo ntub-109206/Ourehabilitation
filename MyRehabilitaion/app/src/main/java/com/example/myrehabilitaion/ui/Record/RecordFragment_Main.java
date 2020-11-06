@@ -2,22 +2,17 @@ package com.example.myrehabilitaion.ui.Record;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
-import com.example.myrehabilitaion.Frag_RecordFinished;
 import com.example.myrehabilitaion.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -53,9 +48,9 @@ public class RecordFragment_Main extends Fragment {
         public CharSequence getPageTitle(int postion){
             switch (postion){
                 case 0:
-                    return "已完成的復健";
-                case 1:
                     return "正在進行的復健";
+                case 1:
+                    return "完成的復健";
                 default:
                     return null;
             }
@@ -69,16 +64,15 @@ public class RecordFragment_Main extends Fragment {
 
             switch (position){
                 case 0:
-                    fragment = new RecordFragment_Finished();
+                    fragment = new RecordFragment();
 
                     break;
                 case 1:
-                    fragment = new RecordFragment();
+                    fragment = new RecordFragment_Finished();
 
 
                     break;
             }
-            Log.d("test09", String.valueOf(position));
 
             return fragment;
 
@@ -98,7 +92,5 @@ public class RecordFragment_Main extends Fragment {
             trans.remove((Fragment) object);
             trans.commit();
         }
-
-
     }
 }

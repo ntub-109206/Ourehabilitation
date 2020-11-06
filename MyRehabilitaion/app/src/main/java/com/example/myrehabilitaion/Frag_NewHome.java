@@ -1,7 +1,6 @@
 package com.example.myrehabilitaion;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,24 +9,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
-import com.example.myrehabilitaion.ui.PersonalInfo.PersonalInfoFragment;
-import com.example.myrehabilitaion.ui.Record.RecordFragment;
 import com.example.myrehabilitaion.ui.Record.RecordFragment_Main;
 import com.example.myrehabilitaion.ui.Stastics.Frag_LineChart;
-import com.example.myrehabilitaion.ui.Stastics.Frag_Statistics;
-import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 public class Frag_NewHome extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancestate) {
         View root = inflater.inflate(R.layout.fragment_newhome, container, false);
+//        GlobalVariable gv = (GlobalVariable) getActivity().getApplicationContext();
+//        gv.setContext_NewFrag(getTargetFragment());
 //----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
 //        Frag_NewHome.InnerPagerStateAdapter pagerAdapter = new Frag_NewHome.InnerPagerStateAdapter(getActivity().getSupportFragmentManager());
 //
@@ -68,12 +60,12 @@ public class Frag_NewHome extends Fragment {
                 case R.id.navigation_record_main:
                     selectedFragment = new RecordFragment_Main();
                     break;
+                case R.id.navigation_instant_record:
+                    selectedFragment = new BT_Test();
+
+                    break;
                 case R.id.navigation_stastics:
                     selectedFragment = new Frag_LineChart();
-                    break;
-                case R.id.navigation_psinfo:
-                    selectedFragment = new PersonalInfoFragment();
-
                     break;
             }
 
@@ -145,6 +137,8 @@ public class Frag_NewHome extends Fragment {
 //        }
 //    }
 //----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
+
+
 }
 
 

@@ -16,16 +16,13 @@ import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myrehabilitaion.GlobalVariable;
 import com.example.myrehabilitaion.R;
-import com.example.myrehabilitaion.RecyclerExampleViewAdapter;
-import com.example.myrehabilitaion.RecyclerViewAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.myrehabilitaion.RecyclerFinishedViewAdapter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +30,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class RecordFragment_Finished extends Fragment {
@@ -50,7 +46,7 @@ public class RecordFragment_Finished extends Fragment {
     Statement statement = null;
 
 
-    RecyclerViewAdapter adapter_exampler;
+    RecyclerFinishedViewAdapter adapter_exampler;
     RecyclerView recyclerexample;
     Dialog mDlog01;
 
@@ -92,21 +88,21 @@ public class RecordFragment_Finished extends Fragment {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-//        try {
-//            Class.forName(Classes);
-//            connection = DriverManager.getConnection(url, username,password);
-//            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
-//            toast.show();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
-//            toast.show();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
-//            toast.show();
-//
-//        }
+        try {
+            Class.forName(Classes);
+            connection = DriverManager.getConnection(url, username,password);
+            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
+            toast.show();
+
+        }
         service_sync_fromdb = new service_sync_fromdb();
         service_sync_fromdb.execute();
 
@@ -123,7 +119,7 @@ public class RecordFragment_Finished extends Fragment {
         recyclerexample.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager.VERTICAL));
 
-        adapter_exampler = new RecyclerViewAdapter(RecordFragment_Finished.super.getActivity(),RecordFragment_Finished.super.getActivity().getApplicationContext(), listStr01, listStr02, listStr03, listStr04, listStr05 ,listImg);
+        adapter_exampler = new RecyclerFinishedViewAdapter(RecordFragment_Finished.super.getActivity(),RecordFragment_Finished.super.getActivity().getApplicationContext(), listStr01, listStr02, listStr03, listStr04, listStr05 ,listImg);
         //adapter_home.addItem(sercmng.Syc());
 
         try {
@@ -239,59 +235,6 @@ public class RecordFragment_Finished extends Fragment {
 //        viewPager.setAdapter(new NewsImageAdapter(pageview));
 //        //這裡的GuiPageChangeListener是第四步定義好的。
 //        viewPager.addOnPageChangeListener(new GuidePageChangeListener(tips, pageview));
-
-        final FloatingActionButton fab01 = root.findViewById(R.id.floatingActionButton);
-
-        fab01.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mDlog01 = new Dialog(v.getContext());
-                mDlog01.setContentView(R.layout.dlg_addtarget);
-                mDlog01.setCancelable(true);
-                mDlog01.show();
-
-                Button btnaddtargt = mDlog01.findViewById(R.id.btn_addtargt);
-                Button btncancelbox = mDlog01.findViewById(R.id.btn_cancelbox);
-                edttargetname = mDlog01.findViewById(R.id.edt_targetname);
-                edtaddtime = mDlog01.findViewById(R.id.edt_targetdate);
-
-                edtaddtime.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Calendar now = Calendar.getInstance();
-
-                        DatePickerDialog dataPickerDialog = new DatePickerDialog(getContext(),datePickerDlgOnDataSet, now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
-
-                        dataPickerDialog.setTitle("選擇日期");
-                        dataPickerDialog.setMessage("請選擇您預計完成的日期");
-                        dataPickerDialog.setCancelable(true);
-                        dataPickerDialog.show();
-
-                    }
-                });
-
-                btncancelbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mDlog01.dismiss();
-                    }
-                });
-
-                btnaddtargt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        adapter_exampler.addItem(edttargetname.getText().toString().trim());
-
-                        service_sync_todb = new RecordFragment_Finished.service_sync_todb();
-                        service_sync_todb.execute();
-
-                        mDlog01.dismiss();
-                    }
-                });
-            }
-        });
-
         return root;
     }
     private DatePickerDialog.OnDateSetListener datePickerDlgOnDataSet = new DatePickerDialog.OnDateSetListener() {
@@ -317,7 +260,6 @@ public class RecordFragment_Finished extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(),"您新增了新的目標並傳輸成功", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -401,8 +343,6 @@ public class RecordFragment_Finished extends Fragment {
 
                 }catch (Exception e){
 
-                    Toast toast = Toast.makeText(getContext(),"目標數據同步失敗", Toast.LENGTH_SHORT);
-                    toast.show();
                     isSuccess = false;
                     z = e.getMessage();
                 }

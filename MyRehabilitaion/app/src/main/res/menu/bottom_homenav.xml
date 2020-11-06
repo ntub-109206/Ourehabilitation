@@ -7,14 +7,13 @@
         android:title="數據統計" />
 
     <item
-        android:id="@+id/navigation_record_main"
+        android:id="@+id/navigation_instant_record"
         android:icon="@drawable/ic_baseline_play_circle_filled_24"
+        android:title="立即記錄" />
+    <item
+        android:id="@+id/navigation_record_main"
+        android:icon="@drawable/pass"
         android:title="目標管理" />
 
-
-    <item
-        android:id="@+id/navigation_psinfo"
-        android:icon="@drawable/ic_person_pin_black_24dp"
-        android:title="個人資料" />
 
 </menu>

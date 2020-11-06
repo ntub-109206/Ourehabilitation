@@ -97,32 +97,32 @@ public class Class_Login extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-//        try {
-//            Class.forName(Classes);
-//            connection = DriverManager.getConnection(url, username,password);
+        try {
+            Class.forName(Classes);
+            connection = DriverManager.getConnection(url, username,password);
 //            Toast toast = Toast.makeText(Class_Login.this,"Success", Toast.LENGTH_SHORT);
 //            toast.show();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
 //            Toast toast = Toast.makeText(Class_Login.this,"ERROR", Toast.LENGTH_SHORT);
 //            toast.show();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
 //            Toast toast = Toast.makeText(Class_Login.this,"FAILURE", Toast.LENGTH_SHORT);
 //            toast.show();
-//
-//        }
+
+        }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                checkLogin checkLogin = new checkLogin();
-//                checkLogin.execute();
+                checkLogin checkLogin = new checkLogin();
+                checkLogin.execute();
 
                 Intent intent = new Intent(Class_Login.this, Main.class);
                 startActivity(intent);
-                finish();
+                
 
             }
         });
@@ -170,7 +170,7 @@ public class Class_Login extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(Class_Login.this, "登入成功", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(Class_Login.this, "登入成功", Toast.LENGTH_LONG).show();
                             gv.setUserEmail(edt_email.getText().toString().trim());
                             gv.setUserPassword(edt_password.getText().toString().trim());
 

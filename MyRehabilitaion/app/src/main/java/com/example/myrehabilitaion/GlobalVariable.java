@@ -1,6 +1,10 @@
 package com.example.myrehabilitaion;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+
+import androidx.fragment.app.Fragment;
 
 public class GlobalVariable extends Application {
     private String Email;     //User 名稱
@@ -10,6 +14,20 @@ public class GlobalVariable extends Application {
     private String UserID;
     private String ServiceID;
     private String CaseID;
+    private String Str_Count;
+    private Fragment Context_NewFrag;
+
+    private String DeviceAddress = null;
+    private String DeviceName = null;
+
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+
+    }
+
 
     //修改 變數値
     public void setUserEmail(String email){
@@ -22,6 +40,12 @@ public class GlobalVariable extends Application {
     public void setUserID(String userid){ this.UserID = userid; }
     public void setServiceID(String serviceid){ this.ServiceID = serviceid; }
     public void setCaseID(String caseid){ this.CaseID = caseid; }
+    public void setCaseName(String casename){ this.CaseID = casename; }
+    public void setStr_Count(String count){ this.Str_Count = count; }
+    public void setContext_NewFrag(Fragment frag){ this.Context_NewFrag = frag;}
+
+    public void setDeviceAddress(String deviceAddress){ this.DeviceAddress = deviceAddress; }
+    public void setDeviceName(String deviceName){ this.DeviceName = deviceName; }
 
     //取得 變數值
     public String getUserEmail() {
@@ -31,13 +55,27 @@ public class GlobalVariable extends Application {
         return Password;
     }
     public String getServiceName(){return ServiceName; }
-    public String getCaseName(){return CaseName; }
     public String getUserID() { return UserID; }
     public String getServiceID() {
         return ServiceID;
     }
+    public String getCaseName(){return CaseName; }
     public String getCaseID() {
         return CaseID;
     }
+    public String getStr_Count() {
+        return Str_Count;
+    }
+    public Fragment getNew_Frag() {
+        return Context_NewFrag;
+    }
+
+    public String getDeviceAddress() {
+        return DeviceAddress;
+    }
+    public String getDeviceName() {
+        return DeviceName;
+    }
+
 
 }

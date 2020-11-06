@@ -12,7 +12,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -48,8 +50,10 @@ import com.example.myrehabilitaion.ui.Record.RecordFragment_Main;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -72,13 +76,14 @@ public class PersonalInfoFragment extends Fragment {
     TextView psinfo_name;
     TextView psinfo_email;
     TextView psinfo_birthday;
+
     Statement statement = null;
 
     Button btn;
 
     GlobalVariable gv;
     String userid;
-
+    byte[] bArray;
 
 
 //---------------------SQL---------------------
@@ -115,21 +120,21 @@ public class PersonalInfoFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
 
 
-//        try {
-//            Class.forName(Classes);
-//            connection = DriverManager.getConnection(url, username,password);
+        try {
+            Class.forName(Classes);
+            connection = DriverManager.getConnection(url, username,password);
 //            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
 //            toast.show();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
 //            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
 //            toast.show();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
 //            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
 //            toast.show();
-//
-//        }
+
+        }
 
         if (connection!=null){
             try {
@@ -138,12 +143,15 @@ public class PersonalInfoFragment extends Fragment {
                 userid = gv.getUserID();
 
                 statement = connection.createStatement();
-                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, birthday  FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
+                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, birthday , pic  FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
                 while (resultSet01.next()){
                     psinfo_name.setText(resultSet01.getString(1).toString().trim());
                     psinfo_email.setText(resultSet01.getString(2).toString().trim());
-                    psinfo_birthday.setText(resultSet01.getString(2).toString().trim());
+                    psinfo_birthday.setText(resultSet01.getString(3).toString().trim());
+                    bigPic.setImageBitmap(BitmapFactory.decodeByteArray( resultSet01.getBytes(4), 0,resultSet01.getString(4).length()));
                 }
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -162,6 +170,7 @@ public class PersonalInfoFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mPhone);
 
         return root;
+
     }
 
 
@@ -280,12 +289,28 @@ public class PersonalInfoFragment extends Fragment {
                 if(bitmap.getWidth()>bitmap.getHeight()) {
 //                    ScalePic(bitmap, mPhone.heightPixels);
 //                    Bitmap bm = toRoundBitmap(bitmap);
-                    bigPic.setImageBitmap(bitmap);
+//                    bigPic.setImageBitmap(bitmap);
+
+                    Bitmap photo = bitmap;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                    bArray = bos.toByteArray();
+
+                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
+                    sync_todb.execute();
                 }
                 else {
 //                    ScalePic(bitmap, mPhone.widthPixels);
 //                    Bitmap bm = toRoundBitmap(bitmap);
-                    bigPic.setImageBitmap(bitmap);
+//                    bigPic.setImageBitmap(bitmap);
+
+                    Bitmap photo = bitmap;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                    bArray = bos.toByteArray();
+
+                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
+                    sync_todb.execute();
                 }
             }
             catch (FileNotFoundException e)
@@ -296,7 +321,15 @@ public class PersonalInfoFragment extends Fragment {
                 Bundle extras = data.getExtras();
                 Bitmap bp = (Bitmap)  extras.get("data");
                 Bitmap bm = toRoundBitmap(bp);
-                bigPic.setImageBitmap(bm);
+//                bigPic.setImageBitmap(bm);
+
+                Bitmap photo = bm;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                bArray = bos.toByteArray();
+
+                bigpic_sync_todb sync_todb = new bigpic_sync_todb();
+                sync_todb.execute();
 
         }
 
@@ -381,6 +414,45 @@ public class PersonalInfoFragment extends Fragment {
             FragmentTransaction trans = manager.beginTransaction();
             trans.remove((Fragment) object);
             trans.commit();
+        }
+    }
+
+    public class bigpic_sync_todb extends AsyncTask<String, String , String> {
+
+        String z = "";
+        Boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(getContext(),"您新增了新的目標並傳輸成功", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            //Toast.makeText(getContext(),"測試來了", Toast.LENGTH_SHORT).show();
+
+            if (connection!=null){
+
+                try{
+
+                    statement = connection.createStatement();
+                    statement.executeQuery("UPDATE dbo.registered SET pic="+ bArray + "WHERE user_id='" + gv.getUserID() + "';");
+
+                }catch (Exception e){
+                    isSuccess = false;
+                    z = e.getMessage();
+                }
+            }
+            else {
+                Toast toast = Toast.makeText(getContext(),"目標數據傳輸失敗", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            return z;
         }
     }
 }

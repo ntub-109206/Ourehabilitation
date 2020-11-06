@@ -15,11 +15,11 @@
         android:name="com.example.myrehabilitaion.Frag_NewHome"
         android:label="@string/mdrin_home"
         tools:layout="@layout/fragment_newhome"/>
-<!--    <fragment-->
-<!--        android:id="@+id/menuItemBluetooth"-->
-<!--        android:name="com.example.myrehabilitaion.BT_Test"-->
-<!--        android:label="藍芽連接"-->
-<!--        tools:layout="@layout/bt_test_activity" />-->
+    <fragment
+        android:id="@+id/menuItemPersonalPage"
+        android:name="com.example.myrehabilitaion.ui.PersonalInfo.PersonalInfoFragment"
+        android:label="個人資料"
+        tools:layout="@layout/fragement_personalinformationpage" />
 <!--    <fragment-->
 <!--        android:id="@+id/menuItemInfo"-->
 <!--        android:name="com.example.myrehabilitaion.FragmentHomePage.Frag_PrivateInfo"-->

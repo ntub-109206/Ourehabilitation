@@ -1,29 +1,26 @@
 package com.example.myrehabilitaion.ui.Record;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,38 +31,19 @@ import com.example.myrehabilitaion.GlobalVariable;
 
 import com.example.myrehabilitaion.R;
 
-import com.example.myrehabilitaion.RecyclerExampleViewAdapter;
+import com.example.myrehabilitaion.RecyclerINGViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.ref.WeakReference;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 public class RecordFragment extends Fragment {
-    private static class StaticHandler extends Handler{
-        private final WeakReference <RecordFragment> mRecordFragment;
-        public StaticHandler(RecordFragment recordFragment){
-            mRecordFragment = new WeakReference<RecordFragment>(recordFragment);
-        }
-    }
-
-    Runnable r = new Runnable() {
-        @Override
-        public void run() {
-
-        }
-    };
-
-    public final StaticHandler mHandler =new StaticHandler(this);
 
     private static String ip = "140.131.114.241";
     private static String port = "1433";
@@ -80,12 +58,14 @@ public class RecordFragment extends Fragment {
     Statement statement = null;
 
 
-    RecyclerExampleViewAdapter adapter_exampler;
+    RecyclerINGViewAdapter adapter_exampler;
     RecyclerView recyclerexample;
     Dialog mDlog01;
 
     public EditText edttargetname;
+    public NumberPicker numberPicker_targettimes;
     public EditText edtaddtime;
+    public EditText edt_buildtarget;
 
     public List<String> listStr01;
     public List<String> listStr02;
@@ -101,9 +81,6 @@ public class RecordFragment extends Fragment {
     public String sync_servicename;
 
     GlobalVariable gv ;
-
-    ProgressBar progressBar;
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -123,21 +100,21 @@ public class RecordFragment extends Fragment {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-//        try {
-//            Class.forName(Classes);
-//            connection = DriverManager.getConnection(url, username,password);
+        try {
+            Class.forName(Classes);
+            connection = DriverManager.getConnection(url, username,password);
 //            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
 //            toast.show();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
 //            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
 //            toast.show();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
 //            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
 //            toast.show();
-//
-//        }
+
+        }
         service_sync_fromdb = new service_sync_fromdb();
         service_sync_fromdb.execute();
 
@@ -150,11 +127,15 @@ public class RecordFragment extends Fragment {
 //            listStr.add(new String("目標" + String.valueOf(i+1)));
 //        }
 
+//        LinearLayoutManager layoutManager
+//                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
         recyclerexample = root.findViewById(R.id.recyclerview_home);
         recyclerexample.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager.VERTICAL));
+//        recyclerexample.setLayoutManager(layoutManager);
 
-        adapter_exampler = new RecyclerExampleViewAdapter(RecordFragment.super.getActivity(),RecordFragment.super.getActivity().getApplicationContext(), listStr01, listStr02,listStr03, listStr04, listStr05,listImg);
+        adapter_exampler = new RecyclerINGViewAdapter(RecordFragment.super.getActivity(),RecordFragment.super.getActivity().getApplicationContext(), listStr01, listStr02,listStr03, listStr04, listStr05,listImg);
         //adapter_home.addItem(sercmng.Syc());
 
         try {
@@ -276,6 +257,7 @@ public class RecordFragment extends Fragment {
 //        fab02.setVisibility(View.INVISIBLE);
 
         fab01.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
 
@@ -303,6 +285,12 @@ public class RecordFragment extends Fragment {
                 Button btncancelbox = mDlog01.findViewById(R.id.btn_cancelbox);
                 edttargetname = mDlog01.findViewById(R.id.edt_targetname);
                 edtaddtime = mDlog01.findViewById(R.id.edt_targetdate);
+                numberPicker_targettimes = mDlog01.findViewById(R.id.numpicker_targettimes);
+                numberPicker_targettimes.setTextSize(45);
+
+                numberPicker_targettimes.setMaxValue(10);
+                numberPicker_targettimes.setMinValue(1);
+                numberPicker_targettimes.setValue(5);
 
                 edtaddtime.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -366,7 +354,7 @@ public class RecordFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(),"您新增了新的目標並傳輸成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"目標已新增", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -379,7 +367,7 @@ public class RecordFragment extends Fragment {
                 try{
 
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"');");
+                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date,progress,target) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"','"+0+"','"+numberPicker_targettimes.getValue()+"');");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -406,7 +394,7 @@ public class RecordFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(),"目標數據同步成功", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),"目標數據同步成功", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -446,8 +434,8 @@ public class RecordFragment extends Fragment {
 
                 }catch (Exception e){
 
-                    Toast toast = Toast.makeText(getContext(),"目標數據同步失敗", Toast.LENGTH_SHORT);
-                    toast.show();
+//                    Toast toast = Toast.makeText(getContext(),"目標數據同步失敗", Toast.LENGTH_SHORT);
+//                    toast.show();
                     isSuccess = false;
                     z = e.getMessage();
                 }

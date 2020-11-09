@@ -72,6 +72,7 @@ public class ColorfulWeekView extends WeekView {
                             calendar.isCurrentMonth() ? mSchemeTextPaint : mSchemeTextPaint);
 
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + mItemHeight / 10, mSchemeLunarTextPaint);
+
         } else {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     calendar.isCurrentDay() ? mCurDayTextPaint :

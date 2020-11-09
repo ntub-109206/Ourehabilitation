@@ -103,6 +103,18 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
     chartdata_sync_fromdb chartdataSyncFromdb;
     spinnerdata_sync_fromdb spinnerdataSyncFromdb;
 
+    ArrayList<Entry> values01;
+    ArrayList<Entry> values01_end;
+
+    ArrayList<NameMapping> case_list;
+    TextView txth;
+    TextView txth01;
+    TextView txth02;
+    TextView txth03;
+
+    CaseAdapter adapter_case;
+    ListView listView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancestate) {
@@ -165,6 +177,57 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "您選擇了:" + bodypart_list.get(position), Toast.LENGTH_SHORT).show();
+                gv.setServiceID(listStr04.get(position));
+                case_list.clear();
+                listStr01.clear();
+                listStr02.clear();
+                listStr03.clear();
+
+                chartdataSyncFromdb =new chartdata_sync_fromdb();
+                chartdataSyncFromdb.execute();
+
+                try {
+                    Thread.sleep(100);
+                    System.out.print("record執行緒睡眠0.1秒！\n");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //------------------------------------------建立數據------------------------------------------
+                values01 = new ArrayList<>();
+
+                for(int i= 6;i<-1 ;i--){
+                    values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
+                }
+                // greenLine
+                values01_end = new ArrayList<>();
+                values01_end.add(new Entry(0, Integer.valueOf(listStr01.get(0))));
+
+                ArrayList<Entry> values02 = new ArrayList<>();
+//        for(int i=0;i < listStr02.size();i++){
+//            values01.add(new Entry(Integer.valueOf(listStr02.get(i)), Integer.valueOf(listStr01.get(i))));
+//        }
+                //yellowLine
+                ArrayList<Entry> values02_end = new ArrayList<>();
+//        values02_end.add(new Entry(Integer.valueOf(str), Integer.valueOf(10)));
+
+                //------------------------------------------建立數據------------------------------------------
+
+                initX();
+                initY();
+                initDataSet(values01, values02, values01_end, values02_end);
+                initChartFormat();
+
+
+
+                for (int j = 6; j >-1 ; j--){
+                    case_list.add(new NameMapping(listStr02.get(j),listStr03.get(j),listStr01.get(j)));
+                }
+
+                adapter_case = new CaseAdapter((Activity) getContext(),case_list);
+                listView = root.findViewById(R.id.caseListView);
+                listView.setAdapter(adapter_case);
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -173,7 +236,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
 
 
 //------------------------------------------建立數據------------------------------------------
-        ArrayList<Entry> values01 = new ArrayList<>();
+        values01 = new ArrayList<>();
 
         for(int i= 6;i<-1 ;i--){
             values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
@@ -197,12 +260,12 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         initDataSet(values01, values02, values01_end, values02_end);
         initChartFormat();
 
-        ArrayList<NameMapping> case_list = new ArrayList<NameMapping>();
+        case_list = new ArrayList<NameMapping>();
 
-        final TextView txth = root.findViewById(R.id.txtH);
-        final TextView txth01 = root.findViewById(R.id.txth01);
-        final TextView txth02 = root.findViewById(R.id.txth02);
-        final TextView txth03 = root.findViewById(R.id.txth03);
+        txth = root.findViewById(R.id.txtH);
+        txth01 = root.findViewById(R.id.txth01);
+        txth02 = root.findViewById(R.id.txth02);
+        txth03 = root.findViewById(R.id.txth03);
 
         txth.setText("近期復健紀錄");
         txth01.setText("日期");
@@ -213,8 +276,8 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
             case_list.add(new NameMapping(listStr02.get(j),listStr03.get(j),listStr01.get(j)));
         }
 
-        CaseAdapter adapter_case = new CaseAdapter((Activity) getContext(),case_list);
-        ListView listView = root.findViewById(R.id.caseListView);
+        adapter_case = new CaseAdapter((Activity) getContext(),case_list);
+        listView = root.findViewById(R.id.caseListView);
         listView.setAdapter(adapter_case);
 
         return root;
@@ -461,12 +524,21 @@ HORIZONTAL_BEZIER水平曲線
                     statement02 = connection.createStatement();
                     ResultSet result01 = statement02.executeQuery("SELECT num_count, builddate, case_name FROM dbo.case_data WHERE user_id = "+Integer.valueOf(userid)+" AND service_id = "+Integer.valueOf(serviceid)+";");
 
-                    while (result01.next()) {
+
+                    if(result01.next()){
                         array_sync01.add(result01.getString(1).toString().trim());
                         array_sync02.add(result01.getString(2).toString().trim());
                         array_sync03.add(result01.getString(3).toString().trim());
+                        while (result01.next()) {
+                            array_sync01.add(result01.getString(1).toString().trim());
+                            array_sync02.add(result01.getString(2).toString().trim());
+                            array_sync03.add(result01.getString(3).toString().trim());
+                        }
+                    }else{
+                        array_sync01.add(String.valueOf("0"));
+                        array_sync02.add(String.valueOf("-"));
+                        array_sync03.add(String.valueOf("-"));
                     }
-
 
                     if(array_sync01.size()<=7 ){
                         for(int i=0;i <7-array_sync01.size() ;i++){
@@ -545,10 +617,16 @@ HORIZONTAL_BEZIER水平曲線
                     statement01 = connection.createStatement();
                     ResultSet result02 = statement01.executeQuery("SELECT service_id, body FROM dbo.service WHERE user_id = " + Integer.valueOf(userid) + ";");
 
-
-                    while (result02.next()) {
+                    if(result02.next()){
                         array_sync04.add(result02.getString(1).toString().trim());
                         array_sync05.add(result02.getString(2).toString().trim());
+                        while (result02.next()) {
+                            array_sync04.add(result02.getString(1).toString().trim());
+                            array_sync05.add(result02.getString(2).toString().trim());
+                        }
+                    }else{
+                        array_sync04.add("000000");
+                        array_sync05.add("-");
                     }
 
                     for (int i = 0; i < array_sync04.size(); i++) {

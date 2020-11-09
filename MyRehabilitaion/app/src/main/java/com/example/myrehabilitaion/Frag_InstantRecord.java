@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 public class Frag_InstantRecord extends Fragment {
 
-    private Frag_Recording mRecording;
     private Frag_ChooseService mChooseService;
     private BT_Test bt_test;
 

@@ -12,9 +12,12 @@ public class GlobalVariable extends Application {
     private String ServiceName;
     private String CaseName;
     private String UserID;
+    private String UserName;
+
     private String ServiceID;
     private String CaseID;
     private String Str_Count;
+    private String ClickDate;
     private Fragment Context_NewFrag;
 
     private String DeviceAddress = null;
@@ -38,10 +41,12 @@ public class GlobalVariable extends Application {
     }
     public void setServiceName(String servicename){ this.ServiceName = servicename; }
     public void setUserID(String userid){ this.UserID = userid; }
+    public void setUserName(String username){ this.UserName = username; }
     public void setServiceID(String serviceid){ this.ServiceID = serviceid; }
     public void setCaseID(String caseid){ this.CaseID = caseid; }
     public void setCaseName(String casename){ this.CaseID = casename; }
     public void setStr_Count(String count){ this.Str_Count = count; }
+    public void setClickDate(String clickDate){ this.ClickDate = clickDate; }
     public void setContext_NewFrag(Fragment frag){ this.Context_NewFrag = frag;}
 
     public void setDeviceAddress(String deviceAddress){ this.DeviceAddress = deviceAddress; }
@@ -56,6 +61,7 @@ public class GlobalVariable extends Application {
     }
     public String getServiceName(){return ServiceName; }
     public String getUserID() { return UserID; }
+    public String getUserName() { return UserName; }
     public String getServiceID() {
         return ServiceID;
     }
@@ -66,6 +72,7 @@ public class GlobalVariable extends Application {
     public String getStr_Count() {
         return Str_Count;
     }
+    public String getClickDate() { return ClickDate; }
     public Fragment getNew_Frag() {
         return Context_NewFrag;
     }

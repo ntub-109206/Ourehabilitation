@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/title_bodypartlist"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="16sp"
             android:background="@drawable/bg_06"
@@ -28,17 +28,26 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:layout_below="@+id/title_bodypartlist"/>
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart1"
+            android:layout_height="25dp"
+            android:layout_below="@+id/title_bodypartlist"
+            android:layout_margin="5dp"
+            android:ems="10" />
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="225dp"
-            android:background="@drawable/btn_design03"
-            android:layout_below="@+id/spinner">
-        </com.github.mikephil.charting.charts.LineChart>
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_design02"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:padding="5dp">
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/btn_design03"
+                android:layout_below="@+id/spinner">
+            </com.github.mikephil.charting.charts.LineChart>
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -68,8 +77,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_04"
+            android:background="@drawable/btn_design02"
             android:padding="5dp"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -103,11 +113,20 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/caseListView"
-            android:background="#ffffff"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:padding="5dp"
+            android:background="@drawable/btn_design02">
+            <ListView
+                android:id="@+id/caseListView"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

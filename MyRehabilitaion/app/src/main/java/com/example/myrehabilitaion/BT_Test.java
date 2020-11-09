@@ -29,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myrehabilitaion.ui.Stastics.Frag_LineChart;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +74,7 @@ public class BT_Test extends Fragment {
 
     String mReadBuffer = null;
     protected Button mListPairedDevicesBtn, mStartBtn;
-    protected TextView mBluetoothStatus,BluetoothCount, time;
+    protected TextView mBluetoothStatus01,mBluetoothStatus02,BluetoothCount, time;
     protected ListView mDevicesListView;
     protected ArrayAdapter<String> mBTArrayAdapter;
     protected BluetoothAdapter mBTAdapter;
@@ -93,6 +94,8 @@ public class BT_Test extends Fragment {
     protected Button mStopBtn;
     protected TextView TimerTV;
     spinnerdata_sync_fromdb spinnerdataSyncFromdb;
+
+    Dialog mDlog01;
 
 
     private int Count = 0;
@@ -140,12 +143,77 @@ public class BT_Test extends Fragment {
         mStopBtn = (Button) root.findViewById(R.id.StopBn);
         time = (TextView) root.findViewById(R.id.timer);
         BluetoothCount = (TextView)root.findViewById(R.id.textCount);
-        mBluetoothStatus = (TextView)root.findViewById(R.id.bluetoothStatus);
+        mBluetoothStatus01 = (TextView)root.findViewById(R.id.bluetoothStatus);
         mStartBtn = (Button)root.findViewById(R.id.StartBn);
-        mListPairedDevicesBtn = (Button)root.findViewById(R.id.PairedBtn);
+//        mListPairedDevicesBtn = (Button)root.findViewById(R.id.PairedBtn);
         mBTArrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1);
         mBTAdapter = BluetoothAdapter.getDefaultAdapter(); // get a handle on the bluetooth radio
-        mDevicesListView = (ListView)root.findViewById(R.id.devicesListView);
+
+        final FloatingActionButton fab01 = root.findViewById(R.id.floatingActionButton_open);
+//        final FloatingActionButton fab02 = root.findViewById(R.id.floatingActionButton_close);
+//        fab02.setVisibility(View.INVISIBLE);
+        fab01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                fab01.setVisibility(View.INVISIBLE);
+//                fab02.setVisibility(View.VISIBLE);
+
+//                fab02.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        mBTArrayAdapter.clear();
+//
+//                        fab02.setVisibility(View.INVISIBLE);
+//                        fab01.setVisibility(View.VISIBLE);
+//                    }
+//                });
+
+
+                mDlog01 = new Dialog(v.getContext());
+                mDlog01.setContentView(R.layout.dlg_devicelist);
+                mDlog01.setCancelable(true);
+                mDlog01.show();
+
+                mDevicesListView = (ListView)mDlog01.findViewById(R.id.devicesListView);
+                mBluetoothStatus02 = (TextView)mDlog01.findViewById(R.id.bluetoothStatus);
+
+                listPairedDevices(v);
+
+                mDevicesListView.setAdapter(mBTArrayAdapter); // assign model to view
+                mDevicesListView.setOnItemClickListener(mDeviceClickListener);
+
+                mHandler = new Handler(){
+                    public void handleMessage(android.os.Message msg){
+
+                        if(msg.what == MESSAGE_READ){
+                            String readMessage = null;
+                            try {
+                                readMessage = new String((byte[]) msg.obj, "UTF-8");
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                            mReadBuffer = readMessage;
+                            mConnectedThread.Counter();
+
+                        }
+                        if(msg.what == CONNECTING_STATUS){
+                            if(msg.arg1 == 1){
+                                mBluetoothStatus01.setText("已連線至: " + (String)(msg.obj));
+                                mBluetoothStatus02.setText("已連線至: " + (String)(msg.obj));
+
+                            }
+                            else{
+                                mBluetoothStatus01.setText("連線失敗");
+                                mBluetoothStatus02.setText("連線失敗");
+                            }
+
+                        }
+                    }
+                };
+            }
+        });
 
 
         findViews();
@@ -237,6 +305,7 @@ public class BT_Test extends Fragment {
 
     private void listPairedDevices(View view){
         mPairedDevices = mBTAdapter.getBondedDevices();
+        mBTArrayAdapter.clear();
         if(mBTAdapter.isEnabled()) {
             // put it's one to the adapter
             for (BluetoothDevice device : mPairedDevices)
@@ -253,40 +322,11 @@ public class BT_Test extends Fragment {
 
     protected void findViews() {
 
-        mDevicesListView.setAdapter(mBTArrayAdapter); // assign model to view
-        mDevicesListView.setOnItemClickListener(mDeviceClickListener);
-        mHandler = new Handler(){
-            public void handleMessage(android.os.Message msg){
-
-                if(msg.what == MESSAGE_READ){
-                    String readMessage = null;
-                    try {
-                        readMessage = new String((byte[]) msg.obj, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    mReadBuffer = readMessage;
-                    mConnectedThread.Counter();
-
-                }
-                if(msg.what == CONNECTING_STATUS){
-                    if(msg.arg1 == 1){
-                        mBluetoothStatus.setText("已連線至: " + (String)(msg.obj));
-
-                    }
-                    else{
-                        mBluetoothStatus.setText("連線失敗");
-                    }
-
-                }
-            }
-        };
-
-
         //*******************************更改****************************************
         if (mBTArrayAdapter == null) {
             // Device does not support Bluetooth
-            mBluetoothStatus.setText("Status: Bluetooth not found");
+            mBluetoothStatus01.setText("Status: Bluetooth not found");
+            mBluetoothStatus02.setText("Status: Bluetooth not found");
             Toast.makeText(getContext(),"找不到藍芽設備!",
                     Toast.LENGTH_SHORT).show();
         }
@@ -317,12 +357,12 @@ public class BT_Test extends Fragment {
             });
 
 
-            mListPairedDevicesBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v){
-                    listPairedDevices(v);
-                }
-            });
+//            mListPairedDevicesBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v){
+//                    listPairedDevices(v);
+//                }
+//            });
 
             mStopBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -434,7 +474,8 @@ public class BT_Test extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    mBluetoothStatus.setText("Connecting...");
+                    mBluetoothStatus01.setText("Connecting...");
+                    mBluetoothStatus02.setText("Connecting...");
                     // Get the device MAC address, which is the last 17 chars in the View
                     String info = ((TextView) v).getText().toString();
                     final String address = info.substring(info.length() - 17);

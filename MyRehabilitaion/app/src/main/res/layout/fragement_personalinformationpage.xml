@@ -21,23 +21,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/bg_06"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_design01"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/bigPic"
-                android:layout_width="145dp"
+                android:layout_width="130dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:src="@drawable/man"
                 android:padding="20dp"
                 app:civ_border_width="2dp"
-                app:civ_border_color="#FF000000"/>
+                app:civ_border_color="#FFffffff"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="5dp"
+                android:background="@drawable/btn_design02"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -45,44 +50,82 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="name"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
                     android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="28sp" />
-
-                <TextView
-                    android:id="@+id/psinfo_email"
+                    android:gravity="center_vertical"
+                    android:textColor="#BF111111"
+                    android:textSize="20dp"
+                    tools:ignore="RtlCompat" />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="e-mail"
-                    android:textSize="24sp"
-                    android:textAlignment="center" />
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/psinfo_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="e-mail"
+                        android:gravity="center_vertical"
+                        android:textSize="14sp"
+                        android:textColor="#BF111111"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat" />
 
-                <TextView
-                    android:id="@+id/info_birthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="birthday"
-                    android:textSize="24sp"
-                    android:textAlignment="center" />
+                    <TextView
+                        android:id="@+id/info_phonenum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="phone number"
+                        android:gravity="center_vertical"
+                        android:textSize="14sp"
+                        android:textColor="#BF111111"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat" />
 
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_06"
-            app:tabIndicatorColor="#ffffff" />
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_design01"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:text="看診日程紀錄"
+                tools:ignore="RtlCompat" />
+
+    <!--        <com.google.android.material.tabs.TabLayout-->
+    <!--            android:id="@+id/tabLayout"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:background="@drawable/bg_06"-->
+    <!--            app:tabIndicatorColor="#ffffff" />-->
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:padding="5dp"
+                android:background="@drawable/btn_design02"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item_instruct"
+        android:id="@+id/item_logo"
         android:title="TODO"
-        android:icon="@drawable/bluetooth"
+        android:icon="@drawable/new_logo"
         app:showAsAction="ifRoom" />
 
 </menu>

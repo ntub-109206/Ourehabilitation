@@ -7,12 +7,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,14 +41,9 @@ import com.example.myrehabilitaion.ColorfulActivity;
 import com.example.myrehabilitaion.GlobalVariable;
 import com.example.myrehabilitaion.MainActivity_Calendar;
 import com.example.myrehabilitaion.R;
-import com.example.myrehabilitaion.SubInfoFragment;
-import com.example.myrehabilitaion.ui.Record.RecordFragment;
-import com.example.myrehabilitaion.ui.Record.RecordFragment_Finished;
-import com.example.myrehabilitaion.ui.Record.RecordFragment_Main;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -75,7 +68,7 @@ public class PersonalInfoFragment extends Fragment {
 
     TextView psinfo_name;
     TextView psinfo_email;
-    TextView psinfo_birthday;
+    TextView psinfo_phonenum;
 
     Statement statement = null;
 
@@ -84,6 +77,7 @@ public class PersonalInfoFragment extends Fragment {
     GlobalVariable gv;
     String userid;
     byte[] bArray;
+    String encodedImage;
 
 
 //---------------------SQL---------------------
@@ -107,14 +101,17 @@ public class PersonalInfoFragment extends Fragment {
 
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tableLayout = root.findViewById(R.id.tabLayout);
-        tableLayout.setupWithViewPager(viewPager);
+//        TabLayout tableLayout = root.findViewById(R.id.tabLayout);
+//        tableLayout.setupWithViewPager(viewPager);
 
 //--------------------SQL--------------------
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
         psinfo_name = root.findViewById(R.id.psinfo_name);
         psinfo_email = root.findViewById(R.id.psinfo_email);
-        psinfo_birthday = root.findViewById(R.id.info_birthday);
+        psinfo_phonenum = root.findViewById(R.id.info_phonenum);
+
+
+        byte[] imgByte = null;
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -123,17 +120,11 @@ public class PersonalInfoFragment extends Fragment {
         try {
             Class.forName(Classes);
             connection = DriverManager.getConnection(url, username,password);
-//            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
-//            toast.show();
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-//            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
-//            toast.show();
         } catch (SQLException e) {
             e.printStackTrace();
-//            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
-//            toast.show();
-
         }
 
         if (connection!=null){
@@ -143,13 +134,16 @@ public class PersonalInfoFragment extends Fragment {
                 userid = gv.getUserID();
 
                 statement = connection.createStatement();
-                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, birthday , pic  FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
+                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, phone FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
+
                 while (resultSet01.next()){
                     psinfo_name.setText(resultSet01.getString(1).toString().trim());
                     psinfo_email.setText(resultSet01.getString(2).toString().trim());
-                    psinfo_birthday.setText(resultSet01.getString(3).toString().trim());
-                    bigPic.setImageBitmap(BitmapFactory.decodeByteArray( resultSet01.getBytes(4), 0,resultSet01.getString(4).length()));
+                    psinfo_phonenum.setText(resultSet01.getString(3).toString().trim());
+//                    bigPic.setImageBitmap(BitmapFactory.decodeByteArray( resultSet01.getBytes(4), 0,resultSet01.getString(4).length()));
                 }
+
+
 
 
             } catch (SQLException e) {
@@ -289,28 +283,28 @@ public class PersonalInfoFragment extends Fragment {
                 if(bitmap.getWidth()>bitmap.getHeight()) {
 //                    ScalePic(bitmap, mPhone.heightPixels);
 //                    Bitmap bm = toRoundBitmap(bitmap);
-//                    bigPic.setImageBitmap(bitmap);
+                    bigPic.setImageBitmap(bitmap);
 
-                    Bitmap photo = bitmap;
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                    bArray = bos.toByteArray();
+//                    Bitmap photo = bitmap;
+//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//                    bArray = bos.toByteArray();
 
-                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
-                    sync_todb.execute();
+//                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
+//                    sync_todb.execute();
                 }
                 else {
 //                    ScalePic(bitmap, mPhone.widthPixels);
 //                    Bitmap bm = toRoundBitmap(bitmap);
-//                    bigPic.setImageBitmap(bitmap);
+                    bigPic.setImageBitmap(bitmap);
 
-                    Bitmap photo = bitmap;
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                    bArray = bos.toByteArray();
-
-                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
-                    sync_todb.execute();
+//                    Bitmap photo = bitmap;
+//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//                    bArray = bos.toByteArray();
+//
+//                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
+//                    sync_todb.execute();
                 }
             }
             catch (FileNotFoundException e)
@@ -318,66 +312,62 @@ public class PersonalInfoFragment extends Fragment {
             }
         }else if ( requestCode == REQUEST_IMAGE_CAPTURE && resultCode==RESULT_OK ) {
 
-                Bundle extras = data.getExtras();
-                Bitmap bp = (Bitmap)  extras.get("data");
-                Bitmap bm = toRoundBitmap(bp);
-//                bigPic.setImageBitmap(bm);
+            Bundle extras = data.getExtras();
+            Bitmap bp = (Bitmap)  extras.get("data");
 
-                Bitmap photo = bm;
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                bArray = bos.toByteArray();
+//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//            bp.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//            bArray = bos.toByteArray();
+//            encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
 
-                bigpic_sync_todb sync_todb = new bigpic_sync_todb();
-                sync_todb.execute();
+//                Bitmap bm = toRoundBitmap(bp);
+            bigPic.setImageBitmap(bp);
 
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void ScalePic(Bitmap bitmap,int phone)
-    {
-        //縮放比例預設為1
-        float mScale = 1;
-
-        //如果圖片寬度大於手機寬度則進行縮放，否則直接將圖片放入ImageView內
-        if(bitmap.getWidth() > phone )
-        {
-            //判斷縮放比例
-            mScale = (float)phone/(float)bitmap.getWidth();
-
-            Matrix mMat = new Matrix() ;
-            mMat.setScale(mScale, mScale);
-
-            Bitmap mScaleBitmap = Bitmap.createBitmap(bitmap,
-                    0,
-                    0,
-                    bitmap.getWidth(),
-                    bitmap.getHeight(),
-                    mMat,
-                    false);
-            bigPic.setImageBitmap(mScaleBitmap);
-        }
-        else bigPic.setImageBitmap(bitmap);
-    }
+//    private void ScalePic(Bitmap bitmap,int phone)
+//    {
+//        //縮放比例預設為1
+//        float mScale = 1;
+//
+//        //如果圖片寬度大於手機寬度則進行縮放，否則直接將圖片放入ImageView內
+//        if(bitmap.getWidth() > phone )
+//        {
+//            //判斷縮放比例
+//            mScale = (float)phone/(float)bitmap.getWidth();
+//
+//            Matrix mMat = new Matrix() ;
+//            mMat.setScale(mScale, mScale);
+//
+//            Bitmap mScaleBitmap = Bitmap.createBitmap(bitmap,
+//                    0,
+//                    0,
+//                    bitmap.getWidth(),
+//                    bitmap.getHeight(),
+//                    mMat,
+//                    false);
+//            bigPic.setImageBitmap(mScaleBitmap);
+//        }
+//        else bigPic.setImageBitmap(bitmap);
+//    }
     public class InnerPagerStateAdapter extends FragmentStatePagerAdapter {
         public InnerPagerStateAdapter(FragmentManager fm){
             super(fm);
         }
 
 
-        @Override
-        public CharSequence getPageTitle(int postion){
-            switch (postion){
-                case 0:
-                    return "看診紀錄(細項)";
-                case 1:
-                    return "看診日程紀錄日程";
-                default:
-                    return null;
-            }
-        }
+//        @Override
+//        public CharSequence getPageTitle(int postion){
+//            switch (postion){
+//                case 0:
+//                    return "看診日程紀錄";
+//                default:
+//                    return null;
+//            }
+//        }
 
 
         @Override
@@ -387,12 +377,7 @@ public class PersonalInfoFragment extends Fragment {
 
             switch (position){
                 case 0:
-                    fragment = new SubInfoFragment();
-
-                    break;
-                case 1:
                     fragment = new ColorfulActivity();
-
 
                     break;
             }
@@ -404,7 +389,7 @@ public class PersonalInfoFragment extends Fragment {
 
         @Override
         public int getCount(){
-            return 2;
+            return 1;
         }
 
         @Override
@@ -418,6 +403,11 @@ public class PersonalInfoFragment extends Fragment {
     }
 
     public class bigpic_sync_todb extends AsyncTask<String, String , String> {
+        private String Str_Pic;
+
+        bigpic_sync_todb(String str_pic){
+            this.Str_Pic = str_pic;
+        }
 
         String z = "";
         Boolean isSuccess = false;
@@ -441,7 +431,8 @@ public class PersonalInfoFragment extends Fragment {
                 try{
 
                     statement = connection.createStatement();
-                    statement.executeQuery("UPDATE dbo.registered SET pic="+ bArray + "WHERE user_id='" + gv.getUserID() + "';");
+                    Log.d("test", Str_Pic);
+                    statement.executeQuery("UPDATE dbo.registered SET pic= '"+Str_Pic+"' WHERE user_id="+Integer.valueOf(gv.getUserID())+";");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -455,4 +446,6 @@ public class PersonalInfoFragment extends Fragment {
             return z;
         }
     }
+
+
 }

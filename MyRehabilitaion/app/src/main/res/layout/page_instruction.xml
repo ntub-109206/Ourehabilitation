@@ -4,25 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/construction_page"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/PairedBtn"
+        <TextView
+            android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="顯示已配對裝置" />
-
-        <ListView
-            android:id="@+id/devicesListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+            android:padding="10dp"
+            android:text="歡迎使用自主復健APP!!\n該APP提供您以下服務:\n\n1.數據統計:\n提供您過去7天的復健紀錄\n\n2.立即記錄:\n從目標管理新增復健目標，即可在此選取要進行的復健並記錄\n\n3.目標管理:\n您可在此新增復健目標，並查看正在進行的復健以及已完成的復健"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

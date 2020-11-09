@@ -120,9 +120,6 @@ public class Class_Login extends AppCompatActivity {
                 checkLogin checkLogin = new checkLogin();
                 checkLogin.execute();
 
-                Intent intent = new Intent(Class_Login.this, Main.class);
-                startActivity(intent);
-                
 
             }
         });
@@ -166,7 +163,7 @@ public class Class_Login extends AppCompatActivity {
 
                 if (rs.next()) {
                     gv.setUserID(rs.getString(1).toString().trim());
-
+                    gv.setUserName(rs.getString(2).toString().trim());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -177,6 +174,13 @@ public class Class_Login extends AppCompatActivity {
                         }
                     });
                     z = "Success";
+
+                    try {
+                        Thread.sleep(100);
+                        System.out.print("record執行緒睡眠0.1秒！\n");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                     Intent intent = new Intent(Class_Login.this, Main.class);
                     startActivity(intent);

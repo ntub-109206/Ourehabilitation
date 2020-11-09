@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -72,16 +74,16 @@ public class RecordFragment extends Fragment {
     public List<String> listStr03;
     public List<String> listStr04;
     public List<String> listStr05;
+    public List<String> listStr06;
     public List<Integer> listImg;
 
     service_sync_todb service_sync_todb;
     service_sync_fromdb service_sync_fromdb;
 
-    public String userid;
-    public String sync_servicename;
-
     GlobalVariable gv ;
+    public String userid;
 
+    public String sync_servicename;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_frag__record, container, false);
@@ -94,6 +96,7 @@ public class RecordFragment extends Fragment {
         listStr03 = new ArrayList<String>();
         listStr04 = new ArrayList<String>();
         listStr05 = new ArrayList<String>();
+        listStr06 = new ArrayList<String>();
         listImg = new ArrayList<Integer>();
 
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
@@ -135,7 +138,7 @@ public class RecordFragment extends Fragment {
                 StaggeredGridLayoutManager.VERTICAL));
 //        recyclerexample.setLayoutManager(layoutManager);
 
-        adapter_exampler = new RecyclerINGViewAdapter(RecordFragment.super.getActivity(),RecordFragment.super.getActivity().getApplicationContext(), listStr01, listStr02,listStr03, listStr04, listStr05,listImg);
+        adapter_exampler = new RecyclerINGViewAdapter(RecordFragment.super.getActivity(),RecordFragment.super.getActivity().getApplicationContext(), listStr01, listStr02,listStr03, listStr04, listStr05, listStr06,listImg);
         //adapter_home.addItem(sercmng.Syc());
 
         try {
@@ -253,29 +256,12 @@ public class RecordFragment extends Fragment {
 //        viewPager.addOnPageChangeListener(new GuidePageChangeListener(tips, pageview));
 
         final FloatingActionButton fab01 = root.findViewById(R.id.floatingActionButton);
-//        final FloatingActionButton fab02 = root.findViewById(R.id.fab02);
-//        fab02.setVisibility(View.INVISIBLE);
 
         fab01.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
 
-//                fab01.setVisibility(View.INVISIBLE);
-//                fab02.setVisibility(View.VISIBLE);
-//
-//                fab02.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Snackbar.make(view, "開啟統計頁面", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//
-//                Intent intent = new Intent(getContext(),HomePage.class);
-//                startActivity(intent);
-//
-//                        Main.this.showStatisticsFragment();
-//
-//                        fab02.setVisibility(View.INVISIBLE);
-//                        fab01.setVisibility(View.VISIBLE);
                 mDlog01 = new Dialog(v.getContext());
                 mDlog01.setContentView(R.layout.dlg_addtarget);
                 mDlog01.setCancelable(true);
@@ -365,9 +351,14 @@ public class RecordFragment extends Fragment {
             if (connection!=null){
 
                 try{
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Calendar c = Calendar.getInstance();
+                    c.add(Calendar.DAY_OF_MONTH,0);
+                    String str = df.format(c.getTime());
+
 
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date,progress,target) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"','"+0+"','"+numberPicker_targettimes.getValue()+"');");
+                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date,progress,target,build_date) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"','"+0+"','"+numberPicker_targettimes.getValue()+"','"+str+"');");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -406,12 +397,14 @@ public class RecordFragment extends Fragment {
             ArrayList<String> array_sync03 = new ArrayList<String>();
             ArrayList<String> array_sync04 = new ArrayList<String>();
             ArrayList<String> array_sync05 = new ArrayList<String>();
+            ArrayList<String> array_sync06 = new ArrayList<String>();
 
             if (connection!=null){
 
                 try{
+
                     statement = connection.createStatement();
-                    ResultSet result = statement.executeQuery("SELECT body, date, progress, target, service_id FROM dbo.service WHERE user_id ="+Integer.valueOf(userid)+" AND progress/target < 1;");
+                    ResultSet result = statement.executeQuery("SELECT body, date, progress, target, service_id, build_date FROM dbo.service WHERE user_id ="+Integer.valueOf(userid)+" AND progress/target < 1;");
 
                     while (result.next()) {
                         array_sync01.add(result.getString(1).toString().trim());
@@ -419,6 +412,7 @@ public class RecordFragment extends Fragment {
                         array_sync03.add(result.getString(3).toString().trim());
                         array_sync04.add(result.getString(4).toString().trim());
                         array_sync05.add(result.getString(5).toString().trim());
+                        array_sync06.add(result.getString(6).toString().trim());
                     }
 
                     for (int i = 0; i < array_sync01.size(); i++) {
@@ -427,9 +421,10 @@ public class RecordFragment extends Fragment {
                         listStr03.add(array_sync03.get(i));
                         listStr04.add(array_sync04.get(i));
                         listStr05.add(array_sync05.get(i));
-//                        double r =Math.random()*3;
-//                        int image[]  = {R.drawable.bg_04, R.drawable.bg_03, R.drawable.bg_07};
-                        listImg.add(R.drawable.legtrain);
+                        listStr06.add(array_sync06.get(i));
+
+                        int image[]  = {R.drawable.legtrain, R.drawable.electherapy};
+                        listImg.add(image[i%2]);
                     }
 
                 }catch (Exception e){

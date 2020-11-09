@@ -3,21 +3,26 @@ package com.example.myrehabilitaion;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
@@ -27,6 +32,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,34 +44,22 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
 import java.util.UUID;
 
 public class Main extends AppCompatActivity {
-//-----------------------------------BT宣告---------------------------------------------------
-    String mReadBuffer = null;
-    protected Button mDiscoverBtn, mListPairedDevicesBtn;
-    protected ListView mDevicesListView;
-    protected ArrayAdapter<String> mBTArrayAdapter;
-    protected BluetoothAdapter mBTAdapter;
-    protected BluetoothSocket mBTSocket = null;
-    protected Set<BluetoothDevice> mPairedDevices;
-
-    protected Handler mHandler01;
-
-    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
-    // #defines for identifying shared types between calling functions
-    private final static int REQUEST_ENABLE_BT = 1; // used to identify adding bluetooth names
-    private final static int MESSAGE_READ = 2; // used in bluetooth handler to identify message update
-    private final static int CONNECTING_STATUS = 3;
-    private final static int SYNC_COUNT = 4; // used in bluetooth handler to identify message status
-
-    String bt_status;
+    GlobalVariable gv;
 
     Toolbar toolbar;
     Dialog mDlog_case;
 
-//-----------------------------------BT宣告---------------------------------------------------
+    TextView side_name;
+    TextView side_email;
 
     DrawerLayout mDrawerLayout;
     private AppBarConfiguration mAppBarConfiguration;
@@ -75,9 +69,7 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sidedrawer_home);
-
-        mBTArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        mBTAdapter = BluetoothAdapter.getDefaultAdapter(); // get a handle on the bluetooth radio
+        gv = (GlobalVariable)getApplicationContext();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,6 +88,15 @@ public class Main extends AppCompatActivity {
         mDrawerToggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // 取得Header
+        View header = navigationView.getHeaderView(0);
+// 取得Header中的TextView
+        side_name = (TextView)  header.findViewById(R.id.side_name);
+        side_email = (TextView)  header.findViewById(R.id.side_email);
+        side_name.setText(String.valueOf(gv.getUserName()));
+        side_email.setText(String.valueOf(gv.getUserEmail()));
+
         //navigationView.setNavigationItemSelectedListener(navViewOnItemSelected);
 
         // Passing each menu ID as a set of Ids because each
@@ -145,23 +146,13 @@ public class Main extends AppCompatActivity {
             return true;
         }else{
             switch (item.getItemId()) {
-                case R.id.item_instruct:
+                case R.id.item_logo:
 
-//                    mDlog_case = new Dialog(this);
-//                    mDlog_case.setContentView(R.layout.page_instruction);
-//                    mDlog_case.setCancelable(true);
-//                    mDlog_case.show();
-//
-//                    mListPairedDevicesBtn = (Button) mDlog_case.findViewById(R.id.PairedBtn);
-//                    mListPairedDevicesBtn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            listPairedDevices(v);
-//                        }
-//                    });
-//                    mDevicesListView = (ListView)mDlog_case.findViewById(R.id.devicesListView);
-//                    mDevicesListView.setAdapter(mBTArrayAdapter); // assign model to view
-//                    mDevicesListView.setOnItemClickListener(mDeviceClickListener);
+                    mDlog_case = new Dialog(this);
+                    mDlog_case.setContentView(R.layout.page_instruction);
+                    mDlog_case.setCancelable(true);
+                    mDlog_case.show();
+
 
                     return true;
                 case R.id.menuItemExit:
@@ -202,55 +193,5 @@ public class Main extends AppCompatActivity {
         }
     };
 */
-
-    private void listPairedDevices(View view){
-        mPairedDevices = mBTAdapter.getBondedDevices();
-        if(mBTAdapter.isEnabled()) {
-            // put it's one to the adapter
-            for (BluetoothDevice device : mPairedDevices)
-                mBTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-
-        }
-        else
-            Toast.makeText(getApplicationContext(), "Bluetooth not on",
-                    Toast.LENGTH_SHORT).show();
-    }
-
-
-    /* Call this from the main activity to shutdown the connection */
-
-
-    private AdapterView.OnItemClickListener mDeviceClickListener =
-            new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> av, final View v, int arg2, long arg3) {
-                    if(!mBTAdapter.isEnabled()) {
-                        Toast.makeText(v.getContext(), "Bluetooth not on",
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    bt_status =  "Connecting...";
-                    toolbar.setSubtitle(bt_status);
-
-                    // Get the device MAC address, which is the last 17 chars in the View
-                    String info = ((TextView) v).getText().toString();
-
-                    final String address = info.substring(info.length() - 17);
-                    GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
-                    globalVariable.setDeviceAddress(address);
-
-                    final String name = info.substring(0,info.length() - 17);
-                    globalVariable.setDeviceName(name);
-
-                    bt_status = "[ Connect to : " + name + "]";
-                    toolbar.setSubtitle(bt_status);
-
-                    Toast.makeText(getApplicationContext(), "藍芽已連接，請重新啟動紀錄頁面", Toast.LENGTH_SHORT).show();
-
-                    mDlog_case.dismiss();
-                }
-            };
-
-
 
 }

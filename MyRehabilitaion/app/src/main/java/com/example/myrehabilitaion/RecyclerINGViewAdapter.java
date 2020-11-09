@@ -38,11 +38,13 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
     private List<String> mListString03 ;
     private List<String> mListString04 ;
     private List<String> mListString05 ;
+    private List<String> mListString06 ;
     private List<Integer> mListImage;
 
     Dialog mDlog_case;
-    TextView updatetargetname;
-    TextView updatetargetaddtime;
+    TextView targetname;
+    TextView targetaddtime;
+    TextView targetbuildtime;
     TextView updatetargetfinishtime;
     Context context;
     Activity activity;
@@ -85,13 +87,14 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
     }
 
     // 建構式，用來接收外部程式傳入的項目資料。
-    public RecyclerINGViewAdapter(Activity activity, Context context, List<String> listString01, List<String> listString02, List<String> ListString03 , List<String> ListString04 , List<String> ListString05 , List<Integer> listImg) {
+    public RecyclerINGViewAdapter(Activity activity, Context context, List<String> listString01, List<String> listString02, List<String> ListString03 , List<String> ListString04 , List<String> ListString05 , List<String> ListString06, List<Integer> listImg) {
 
         this.mListString01 =  listString01;
         this.mListString02 =  listString02;
         this.mListString03 = ListString03;
         this.mListString04 = ListString04;
         this.mListString05 = ListString05;
+        this.mListString06 = ListString06;
 
         this.mListImage =  listImg;
         this.context=context;
@@ -136,10 +139,12 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
                     mDlog_case.show();
 
                     //------------------設定dlg目標部位名稱、建立時間、完成時間------------------------
-                    updatetargetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
-                    updatetargetname.setText(mListString01.get(getAdapterPosition()));
-                    updatetargetaddtime =mDlog_case.findViewById(R.id.edt_date);
-                    updatetargetaddtime.setText(mListString02.get(getAdapterPosition()));
+                    targetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
+                    targetname.setText(mListString01.get(getAdapterPosition()));
+                    targetaddtime =mDlog_case.findViewById(R.id.edt_date);
+                    targetaddtime.setText(mListString02.get(getAdapterPosition()));
+                    targetbuildtime = mDlog_case.findViewById(R.id.txt_targetdate);
+                    targetbuildtime.setText(mListString06.get(getAdapterPosition()));
 
 //                    updatetargetfinishtime = mDlog_case.findViewById(R.id.txt_targetdate);
 //                    updatetargetfinishtime.setText(mListString03.get(getAdapterPosition()).toString().trim());

@@ -37,12 +37,14 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
     private List<String> mListString03 ;
     private List<String> mListString04 ;
     private List<String> mListString05 ;
+    private List<String> mListString06 ;
     private List<Integer> mListImage;
 
     Dialog mDlog_case;
     TextView updatetargetname;
     TextView updatetargetaddtime;
     TextView updatetargetfinishtime;
+    TextView targetbuildtime;
     Context context;
     Activity activity;
 
@@ -73,13 +75,15 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
     }
 
     // 建構式，用來接收外部程式傳入的項目資料。
-    public RecyclerFinishedViewAdapter(Activity activity, Context context, List<String> listString01, List<String> listString02, List<String> ListString03, List<String> ListString04, List<String> ListString05  , List<Integer> listImg) {
+    public RecyclerFinishedViewAdapter(Activity activity, Context context, List<String> listString01, List<String> listString02, List<String> ListString03, List<String> ListString04, List<String> ListString05,  List<String> ListString06, List<Integer> listImg) {
 
         this.mListString01 =  listString01;
         this.mListString02 =  listString02;
         this.mListString03 = ListString03;
         this.mListString04 = ListString04;
         this.mListString05 = ListString05;
+        this.mListString06 = ListString06;
+
 
         this.mListImage =  listImg;
         this.context=context;
@@ -104,7 +108,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
             mrecord_progressbar = itemView.findViewById(R.id.reacord_progressBar);
             mtxtonbar =itemView.findViewById(R.id.txt_onbar);
             mstartrecord_btn = itemView.findViewById(R.id.reacord_startbutton);
-            mstartrecord_btn.setText("完成");
+            mstartrecord_btn.setText("已完成");
 
             // 處理按下的事件。
             itemView.setOnClickListener(this);
@@ -121,9 +125,11 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
                     updatetargetname.setText(mListString01.get(getAdapterPosition()));
                     updatetargetaddtime =mDlog_case.findViewById(R.id.edt_date);
                     updatetargetaddtime.setText(mListString02.get(getAdapterPosition()));
+                    targetbuildtime = mDlog_case.findViewById(R.id.txt_targetdate);
+                    targetbuildtime.setText(mListString06.get(getAdapterPosition()));
 
-//                    updatetargetfinishtime = mDlog_case.findViewById(R.id.txt_targetdate);
-//                    updatetargetfinishtime.setText(mListString03.get(getAdapterPosition()).toString().trim());
+                    updatetargetfinishtime = mDlog_case.findViewById(R.id.txt_targetdate);
+                    updatetargetfinishtime.setText(mListString05.get(getAdapterPosition()).toString().trim());
                     //------------------設定dlg目標部位名稱------------------------
 
 //                    Button btnupdatetargt =  mDlog_case.findViewById(R.id.btn_updatetargt);
@@ -147,8 +153,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
                     });
 
                     Button btndeltarget =mDlog_case.findViewById(R.id.btn_deltbox);
-                    btndeltarget.setVisibility(View.INVISIBLE);
-
+                    btndeltarget.setText("已完成");
 
                     return false;
                 }
@@ -185,7 +190,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
         int p = 100 * Integer.valueOf(mListString03.get(i))/Integer.valueOf(mListString04.get(i));
 
         viewHolder.mrecord_progressbar.setProgress(p);
-        viewHolder.mtxtonbar.setText(String.valueOf(mListString03.get(i)) + "/" + String.valueOf(mListString04.get(i)));
+        viewHolder.mtxtonbar.setText(String.valueOf(mListString03.get(i)) + "   /   " + String.valueOf(mListString04.get(i)));
     }
 
     // RecyclerView會呼叫這個方法，我們要傳回總共有幾個項目。

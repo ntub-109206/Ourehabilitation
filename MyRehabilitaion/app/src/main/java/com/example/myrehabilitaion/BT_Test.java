@@ -225,8 +225,7 @@ public class BT_Test extends Fragment {
 
 
         try {
-            Thread.sleep(100);
-            System.out.print("record執行緒睡眠0.1秒！\n");
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -244,7 +243,7 @@ public class BT_Test extends Fragment {
         spnbody.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "您選擇了:" + bodypart_list.get(position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "您選擇了:" + bodypart_list.get(position), Toast.LENGTH_SHORT).show();
                 servcie_id = listStr04.get(position);
                 choose_service =  bodypart_list.get(position);
             }
@@ -269,8 +268,17 @@ public class BT_Test extends Fragment {
                 mDlog.setCancelable(true);
                 mDlog.show();
 
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DAY_OF_MONTH,0);
+                String str = df.format(c.getTime());
+
                 TextView txtview_bodypart= mDlog.findViewById(R.id.txt_bodypart);
-//                txtview_bodypart.setText(gv.getServiceName().toString());
+                txtview_bodypart.setText(choose_service);
+                TextView txtview_times = mDlog.findViewById(R.id.txt_times);
+                txtview_times.setText(BluetoothCount.getText());
+                TextView txtview_buildate = mDlog.findViewById(R.id.txt_buildtime);
+                txtview_buildate.setText(str);
                 Button btnfinishcheckt = mDlog.findViewById(R.id.btn_checkconfirm);
                 Button btncancel = mDlog.findViewById(R.id.btn_checkcancel);
 

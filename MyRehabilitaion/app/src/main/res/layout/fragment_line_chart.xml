@@ -47,8 +47,6 @@
                 android:layout_below="@+id/spinner">
             </com.github.mikephil.charting.charts.LineChart>
         </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -127,6 +125,15 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-
     </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="150dp"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

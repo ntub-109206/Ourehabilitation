@@ -7,16 +7,19 @@
     android:background="@drawable/bg_05"
     tools:context=".Class_Login">
 
+
+
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:gravity="center_horizontal"
         android:background="@drawable/btn_design06"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingStart="10dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,24 +38,24 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
-            android:textColorHint="#80111111"
             android:background="@drawable/btn_design02"
             android:ems="10"
             android:hint="請輸入帳號"
             android:inputType="textPersonName"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColorHint="#80111111" />
 
         <EditText
             android:id="@+id/editPasswordLogin"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            android:textColorHint="#80111111"
             android:background="@drawable/btn_design02"
             android:ems="10"
             android:hint="請輸入密碼"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColorHint="#80111111" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,10 +74,10 @@
                 android:id="@+id/link_forgetpassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="20dp"
-                android:textAlignment="viewEnd"
                 android:layout_weight="1"
-                android:text="忘記密碼?" />
+                android:paddingEnd="20dp"
+                android:text="忘記密碼?"
+                android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,9 +89,9 @@
                 android:id="@+id/btn_visit"
                 android:layout_width="125dp"
                 android:layout_height="70dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_design07"
-                android:layout_marginEnd="5dp"
                 android:text="登入"
                 android:textSize="24sp" />
 
@@ -96,8 +99,8 @@
                 android:id="@+id/registerar_button"
                 android:layout_width="125dp"
                 android:layout_height="70dp"
-                android:layout_weight="1"
                 android:layout_marginStart="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/btn_design05"
                 android:text="註冊"
                 android:textSize="24sp" />
@@ -152,6 +155,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

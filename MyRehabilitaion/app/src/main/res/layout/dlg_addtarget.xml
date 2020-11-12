@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:background="@drawable/btn_design04"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -40,21 +41,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:paddingEnd="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/casename"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
                 android:text="復健部位"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="RtlCompat" />
 
             <EditText
                 android:id="@+id/edt_targetname"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="輸入目標名稱"
+                android:padding="5dp"
+                android:textColorHint="#80111111"
+                android:background="@drawable/btn_design02"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
@@ -63,21 +71,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:paddingEnd="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/title_targetimes"
+                android:id="@+id/targetime"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="目標次數"
-                android:textSize="20sp" />
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:text="預計完成"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                tools:ignore="RtlCompat" />
 
-            <NumberPicker
-                android:id="@+id/numpicker_targettimes"
-                android:layout_width="200dp"
-                android:layout_height="35dp"
-                android:gravity="center_vertical"
-                android:textColor="#111111" />
+            <EditText
+                android:id="@+id/edt_targetdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_design02"
+                android:ems="10"
+                android:padding="5dp"
+                android:focusable="false"
+                android:hint="輸入目標日期"
+                android:textColorHint="#80111111"
+                android:inputType="datetime" />
 
         </LinearLayout>
 
@@ -85,29 +102,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/targetime"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="預計完成"
-                android:textSize="20sp" />
+                android:id="@+id/title_targetimes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:text="復健次數"
+                android:textSize="20sp"
+                tools:ignore="RtlCompat" />
 
-            <EditText
-                android:id="@+id/edt_targetdate"
-                android:layout_width="200dp"
+            <NumberPicker
+                android:id="@+id/numpicker_targettimes"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="輸入目標日期"
-                android:inputType="datetime" />
+                android:background="@drawable/btn_design02"
+                android:gravity="center_vertical" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:orientation="horizontal">
 
             <Button
@@ -115,6 +134,7 @@
                 android:background="@drawable/btn_design07"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:text="設置"
                 android:textSize="32sp" />

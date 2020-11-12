@@ -30,6 +30,16 @@
             app:itemTextColor="@drawable/btn_bg_selector"
             app:menu="@menu/bottom_homenav" />
     </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="150dp"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->

@@ -1,10 +1,12 @@
 package com.example.myrehabilitaion;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +17,14 @@ import com.example.myrehabilitaion.ui.Stastics.Frag_LineChart;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Frag_NewHome extends Fragment {
+    ProgressBar progressBar;
+
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancestate) {
         View root = inflater.inflate(R.layout.fragment_newhome, container, false);
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+
 //        GlobalVariable gv = (GlobalVariable) getActivity().getApplicationContext();
 //        gv.setContext_NewFrag(getTargetFragment());
 //----------------------------------------ButtomNavigationView_第三版本-----------------------------------------------
@@ -53,8 +60,8 @@ public class Frag_NewHome extends Fragment {
         private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            progressBar.setVisibility(View.VISIBLE);
             Fragment selectedFragment = null;
-
 
             switch(item.getItemId()){
                 case R.id.navigation_record_main:
@@ -62,14 +69,13 @@ public class Frag_NewHome extends Fragment {
                     break;
                 case R.id.navigation_instant_record:
                     selectedFragment = new BT_Test();
-
                     break;
                 case R.id.navigation_stastics:
                     selectedFragment = new Frag_LineChart();
                     break;
             }
-
             getChildFragmentManager().beginTransaction().replace(R.id.nav_home_container,selectedFragment).commit();
+            progressBar.setVisibility(View.INVISIBLE);
 
             return true;
         }

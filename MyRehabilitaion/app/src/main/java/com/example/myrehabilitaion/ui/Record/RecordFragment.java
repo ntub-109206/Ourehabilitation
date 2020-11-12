@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,6 +67,7 @@ public class RecordFragment extends Fragment {
 
     public EditText edttargetname;
     public NumberPicker numberPicker_targettimes;
+    public Integer targetTimes;
     public EditText edtaddtime;
     public EditText edt_buildtarget;
 
@@ -142,8 +144,7 @@ public class RecordFragment extends Fragment {
         //adapter_home.addItem(sercmng.Syc());
 
         try {
-            Thread.sleep(100);
-            System.out.print("record執行緒睡眠0.1秒！\n");
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -272,11 +273,12 @@ public class RecordFragment extends Fragment {
                 edttargetname = mDlog01.findViewById(R.id.edt_targetname);
                 edtaddtime = mDlog01.findViewById(R.id.edt_targetdate);
                 numberPicker_targettimes = mDlog01.findViewById(R.id.numpicker_targettimes);
-                numberPicker_targettimes.setTextSize(45);
+                numberPicker_targettimes.setTextSize(60);
 
                 numberPicker_targettimes.setMaxValue(10);
                 numberPicker_targettimes.setMinValue(1);
                 numberPicker_targettimes.setValue(5);
+                numberPicker_targettimes.setTextColor(Color.parseColor("#80111111"));
 
                 edtaddtime.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -304,6 +306,7 @@ public class RecordFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 //                        adapter_exampler.addItem(edttargetname.getText().toString().trim());
+                        targetTimes = numberPicker_targettimes.getValue();
 
                         service_sync_todb = new service_sync_todb();
                         service_sync_todb.execute();
@@ -358,7 +361,7 @@ public class RecordFragment extends Fragment {
 
 
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date,progress,target,build_date) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"','"+0+"','"+numberPicker_targettimes.getValue()+"','"+str+"');");
+                    statement.executeQuery("INSERT INTO dbo.service (user_id,body,date,progress,target,build_date) VALUES ('"+Integer.valueOf(userid)+"','"+edttargetname.getText().toString().trim()+"','"+edtaddtime.getText().toString().trim()+"','"+0+"','"+targetTimes+"','"+str+"');");
 
                 }catch (Exception e){
                     isSuccess = false;

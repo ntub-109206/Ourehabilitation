@@ -108,8 +108,8 @@
         app:layout_constraintVertical_bias="0.988">
 
         <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="#BF111111"
             android:gravity="center"
             android:orientation="vertical"
@@ -122,8 +122,9 @@
 
             <TextView
                 android:id="@+id/txt_content01"
-                android:layout_width="300dp"
-                android:layout_height="114dp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="親愛的使用者您好，我們是台北商業大學資訊管理系的109206專題組團隊，藉由科技應用提升自己的生活品質，更高效的利用自己的時間!"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
@@ -136,12 +137,13 @@
 
             <TextView
                 android:id="@+id/txt_content02"
-                android:layout_width="300dp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="&quot;The first and best victory is to conquer self&quot;"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.352"
@@ -151,12 +153,13 @@
 
             <TextView
                 android:id="@+id/txt_content03"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
+                android:padding="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:text="-Plato, Greek philosopher"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.352"

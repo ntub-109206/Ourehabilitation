@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ import java.util.Random;
 import static com.example.myrehabilitaion.R.layout.simple_list_item_01;
 
 public class Frag_LineChart extends Fragment implements OnChartGestureListener, OnChartValueSelectedListener {
-
+    ProgressBar progressBar;
 
     protected static String ip = "140.131.114.241";
     protected static String port = "1433";
@@ -90,7 +91,6 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
     protected List<String> listStr01 = new ArrayList<String>();
     protected List<String> listStr02 = new ArrayList<String>();
     protected List<String> listStr03 = new ArrayList<String>();
-    protected List<String> xValue = new ArrayList<String>();
     protected List<String> listStr04 = new ArrayList<String>();
     protected List<String> listStr05 = new ArrayList<String>();
 
@@ -115,10 +115,13 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
     CaseAdapter adapter_case;
     ListView listView;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancestate) {
         final View root = inflater.inflate(R.layout.fragment_line_chart, container, false);
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -145,8 +148,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         spinnerdataSyncFromdb.execute();
 
         try {
-            Thread.sleep(100);
-            System.out.print("record執行緒睡眠0.1秒！\n");
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -155,8 +157,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         chartdataSyncFromdb.execute();
 
         try {
-            Thread.sleep(100);
-            System.out.print("record執行緒睡眠0.1秒！\n");
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -176,7 +177,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         spnbody.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "您選擇了:" + bodypart_list.get(position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "您選擇了:" + bodypart_list.get(position), Toast.LENGTH_SHORT).show();
                 gv.setServiceID(listStr04.get(position));
                 case_list.clear();
                 listStr01.clear();
@@ -187,8 +188,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
                 chartdataSyncFromdb.execute();
 
                 try {
-                    Thread.sleep(100);
-                    System.out.print("record執行緒睡眠0.1秒！\n");
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -196,12 +196,12 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
                 //------------------------------------------建立數據------------------------------------------
                 values01 = new ArrayList<>();
 
-                for(int i= 6;i<-1 ;i--){
+                for(int i= 0;i<listStr01.size() ;i++){
                     values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
                 }
                 // greenLine
                 values01_end = new ArrayList<>();
-                values01_end.add(new Entry(0, Integer.valueOf(listStr01.get(0))));
+                values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(6))));
 
                 ArrayList<Entry> values02 = new ArrayList<>();
 //        for(int i=0;i < listStr02.size();i++){
@@ -238,12 +238,13 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
 //------------------------------------------建立數據------------------------------------------
         values01 = new ArrayList<>();
 
-        for(int i= 6;i<-1 ;i--){
+        for(int i= 0;i<listStr01.size() ;i++){
             values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
         }
+        Log.d("test", String.valueOf(values01));
         // greenLine
         ArrayList<Entry> values01_end = new ArrayList<>();
-        values01_end.add(new Entry(0, Integer.valueOf(listStr01.get(0))));
+        values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(6))));
 
         ArrayList<Entry> values02 = new ArrayList<>();
 //        for(int i=0;i < listStr02.size();i++){
@@ -378,7 +379,7 @@ HORIZONTAL_BEZIER水平曲線
         //設定所需特定標籤資料
         List<String> xList = new ArrayList<String>();
 
-        for (int i = 6; i > -1 ; i--) {
+        for (int i = 0; i < listStr02.size() ; i++) {
 //            xList.add(listStr02.get(i).trim().substring(5).replaceAll("-", "/"));
             xList.add(listStr02.get(i).trim());
         }
@@ -539,22 +540,20 @@ HORIZONTAL_BEZIER水平曲線
                         array_sync02.add(String.valueOf("-"));
                         array_sync03.add(String.valueOf("-"));
                     }
-
                     if(array_sync01.size()<=7 ){
                         for(int i=0;i <7-array_sync01.size() ;i++){
                             listStr01.add("0");
                             listStr02.add("-");
                             listStr03.add("-");
-                            xValue.add("-");
                         }
                     }
-
-                    for (int i = array_sync01.size()-1; i > array_sync01.size()-8; i--) {
+                    for (int i = 0; i < array_sync01.size(); i++) {
                         listStr01.add((String) String.valueOf(array_sync01.get(i)));
                         listStr02.add((String) String.valueOf(array_sync02.get(i)));
                         listStr03.add(String.valueOf(array_sync03.get(i)));
-                        xValue.add(String.valueOf((String) array_sync02.get(i)));
                     }
+
+
 
                 }catch (Exception e){
 
@@ -576,7 +575,6 @@ HORIZONTAL_BEZIER水平曲線
                   c.add(Calendar.DAY_OF_MONTH, -i);
                   String str = df.format(c.getTime());
                   listStr02.add(str);
-                  xValue.add(str);
               }
 
               for (int i = 0; i < 7; i++) {

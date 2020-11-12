@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
@@ -15,10 +16,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -174,10 +178,21 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
                     btndeltarget.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gv.setServiceID(mListString05.get(getAdapterPosition()));
 
-                            removeItem(getAdapterPosition());
-                            mDlog_case.dismiss();
+                            Snackbar snackbar = Snackbar.make(v.getRootView(),"確定刪除復健?",Snackbar.LENGTH_SHORT)
+                                    .setAction("ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            gv.setServiceID(mListString05.get(getAdapterPosition()));
+                                            removeItem(getAdapterPosition());
+                                            Toast.makeText(context, "您刪除了復健", Toast.LENGTH_SHORT).show();
+                                            mDlog_case.dismiss();
+                                        }
+                                    });
+                            snackbar.setBackgroundTint(Color.parseColor("#003D79"));
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            snackbar.show();
+
                         }
                     });
 

@@ -238,7 +238,7 @@ public class ColorfulActivity extends BaseFragment implements
 
     @Override
     public void onCalendarLongClick(Calendar calendar) {
-        Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_LONG).show();
     }
 
     private String getCalendarText(Calendar calendar) {

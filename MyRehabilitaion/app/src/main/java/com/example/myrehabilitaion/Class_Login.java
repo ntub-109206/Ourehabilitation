@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class Class_Login extends AppCompatActivity {
     Button login,register;
     EditText edt_email, edt_password;
     CheckBox remember;
+    ProgressBar progressBar;
 
     private static String ip = "140.131.114.241";
     private static String port = "1433";
@@ -43,6 +45,7 @@ public class Class_Login extends AppCompatActivity {
     private static String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
 
     private Connection connection = null;
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,9 @@ public class Class_Login extends AppCompatActivity {
         edt_email= findViewById(R.id.edtEmailLogin);
         edt_password = findViewById(R.id.editPasswordLogin);
         register = findViewById(R.id.registerar_button);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+
 //        remember = findViewById(R.id.checkBox);
 //
 //        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -145,18 +151,18 @@ public class Class_Login extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
         }
 
         @Override
         protected void onPostExecute(String s) {
-
         }
 
         @Override
         protected String doInBackground(String... strings) {
 
+
             try {
+
                 String sql = "SELECT * FROM dbo.registered WHERE email = '" + edt_email.getText() + "' AND password = '" + edt_password.getText() + "';";
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
@@ -174,6 +180,7 @@ public class Class_Login extends AppCompatActivity {
                         }
                     });
                     z = "Success";
+
 
                     try {
                         Thread.sleep(100);

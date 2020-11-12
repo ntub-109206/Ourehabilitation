@@ -95,16 +95,16 @@ public class RecordFragment_Finished extends Fragment {
         try {
             Class.forName(Classes);
             connection = DriverManager.getConnection(url, username,password);
-            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT);
+//            toast.show();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getContext(),"ERROR", Toast.LENGTH_SHORT);
+//            toast.show();
         } catch (SQLException e) {
             e.printStackTrace();
-            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getContext(),"FAILURE", Toast.LENGTH_SHORT);
+//            toast.show();
 
         }
         service_sync_fromdb = new service_sync_fromdb();
@@ -127,8 +127,7 @@ public class RecordFragment_Finished extends Fragment {
         //adapter_home.addItem(sercmng.Syc());
 
         try {
-            Thread.sleep(100);
-            System.out.print("record執行緒睡眠0.1秒！\n");
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -310,7 +309,7 @@ public class RecordFragment_Finished extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(),"目標數據同步成功", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),"目標數據同步成功", Toast.LENGTH_SHORT).show();
         }
 
 

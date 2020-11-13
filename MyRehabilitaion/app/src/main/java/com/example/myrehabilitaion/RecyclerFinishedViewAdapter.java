@@ -26,12 +26,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFinishedViewAdapter.ViewHolder> {
-
+    protected List<String> listStr01 = new ArrayList<String>();
     String userid;
     public String sync_name;
     public String sync_serviceid;
@@ -45,6 +49,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
     private List<Integer> mListImage;
 
     Dialog mDlog_case;
+    TextView expecteddate;
     TextView updatetargetname;
     TextView updatetargetaddtime;
     TextView updatetargetfinishtime;
@@ -130,16 +135,28 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    gv.setServiceID(mListString05.get(getAdapterPosition()));
+                    finisheddata_sync_fromdb finisheddata_sync_fromdb = new finisheddata_sync_fromdb();
+                    finisheddata_sync_fromdb.execute();
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     mDlog_case = new Dialog(v.getContext());
                     mDlog_case.setContentView(R.layout.dlg_case);
                     mDlog_case.setCancelable(true);
                     mDlog_case.show();
 
                     //------------------設定dlg目標部位名稱、建立時間、完成時間------------------------
+                    expecteddate = mDlog_case.findViewById(R.id.title_expected);
+                    expecteddate.setText("完成日期");
                     updatetargetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
                     updatetargetname.setText(mListString01.get(getAdapterPosition()));
                     updatetargetaddtime =mDlog_case.findViewById(R.id.edt_date);
-                    updatetargetaddtime.setText(mListString02.get(getAdapterPosition()));
+//                    updatetargetaddtime.setText(mListString02.get(getAdapterPosition()));
+                    updatetargetaddtime.setText(listStr01.get(listStr01.size()-1));
                     targetbuildtime = mDlog_case.findViewById(R.id.txt_builddate);
                     targetbuildtime.setText(mListString06.get(getAdapterPosition()));
 
@@ -362,6 +379,92 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
                     isSuccess = false;
                     z = e.getMessage();
                 }
+            }
+            else {
+            }
+            return z;
+        }
+    }
+
+
+    public class finisheddata_sync_fromdb extends AsyncTask<String, String , String> {
+        private  String ip = "140.131.114.241";
+        private  String port = "1433";
+        private  String Classes = "net.sourceforge.jtds.jdbc.Driver";
+        private  String database = "109-rehabilitation";
+        private  String username = "case210906";
+        private  String password = "1@case206";
+        private  String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
+
+        private Connection connection = null;
+
+        Statement statement02 = null;
+        String z = "";
+        Boolean isSuccess = false;
+
+
+        @Override
+        protected void onPreExecute() {
+
+            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            try {
+                Class.forName(Classes);
+                connection = DriverManager.getConnection(url, username,password);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            ArrayList<String> array_sync01 = new ArrayList<String>();
+            ArrayList<String> array_sync02 = new ArrayList<String>();
+            userid = gv.getUserID();
+            sync_serviceid = gv.getServiceID();
+
+            if (connection!=null){
+
+                try{
+
+                    statement02 = connection.createStatement();
+                    ResultSet result01 = statement02.executeQuery("SELECT builddate FROM dbo.case_data WHERE user_id = "+Integer.valueOf(userid)+" AND service_id = "+Integer.valueOf(sync_serviceid)+";");
+
+
+                    if(result01.next()){
+                        array_sync01.add(result01.getString(1).toString().trim());
+                        while (result01.next()) {
+                            array_sync01.add(result01.getString(1).toString().trim());
+                        }
+                    }else{
+                        array_sync01.add(String.valueOf("-"));
+                    }
+                    for (int i = 0; i < array_sync01.size(); i++) {
+                        listStr01.add((String) String.valueOf(array_sync01.get(i)));
+                    }
+
+
+
+                }catch (Exception e){
+
+                    isSuccess = false;
+                    z = e.getMessage();
+                }
+
             }
             else {
             }

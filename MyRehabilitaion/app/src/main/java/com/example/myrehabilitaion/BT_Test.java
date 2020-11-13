@@ -256,6 +256,7 @@ public class BT_Test extends Fragment {
         mbtn_scores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onStop();
 //                Frag_RecordFinished frag_recordFinished = new Frag_RecordFinished();
 //
 //                Bundle bundle = new Bundle();

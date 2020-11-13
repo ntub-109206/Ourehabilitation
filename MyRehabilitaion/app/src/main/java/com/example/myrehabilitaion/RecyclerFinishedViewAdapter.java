@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -15,10 +16,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,7 +32,7 @@ import java.util.List;
 
 public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFinishedViewAdapter.ViewHolder> {
 
-
+    String userid;
     public String sync_name;
     public String sync_serviceid;
 
@@ -67,6 +71,17 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
 
     // 刪除項目
     public void removeItem(int position){
+
+        case_delete_todb case_delete_todb = new case_delete_todb();
+        case_delete_todb.execute();
+
+        try {
+            Thread.sleep(100);
+            System.out.print("record執行緒睡眠0.1秒！\n");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         service_delete_todb service_delete_todb = new service_delete_todb();
         service_delete_todb.execute();
 
@@ -125,11 +140,9 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
                     updatetargetname.setText(mListString01.get(getAdapterPosition()));
                     updatetargetaddtime =mDlog_case.findViewById(R.id.edt_date);
                     updatetargetaddtime.setText(mListString02.get(getAdapterPosition()));
-                    targetbuildtime = mDlog_case.findViewById(R.id.txt_targetdate);
+                    targetbuildtime = mDlog_case.findViewById(R.id.txt_builddate);
                     targetbuildtime.setText(mListString06.get(getAdapterPosition()));
 
-                    updatetargetfinishtime = mDlog_case.findViewById(R.id.txt_targetdate);
-                    updatetargetfinishtime.setText(mListString05.get(getAdapterPosition()).toString().trim());
                     //------------------設定dlg目標部位名稱------------------------
 
 //                    Button btnupdatetargt =  mDlog_case.findViewById(R.id.btn_updatetargt);
@@ -145,6 +158,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
 //                        }
 //                    });
                     Button btncanceledit = mDlog_case.findViewById(R.id.btn_cancelbox);
+                    btncanceledit.setText("已完成");
                     btncanceledit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -153,7 +167,26 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
                     });
 
                     Button btndeltarget =mDlog_case.findViewById(R.id.btn_deltbox);
-                    btndeltarget.setText("已完成");
+                    btndeltarget.setText("刪除復健");
+                    btndeltarget.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Snackbar snackbar = Snackbar.make(v.getRootView(),"確定刪除復健?",Snackbar.LENGTH_SHORT)
+                                    .setAction("ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            gv.setServiceID(mListString05.get(getAdapterPosition()));
+                                            removeItem(getAdapterPosition());
+                                            Toast.makeText(context, "您刪除了復健", Toast.LENGTH_SHORT).show();
+                                            mDlog_case.dismiss();
+                                        }
+                                    });
+                            snackbar.setBackgroundTint(Color.parseColor("#003D79"));
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            snackbar.show();
+
+                        }
+                    });
 
                     return false;
                 }
@@ -199,7 +232,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
         return this.mListString05.size();
     }
 
-    public class service_delete_todb  extends AsyncTask<String, String , String> {
+    public class case_delete_todb  extends AsyncTask<String, String , String> {
 
         private  String ip = "140.131.114.241";
         private  String port = "1433";
@@ -211,7 +244,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
 
         private Connection connection = null;
 
-        Statement statement = null;
+        Statement statement01 = null;
 
         String z = "";
         Boolean isSuccess = false;
@@ -232,8 +265,8 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
 
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
 
+            }
 
         }
 
@@ -250,10 +283,12 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
             if (connection!=null){
                 try{
 
-                    sync_name = gv.getUserEmail();
+                    userid = gv.getUserID();
                     sync_serviceid = gv.getServiceID();
-                    statement = connection.createStatement();
-                    statement.executeQuery("DELETE FROM dbo.service WHERE user_id ='"+sync_name.toString().trim()+"' AND body ='"+sync_serviceid.toString().trim()+ "';");
+
+                    statement01 = connection.createStatement();
+                    statement01.executeQuery("DELETE FROM dbo.case_data WHERE user_id ="+ Integer.valueOf(userid)+" AND service_id ="+Integer.valueOf(sync_serviceid)+";");
+                    statement01.executeQuery("DELETE FROM dbo.service WHERE user_id ="+ Integer.valueOf(userid)+" AND service_id ="+Integer.valueOf(sync_serviceid)+";");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -265,4 +300,73 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
             return z;
         }
     }
+
+    public class service_delete_todb  extends AsyncTask<String, String , String> {
+
+        private  String ip = "140.131.114.241";
+        private  String port = "1433";
+        private  String Classes = "net.sourceforge.jtds.jdbc.Driver";
+        private  String database = "109-rehabilitation";
+        private  String username = "case210906";
+        private  String password = "1@case206";
+        private  String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
+
+        private Connection connection = null;
+
+        Statement statement02 = null;
+
+        String z = "";
+        Boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+
+            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            try {
+                Class.forName(Classes);
+                connection = DriverManager.getConnection(url, username,password);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            GlobalVariable gv = (GlobalVariable) context.getApplicationContext();
+
+            if (connection!=null){
+                try{
+
+                    userid = gv.getUserID();
+                    sync_serviceid = gv.getServiceID();
+
+                    statement02 = connection.createStatement();
+                    statement02.executeQuery("DELETE FROM dbo.service WHERE user_id ="+ Integer.valueOf(userid)+" AND service_id ="+Integer.valueOf(sync_serviceid)+";");
+
+                }catch (Exception e){
+                    isSuccess = false;
+                    z = e.getMessage();
+                }
+            }
+            else {
+            }
+            return z;
+        }
+    }
+
 }

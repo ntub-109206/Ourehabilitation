@@ -2,6 +2,7 @@ package com.example.myrehabilitaion;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.List;
 
 public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGViewAdapter.ViewHolder> {
@@ -63,12 +66,22 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
 //        notifyItemInserted(mListString01.size());
 //    }
 
-//    public void updateItem(int position){
-//         updatetargetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
-//
-//        mListString01.set(position, updatetargetname.getText().toString().trim());//修改值
-//        notifyDataSetChanged();//刷新版列表权
-//    }
+    public void updateItem(int position){
+        case_todb_update_service_info case_todb_update_service_info =new case_todb_update_service_info();
+        case_todb_update_service_info.execute();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        updatetargetname = mDlog_case.findViewById(R.id.edt_updatetargetname);
+        mListString01.set(position, targetname.getText().toString().trim());//修改值
+        mListString06.set(position, targetaddtime.getText().toString().trim());//修改值
+
+        notifyDataSetChanged();//刷新版列表权
+    }
 
     // 刪除項目
     public void removeItem(int position){
@@ -147,7 +160,21 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
                     targetname.setText(mListString01.get(getAdapterPosition()));
                     targetaddtime =mDlog_case.findViewById(R.id.edt_date);
                     targetaddtime.setText(mListString02.get(getAdapterPosition()));
-                    targetbuildtime = mDlog_case.findViewById(R.id.txt_targetdate);
+                    targetaddtime.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar now = Calendar.getInstance();
+
+                            DatePickerDialog dataPickerDialog = new DatePickerDialog(v.getContext(),datePickerDlgOnDataSet, now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+
+                            dataPickerDialog.setTitle("選擇日期");
+                            dataPickerDialog.setMessage("請選擇您預計完成的日期");
+                            dataPickerDialog.setCancelable(true);
+                            dataPickerDialog.show();
+                        }
+                    });
+
+                    targetbuildtime = mDlog_case.findViewById(R.id.txt_builddate);
                     targetbuildtime.setText(mListString06.get(getAdapterPosition()));
 
 //                    updatetargetfinishtime = mDlog_case.findViewById(R.id.txt_targetdate);
@@ -166,15 +193,31 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
 //                            mDlog_case.dismiss();
 //                        }
 //                    });
-                    Button btncanceledit = mDlog_case.findViewById(R.id.btn_cancelbox);
-                    btncanceledit.setOnClickListener(new View.OnClickListener() {
+                    Button btn_confirm = mDlog_case.findViewById(R.id.btn_cancelbox);
+                    btn_confirm.setText("編輯儲存");
+                    btn_confirm.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mDlog_case.dismiss();
+
+                            Snackbar snackbar = Snackbar.make(v.getRootView(),"確定刪除復健?",Snackbar.LENGTH_SHORT)
+                                    .setAction("ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            gv.setServiceID(mListString05.get(getAdapterPosition()));
+
+                                            updateItem(getAdapterPosition());
+                                            mDlog_case.dismiss();
+                                        }
+                                    });
+                            snackbar.setBackgroundTint(Color.parseColor("#A6C2CE"));
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            snackbar.show();
+
                         }
                     });
 
                     Button btndeltarget =mDlog_case.findViewById(R.id.btn_deltbox);
+                    btndeltarget.setText("終止復健");
                     btndeltarget.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -386,4 +429,81 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
             return z;
         }
     }
+
+    public class case_todb_update_service_info extends AsyncTask<String, String , String> {
+
+        String z = "";
+        Boolean isSuccess = false;
+
+        private  String ip = "140.131.114.241";
+        private  String port = "1433";
+        private  String Classes = "net.sourceforge.jtds.jdbc.Driver";
+        private  String database = "109-rehabilitation";
+        private  String username = "case210906";
+        private  String password = "1@case206";
+        private  String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
+
+        private Connection connection = null;
+
+        Statement statement03 = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            try {
+                Class.forName(Classes);
+                connection = DriverManager.getConnection(url, username,password);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            if (connection!=null){
+
+                try{
+                    userid = gv.getUserID();
+                    sync_serviceid = gv.getServiceID();
+                    statement03 = connection.createStatement();
+                    statement03.executeQuery("UPDATE dbo.service SET body='"+ targetname.getText().toString().trim() +"', date='"+targetaddtime.getText().toString().trim()+"' WHERE user_id="+Integer.valueOf(userid)+" AND service_id =" + Integer.valueOf(sync_serviceid)+";");
+
+                }catch (Exception e){
+                    isSuccess = false;
+                    z = e.getMessage();
+                }
+            }
+            else {
+            }
+            return z;
+        }
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerDlgOnDataSet = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            targetaddtime.setText(
+                    String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(dayOfMonth)
+            );
+
+        }
+    };
+
 }

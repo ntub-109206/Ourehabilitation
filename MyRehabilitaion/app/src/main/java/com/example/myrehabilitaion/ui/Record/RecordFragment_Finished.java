@@ -348,7 +348,7 @@ public class RecordFragment_Finished extends Fragment {
                         listStr03.add(array_sync03.get(i));
                         listStr04.add(array_sync04.get(i));
                         listStr05.add(array_sync05.get(i));
-                        listStr06.add(array_sync05.get(i));
+                        listStr06.add(array_sync06.get(i));
 
 
                         int image[]  = {R.drawable.legtrain, R.drawable.electherapy};

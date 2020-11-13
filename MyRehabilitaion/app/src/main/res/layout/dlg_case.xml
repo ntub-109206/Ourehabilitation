@@ -30,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="詳細資訊"
-                android:textSize="30sp" />
+                android:text="復健資訊"
+                android:textSize="26sp" />
 
         </LinearLayout>
         <LinearLayout
@@ -47,14 +47,14 @@
                 android:text="復健部位"
                 android:textSize="18sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/edt_updatetargetname"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_height="57dp"
                 android:text="復健部位"
+                android:textAlignment="center"
                 android:textColor="#80ffffff"
-                android:textAlignment="center" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -71,21 +71,24 @@
                 android:text="預計完成"
                 android:textSize="18sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/edt_date"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="#80ffffff"
                 android:text="目標時間"
+                android:focusable="false"
                 android:textAlignment="center" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -96,7 +99,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txt_targetdate"
+                android:id="@+id/txt_builddate"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"

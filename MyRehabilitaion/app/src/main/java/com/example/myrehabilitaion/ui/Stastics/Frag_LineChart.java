@@ -62,6 +62,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -391,16 +392,23 @@ HORIZONTAL_BEZIER水平曲線
 
 
     private void initY() {
+        ArrayList<Integer> int_array = new ArrayList<Integer>();
+        for(int i=0; i<listStr01.size();i++){
+            int_array.add(Integer.valueOf(listStr01.get(i)));
+        }
+
+        int max_num = Collections.max(int_array);
+        Log.d("test", String.valueOf(max_num));
         YAxis rightAxis = chart.getAxisRight();//獲取右側的軸線
         rightAxis.setEnabled(false);//不顯示右側Y軸
         YAxis leftAxis = chart.getAxisLeft();//獲取左側的軸線
 
-        leftAxis.setLabelCount(4);//Y軸標籤個數
+        leftAxis.setLabelCount(5);//Y軸標籤個數
         leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色
         leftAxis.setTextSize(12);//Y軸標籤大小
 
         leftAxis.setAxisMinimum(0);//Y軸標籤最小值
-        leftAxis.setAxisMaximum(20);//Y軸標籤最大值
+        leftAxis.setAxisMaximum(Integer.valueOf(max_num));//Y軸標籤最大值
 
         leftAxis.enableGridDashedLine(5f, 5f, 0f);//格線以虛線顯示，可設定虛線長度、間距等
 

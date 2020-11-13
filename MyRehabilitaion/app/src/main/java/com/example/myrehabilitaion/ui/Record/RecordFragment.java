@@ -325,7 +325,7 @@ public class RecordFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
             edtaddtime.setText(
-                    String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(dayOfMonth)
+                    String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(dayOfMonth)
             );
 
         }

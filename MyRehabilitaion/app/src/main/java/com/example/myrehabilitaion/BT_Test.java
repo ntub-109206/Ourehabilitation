@@ -95,14 +95,14 @@ public class BT_Test extends Fragment {
     protected TextView TimerTV;
     spinnerdata_sync_fromdb spinnerdataSyncFromdb;
 
-    Dialog mDlog01;
+    Dialog mDlog_deviceList;
 
 
     private int Count = 0;
 
     GlobalVariable gv ;
     String userid;
-    Spinner spnbody;
+    Spinner spn_body;
 
     String servcie_id;
     String choose_service;
@@ -171,13 +171,13 @@ public class BT_Test extends Fragment {
 //                });
 
 
-                mDlog01 = new Dialog(v.getContext());
-                mDlog01.setContentView(R.layout.dlg_devicelist);
-                mDlog01.setCancelable(true);
-                mDlog01.show();
+                mDlog_deviceList = new Dialog(v.getContext());
+                mDlog_deviceList.setContentView(R.layout.dlg_devicelist);
+                mDlog_deviceList.setCancelable(true);
+                mDlog_deviceList.show();
 
-                mDevicesListView = (ListView)mDlog01.findViewById(R.id.devicesListView);
-                mBluetoothStatus02 = (TextView)mDlog01.findViewById(R.id.bluetoothStatus);
+                mDevicesListView = (ListView)mDlog_deviceList.findViewById(R.id.devicesListView);
+                mBluetoothStatus02 = (TextView)mDlog_deviceList.findViewById(R.id.bluetoothStatus);
 
                 listPairedDevices(v);
 
@@ -221,7 +221,7 @@ public class BT_Test extends Fragment {
 
         spinnerdataSyncFromdb = new spinnerdata_sync_fromdb();
         spinnerdataSyncFromdb.execute();
-        spnbody = root.findViewById(R.id.spinner);
+        spn_body = root.findViewById(R.id.spinner);
 
 
         try {
@@ -239,8 +239,8 @@ public class BT_Test extends Fragment {
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, bodypart_list);
-        spnbody.setAdapter(adapter);
-        spnbody.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spn_body.setAdapter(adapter);
+        spn_body.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getContext(), "您選擇了:" + bodypart_list.get(position), Toast.LENGTH_SHORT).show();
@@ -640,7 +640,7 @@ public class BT_Test extends Fragment {
                         choose_service_count = Integer.valueOf(resultSet.getString(1).toString().trim());
                     }
 
-                    statement02.executeQuery("INSERT INTO dbo.case_data (user_id,service_id,case_name,num_count,builddate) VALUES ("+Integer.valueOf(userid)+","+Integer.valueOf(servcie_id)+",'"+choose_service.toString().trim() + "(紀錄" + (choose_service_count+1) + ")','"+Integer.valueOf(BluetoothCount.getText().toString().trim())+"','"+str+"');");
+                    statement02.executeQuery("INSERT INTO dbo.case_data (user_id,service_id,case_name,num_count,builddate) VALUES ("+Integer.valueOf(userid)+","+Integer.valueOf(servcie_id)+",'"+choose_service.toString().trim() + "\n(紀錄" + (choose_service_count+1) + ")','"+Integer.valueOf(BluetoothCount.getText().toString().trim())+"','"+str+"');");
 
                 }catch (Exception e){
                     isSuccess = false;

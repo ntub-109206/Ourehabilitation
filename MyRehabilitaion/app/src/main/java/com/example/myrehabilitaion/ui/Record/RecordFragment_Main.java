@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,7 @@ public class RecordFragment_Main extends Fragment {
 
             switch (position){
                 case 0:
-                    fragment = new RecordFragment();
+                    fragment = new RecordFragment_NotFinished();
 
                     break;
                 case 1:

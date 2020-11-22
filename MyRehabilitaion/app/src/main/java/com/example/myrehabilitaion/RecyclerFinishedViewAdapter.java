@@ -29,9 +29,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFinishedViewAdapter.ViewHolder> {
@@ -145,7 +143,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
                     }
 
                     mDlog_case = new Dialog(v.getContext());
-                    mDlog_case.setContentView(R.layout.dlg_case);
+                    mDlog_case.setContentView(R.layout.dlg_caseinfo);
                     mDlog_case.setCancelable(true);
                     mDlog_case.show();
 
@@ -222,7 +220,7 @@ public class RecyclerFinishedViewAdapter extends RecyclerView.Adapter<RecyclerFi
     @Override
     public RecyclerFinishedViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // 建立一個 view。
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_targetitem, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_finished, viewGroup, false);
 
         // 建立這個 view 的 ViewHolder。
         RecyclerFinishedViewAdapter.ViewHolder viewHolder = new RecyclerFinishedViewAdapter.ViewHolder(v);

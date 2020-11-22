@@ -12,6 +12,7 @@
     <uses-permission android:name="android.Manifest.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -24,10 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".Frag_InstantRecord" />
-        <activity android:name=".Main" />
-        <activity android:name=".Class_Registeration" />
+        <activity android:name=".Main_Activity" />
+        <activity android:name=".Activity_Registeration" />
         <activity android:name=".MainActivity_Calendar" />
-        <activity android:name=".Class_Login" >
+        <activity android:name=".Activity_Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

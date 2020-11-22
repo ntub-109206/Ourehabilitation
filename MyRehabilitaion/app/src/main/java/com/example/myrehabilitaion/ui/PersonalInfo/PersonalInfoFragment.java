@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -37,13 +38,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.myrehabilitaion.ColorfulActivity;
+import com.example.myrehabilitaion.Frag_ColorfulCalendar;
 import com.example.myrehabilitaion.GlobalVariable;
-import com.example.myrehabilitaion.MainActivity_Calendar;
 import com.example.myrehabilitaion.R;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -70,13 +70,16 @@ public class PersonalInfoFragment extends Fragment {
     TextView psinfo_email;
     TextView psinfo_phonenum;
 
+
     Statement statement = null;
+    Statement statement_pic = null;
 
     Button btn;
 
     GlobalVariable gv;
     String userid;
     byte[] bArray;
+    byte[] byteArray;
     String encodedImage;
 
 
@@ -109,6 +112,9 @@ public class PersonalInfoFragment extends Fragment {
         psinfo_name = root.findViewById(R.id.psinfo_name);
         psinfo_email = root.findViewById(R.id.psinfo_email);
         psinfo_phonenum = root.findViewById(R.id.info_phonenum);
+        bigPic = root.findViewById(R.id.bigPic);
+        registerForContextMenu(bigPic);
+
 
 
         byte[] imgByte = null;
@@ -134,13 +140,17 @@ public class PersonalInfoFragment extends Fragment {
                 userid = gv.getUserID();
 
                 statement = connection.createStatement();
-                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, phone FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
+                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, phone,pic FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
 
                 while (resultSet01.next()){
                     psinfo_name.setText(resultSet01.getString(1).toString().trim());
                     psinfo_email.setText(resultSet01.getString(2).toString().trim());
                     psinfo_phonenum.setText(resultSet01.getString(3).toString().trim());
-//                    bigPic.setImageBitmap(BitmapFactory.decodeByteArray( resultSet01.getBytes(4), 0,resultSet01.getString(4).length()));
+
+                    byte[] decodeString = Base64.decode(resultSet01.getString(4).toString().trim(), Base64.DEFAULT);
+                    Bitmap decodebitmap = BitmapFactory.decodeByteArray(
+                            decodeString, 0, decodeString.length);
+                    bigPic.setImageBitmap(decodebitmap);
                 }
 
 
@@ -156,8 +166,6 @@ public class PersonalInfoFragment extends Fragment {
         }
  //--------------------SQL--------------------
 
-        bigPic = root.findViewById(R.id.bigPic);
-        registerForContextMenu(bigPic);
 
         //讀取手機解析度
         mPhone = new DisplayMetrics();
@@ -248,7 +256,18 @@ public class PersonalInfoFragment extends Fragment {
                         .setAction("ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                bigPic.setImageDrawable(null);
+                                Bitmap default_icon = BitmapFactory.decodeResource(getContext().getResources(),
+                                        R.drawable.man);
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                default_icon.compress(Bitmap.CompressFormat.JPEG, 30, stream);
+                                byteArray = stream.toByteArray();
+                                encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                                bigpic_sync_todb bigpic_sync_todb = new bigpic_sync_todb();
+                                bigpic_sync_todb.execute();
+
+                                bigPic.setImageBitmap(default_icon);
+
                                 Toast.makeText(getActivity(), "您刪除了大頭貼", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -276,35 +295,47 @@ public class PersonalInfoFragment extends Fragment {
                 //讀取照片，型態為Bitmap
                 BitmapFactory.Options mOptions = new BitmapFactory.Options();
 //Size=2為將原始圖片縮小1/2，Size=4為1/4，以此類推
-                mOptions.inSampleSize = 1;
+                mOptions.inSampleSize = 4;
                 Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri),null,mOptions);
 
                 //判斷照片為橫向或者為直向，並進入ScalePic判斷圖片是否要進行縮放
                 if(bitmap.getWidth()>bitmap.getHeight()) {
 //                    ScalePic(bitmap, mPhone.heightPixels);
 //                    Bitmap bm = toRoundBitmap(bitmap);
+
                     bigPic.setImageBitmap(bitmap);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
+                    byteArray = stream.toByteArray();
+                    encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-//                    Bitmap photo = bitmap;
-//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//                    bArray = bos.toByteArray();
+                    bigpic_sync_todb bigpic_sync_todb = new bigpic_sync_todb();
+                    bigpic_sync_todb.execute();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-//                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
-//                    sync_todb.execute();
                 }
                 else {
 //                    ScalePic(bitmap, mPhone.widthPixels);
 //                    Bitmap bm = toRoundBitmap(bitmap);
                     bigPic.setImageBitmap(bitmap);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
+                    byteArray = stream.toByteArray();
+                    encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-//                    Bitmap photo = bitmap;
-//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//                    bArray = bos.toByteArray();
-//
-//                    bigpic_sync_todb sync_todb = new bigpic_sync_todb();
-//                    sync_todb.execute();
+                    bigpic_sync_todb bigpic_sync_todb = new bigpic_sync_todb();
+                    bigpic_sync_todb.execute();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
             }
             catch (FileNotFoundException e)
@@ -315,13 +346,15 @@ public class PersonalInfoFragment extends Fragment {
             Bundle extras = data.getExtras();
             Bitmap bp = (Bitmap)  extras.get("data");
 
-//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//            bp.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//            bArray = bos.toByteArray();
-//            encodedImage = Base64.encodeToString(bArray, Base64.DEFAULT);
-
 //                Bitmap bm = toRoundBitmap(bp);
             bigPic.setImageBitmap(bp);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bp.compress(Bitmap.CompressFormat.JPEG, 30, stream);
+            byteArray = stream.toByteArray();
+            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            bigpic_sync_todb bigpic_sync_todb = new bigpic_sync_todb();
+            bigpic_sync_todb.execute();
 
         }
 
@@ -377,7 +410,7 @@ public class PersonalInfoFragment extends Fragment {
 
             switch (position){
                 case 0:
-                    fragment = new ColorfulActivity();
+                    fragment = new Frag_ColorfulCalendar();
 
                     break;
             }
@@ -403,11 +436,6 @@ public class PersonalInfoFragment extends Fragment {
     }
 
     public class bigpic_sync_todb extends AsyncTask<String, String , String> {
-        private String Str_Pic;
-
-        bigpic_sync_todb(String str_pic){
-            this.Str_Pic = str_pic;
-        }
 
         String z = "";
         Boolean isSuccess = false;
@@ -418,26 +446,28 @@ public class PersonalInfoFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(),"您新增了新的目標並傳輸成功", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected String doInBackground(String... strings) {
 
-            //Toast.makeText(getContext(),"測試來了", Toast.LENGTH_SHORT).show();
-
             if (connection!=null){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            statement_pic = connection.createStatement();
+                            statement_pic.executeQuery("UPDATE dbo.registered SET pic= '"+encodedImage+"' WHERE user_id="+Integer.valueOf(gv.getUserID())+";");
 
-                try{
+                        }catch (Exception e){
 
-                    statement = connection.createStatement();
-                    Log.d("test", Str_Pic);
-                    statement.executeQuery("UPDATE dbo.registered SET pic= '"+Str_Pic+"' WHERE user_id="+Integer.valueOf(gv.getUserID())+";");
+                            isSuccess = false;
+                            z = e.getMessage();
 
-                }catch (Exception e){
-                    isSuccess = false;
-                    z = e.getMessage();
-                }
+                        }
+
+                    }
+                }).start();
             }
             else {
                 Toast toast = Toast.makeText(getContext(),"目標數據傳輸失敗", Toast.LENGTH_SHORT);

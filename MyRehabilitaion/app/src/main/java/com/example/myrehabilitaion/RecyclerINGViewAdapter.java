@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
@@ -151,7 +149,7 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
                 @Override
                 public boolean onLongClick(View v) {
                     mDlog_case = new Dialog(v.getContext());
-                    mDlog_case.setContentView(R.layout.dlg_case);
+                    mDlog_case.setContentView(R.layout.dlg_caseinfo);
                     mDlog_case.setCancelable(true);
                     mDlog_case.show();
 
@@ -256,7 +254,7 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
     @Override
     public RecyclerINGViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // 建立一個 view。
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerexampleview, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_notfinished, viewGroup, false);
 
         // 建立這個 view 的 ViewHolder。
         RecyclerINGViewAdapter.ViewHolder viewHolder = new RecyclerINGViewAdapter.ViewHolder(v);

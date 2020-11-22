@@ -8,10 +8,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,11 +22,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.myrehabilitaion.GlobalVariable;
 import com.example.myrehabilitaion.R;
-import com.example.myrehabilitaion.ui.Record.RecordFragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -49,10 +45,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Text;
-
-import java.lang.ref.WeakReference;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -64,8 +56,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import static com.example.myrehabilitaion.R.layout.simple_list_item_01;
 
@@ -197,12 +187,12 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
                 //------------------------------------------建立數據------------------------------------------
                 values01 = new ArrayList<>();
 
-                for(int i= 0;i<listStr01.size() ;i++){
+                for(int i= listStr01.size()-7;i<listStr01.size() ;i++){
                     values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
                 }
                 // greenLine
                 values01_end = new ArrayList<>();
-                values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(6))));
+                values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(listStr01.size()-1))));
 
                 ArrayList<Entry> values02 = new ArrayList<>();
 //        for(int i=0;i < listStr02.size();i++){
@@ -221,7 +211,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
 
 
 
-                for (int j = 6; j >-1 ; j--){
+                for (int j = listStr01.size()-1; j >listStr01.size()-8 ; j--){
                     case_list.add(new NameMapping(listStr02.get(j),listStr03.get(j),listStr01.get(j)));
                 }
 
@@ -239,13 +229,13 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
 //------------------------------------------建立數據------------------------------------------
         values01 = new ArrayList<>();
 
-        for(int i= 0;i<listStr01.size() ;i++){
+        for(int i= listStr01.size()-7;i<listStr01.size() ;i++){
             values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
         }
         Log.d("test", String.valueOf(values01));
         // greenLine
         ArrayList<Entry> values01_end = new ArrayList<>();
-        values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(6))));
+        values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(listStr01.size() -1))));
 
         ArrayList<Entry> values02 = new ArrayList<>();
 //        for(int i=0;i < listStr02.size();i++){
@@ -274,7 +264,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         txth02.setText("復健部位");
         txth03.setText("達成(次)");
 
-        for (int j = 6; j >-1 ; j--){
+        for (int j = listStr01.size()-1; j >listStr01.size()-8 ; j--){
             case_list.add(new NameMapping(listStr02.get(j),listStr03.get(j),listStr01.get(j)));
         }
 
@@ -402,6 +392,7 @@ HORIZONTAL_BEZIER水平曲線
         YAxis rightAxis = chart.getAxisRight();//獲取右側的軸線
         rightAxis.setEnabled(false);//不顯示右側Y軸
         YAxis leftAxis = chart.getAxisLeft();//獲取左側的軸線
+
 
         leftAxis.setLabelCount(5);//Y軸標籤個數
         leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色

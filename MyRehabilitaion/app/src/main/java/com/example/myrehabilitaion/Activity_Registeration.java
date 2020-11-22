@@ -1,9 +1,6 @@
 package com.example.myrehabilitaion;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,22 +10,16 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 
 import java.io.ByteArrayOutputStream;
@@ -37,22 +28,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import javax.xml.datatype.Duration;
+public class Activity_Registeration extends AppCompatActivity  {
 
-import static android.widget.Toast.LENGTH_LONG;
-
-public class Class_Registeration extends AppCompatActivity  {
-
-    EditText mname,memail,mpassword,mpasswordconfirm,mcellphone,mbirthday;
-    Button registerbtn;
-    ImageButton checkemail;
-    RadioGroup chkgender;
-    String chkgen;
-    registeruser_checkemailid registeruser_checkemailid;
+    EditText edt_name,edt_email,edt_password,edt_passwordConfirm,edt_phoneNumber,edt_birthday;
+    Button btn_register;
+    RadioGroup radioGrp_gender;
+    ImageButton imgBtn_emailInspect;
+    String str_gen;
+    server_checkEmailID server_checkeEmailID;
 
 
 
@@ -79,7 +64,7 @@ public class Class_Registeration extends AppCompatActivity  {
         photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
         bArray = bos.toByteArray();
 
-        ActivityCompat.requestPermissions(Class_Registeration.this,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(Activity_Registeration.this,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -99,39 +84,38 @@ public class Class_Registeration extends AppCompatActivity  {
 
         }
 
-        registeruser_checkemailid = new registeruser_checkemailid();
+        server_checkeEmailID = new server_checkEmailID();
 
-        mname = null;
-        memail = null;
-        mpassword = null;
-        mpasswordconfirm = null;
-        mcellphone = null;
-        mbirthday = null;
+        edt_name = null;
+        edt_email = null;
+        edt_password = null;
+        edt_passwordConfirm = null;
+        edt_phoneNumber = null;
+        edt_birthday = null;
 
-        mname = (EditText)findViewById(R.id.edtName);
-        memail = (EditText)findViewById(R.id.edtEmail);
-        mpassword = (EditText)findViewById(R.id.edtPassword);
-        mpasswordconfirm = findViewById(R.id.edtPasswordConfirm);
-        mcellphone =findViewById(R.id.edtPhone);
-        chkgender = findViewById(R.id.chkgendergrp);
-        registerbtn = (Button)findViewById(R.id.mbtnRegistr);
+        edt_name = (EditText)findViewById(R.id.edtName);
+        edt_email = (EditText)findViewById(R.id.edtEmail);
+        edt_password = (EditText)findViewById(R.id.edtPassword);
+        edt_passwordConfirm = findViewById(R.id.edtPasswordConfirm);
+        edt_phoneNumber =findViewById(R.id.edtPhone);
+        radioGrp_gender = findViewById(R.id.chkgendergrp);
+        btn_register = (Button)findViewById(R.id.mbtnRegistr);
 
-        switch(chkgender.getCheckedRadioButtonId()){
+        switch(radioGrp_gender.getCheckedRadioButtonId()){
             case R.id.chkman:
-                chkgen = "男"; //顯示結果
+                str_gen = "男"; //顯示結果
                 break;
             case R.id.chkwmn:
-                chkgen = "女"; //顯示結果
+                str_gen = "女"; //顯示結果
                 break;
         }
 
-        checkemail = findViewById(R.id.checkemail);
-        checkemail.setOnClickListener(new View.OnClickListener() {
+        imgBtn_emailInspect = findViewById(R.id.checkemail);
+        imgBtn_emailInspect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                registeruser_checkemailid = new registeruser_checkemailid();
-                registeruser_checkemailid.execute();
+                server_checkeEmailID.execute();
 
                 try {
                     Thread.sleep(100);
@@ -144,14 +128,14 @@ public class Class_Registeration extends AppCompatActivity  {
         });
 
 
-        mbirthday = findViewById(R.id.edtBirthday);
-        mbirthday.setOnClickListener(new View.OnClickListener() {
+        edt_birthday = findViewById(R.id.edtBirthday);
+        edt_birthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeKeyBoard(v);
                 Calendar now = Calendar.getInstance();
 
-                DatePickerDialog dataPickerDialog = new DatePickerDialog(Class_Registeration.this,datePickerDlgOnDataSet, now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+                DatePickerDialog dataPickerDialog = new DatePickerDialog(Activity_Registeration.this,datePickerDlgOnDataSet, now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
 
                 dataPickerDialog.setTitle("選擇日期");
                 dataPickerDialog.setMessage("請選擇您的生日日期");
@@ -162,17 +146,15 @@ public class Class_Registeration extends AppCompatActivity  {
         });
 
 
-        registerbtn.setOnClickListener(new View.OnClickListener() {
+        btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                if(mname.getText().toString().trim().equals("") ||memail.getText().toString().trim().equals("")||mpassword.getText().toString().trim().equals("")||mcellphone.getText().toString().trim().equals("")||mbirthday.getText().toString().trim().equals("")){
-                    Toast.makeText(Class_Registeration.this, "請完成資料填寫", Toast.LENGTH_SHORT).show();
+                if(edt_name.getText().toString().trim().equals("") ||edt_email.getText().toString().trim().equals("")||edt_password.getText().toString().trim().equals("")||edt_phoneNumber.getText().toString().trim().equals("")||edt_birthday.getText().toString().trim().equals("")){
+                    Toast.makeText(Activity_Registeration.this, "請完成資料填寫", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    registeruser_checkemailid = new registeruser_checkemailid();
-                    registeruser_checkemailid.execute();
+                    server_checkeEmailID.execute();
 
                     try {
                         Thread.sleep(100);
@@ -180,12 +162,12 @@ public class Class_Registeration extends AppCompatActivity  {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(mpassword.length() < 6){
-                        Toast.makeText(Class_Registeration.this, "密碼太短", Toast.LENGTH_SHORT).show();
+                    if(edt_password.length() < 6){
+                        Toast.makeText(Activity_Registeration.this, "密碼太短", Toast.LENGTH_SHORT).show();
                     }else{
-                        if(mpassword.getText().toString().trim().matches(mpasswordconfirm.getText().toString().trim())){
-                            registeruser registeruser =new registeruser();
-                            registeruser.execute();
+                        if(edt_password.getText().toString().trim().matches(edt_passwordConfirm.getText().toString().trim())){
+                            server_registerUser registerUser =new server_registerUser();
+                            registerUser.execute();
 
                             try {
                                 Thread.sleep(100);
@@ -195,10 +177,9 @@ public class Class_Registeration extends AppCompatActivity  {
                             }
 
                         }else{
-                            mpassword.setText("");
-                            mpasswordconfirm.setText("");
-                            Toast.makeText(Class_Registeration.this, "密碼輸入不一致", Toast.LENGTH_SHORT).show();
-
+                            edt_password.setText("");
+                            edt_passwordConfirm.setText("");
+                            Toast.makeText(Activity_Registeration.this, "密碼輸入不一致", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -217,13 +198,13 @@ public class Class_Registeration extends AppCompatActivity  {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-            mbirthday.setText(
+            edt_birthday.setText(
                     String.valueOf(year) + "-" + String.valueOf(month +1) + "-" + String.valueOf(dayOfMonth)
             );
         }
     };
 
-    public class registeruser extends AsyncTask<String, String , String>{
+    public class server_registerUser extends AsyncTask<String, String , String>{
 
         String z = "";
         Boolean isSuccess = false;
@@ -234,14 +215,14 @@ public class Class_Registeration extends AppCompatActivity  {
 
         @Override
         protected void onPostExecute(String s) {
-           Toast.makeText(Class_Registeration.this,"註冊成功", Toast.LENGTH_SHORT).show();
+           Toast.makeText(Activity_Registeration.this,"註冊成功", Toast.LENGTH_SHORT).show();
 
 
             GlobalVariable gv = (GlobalVariable)getApplicationContext();
-            gv.setUserEmail(memail.getText().toString().trim());
-            gv.setUserPassword(mpassword.getText().toString().trim());
+            gv.setUserEmail(edt_email.getText().toString().trim());
+            gv.setUserPassword(edt_password.getText().toString().trim());
 
-            Intent intent = new Intent(Class_Registeration.this, Class_Login.class);
+            Intent intent = new Intent(Activity_Registeration.this, Activity_Login.class);
             startActivity(intent);
         }
 
@@ -251,7 +232,7 @@ public class Class_Registeration extends AppCompatActivity  {
             if (connection!=null){
                 try{
                     statement = connection.createStatement();
-                    statement.executeQuery("INSERT INTO dbo.registered (username, email, password ,phone, gender, birthday, pic) VALUES ('"+mname.getText().toString().trim()+"','"+memail.getText().toString().trim()+"','"+ Encrypt.SHA512(mpassword.getText().toString().trim())+"','"+mcellphone.getText().toString().trim()+"','"+chkgen.toString().trim()+"','"+mbirthday.getText().toString().trim()+"', CAST('"+bArray.toString().trim()+"' AS VARBINARY(MAX)));");
+                    statement.executeQuery("INSERT INTO dbo.registered (username, email, password ,phone, gender, birthday, pic) VALUES ('"+edt_name.getText().toString().trim()+"','"+edt_email.getText().toString().trim()+"','"+ Encrypt.SHA512(edt_password.getText().toString().trim())+"','"+edt_phoneNumber.getText().toString().trim()+"','"+radioGrp_gender.toString().trim()+"','"+edt_birthday.getText().toString().trim()+"', CAST('"+bArray.toString().trim()+"' AS VARBINARY(MAX)));");
 
                 }catch (Exception e){
                     isSuccess = false;
@@ -259,14 +240,14 @@ public class Class_Registeration extends AppCompatActivity  {
                 }
             }
             else {
-                Toast toast = Toast.makeText(Class_Registeration.this,"註冊失敗", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(Activity_Registeration.this,"註冊失敗", Toast.LENGTH_SHORT);
                 toast.show();
             }
             return z;
         }
     }
 
-    public class registeruser_checkemailid extends AsyncTask<String, String , String>{
+    public class server_checkEmailID extends AsyncTask<String, String , String>{
 
         String z = "";
         Boolean isSuccess = false;
@@ -286,23 +267,23 @@ public class Class_Registeration extends AppCompatActivity  {
             if (connection!=null){
                 try{
                     statement = connection.createStatement();
-                    ResultSet rs = statement.executeQuery("SELECT * FROM dbo.registered WHERE email = '" + memail.getText().toString().trim() +  "';");
+                    ResultSet rs = statement.executeQuery("SELECT * FROM dbo.registered WHERE email = '" + edt_email.getText().toString().trim() +  "';");
 
 
                     if (rs.next()) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(Class_Registeration.this, "此Email已被使用", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_Registeration.this, "此Email已被使用", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        memail.setText("");
+                        edt_email.setText("");
                     }else{
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(Class_Registeration.this,"此Email可使用", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_Registeration.this,"此Email可使用", Toast.LENGTH_SHORT).show();
                             }
                         });
 

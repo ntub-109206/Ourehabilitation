@@ -43,7 +43,7 @@
                 android:id="@+id/chart1"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@drawable/btn_design03"
+                android:background="@drawable/bg_01"
                 android:layout_below="@+id/spinner">
             </com.github.mikephil.charting.charts.LineChart>
         </LinearLayout>

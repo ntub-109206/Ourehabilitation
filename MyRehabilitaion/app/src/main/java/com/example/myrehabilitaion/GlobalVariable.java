@@ -22,6 +22,7 @@ public class GlobalVariable extends Application {
 
     private String DeviceAddress = null;
     private String DeviceName = null;
+    private String Big_Pic;
 
 
     @Override
@@ -47,6 +48,7 @@ public class GlobalVariable extends Application {
     public void setCaseName(String casename){ this.CaseID = casename; }
     public void setStr_Count(String count){ this.Str_Count = count; }
     public void setClickDate(String clickDate){ this.ClickDate = clickDate; }
+    public void setBig_Pic(String big_pic){ this.Big_Pic = big_pic; }
     public void setContext_NewFrag(Fragment frag){ this.Context_NewFrag = frag;}
 
     public void setDeviceAddress(String deviceAddress){ this.DeviceAddress = deviceAddress; }
@@ -73,6 +75,7 @@ public class GlobalVariable extends Application {
         return Str_Count;
     }
     public String getClickDate() { return ClickDate; }
+    public String getBig_Pic() { return Big_Pic; }
     public Fragment getNew_Frag() {
         return Context_NewFrag;
     }

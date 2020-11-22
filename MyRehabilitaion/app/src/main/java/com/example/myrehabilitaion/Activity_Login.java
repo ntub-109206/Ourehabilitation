@@ -1,9 +1,6 @@
 package com.example.myrehabilitaion;
-import com.example.myrehabilitaion.*;
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,8 +9,6 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -26,15 +21,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 
-public class Class_Login extends AppCompatActivity {
+public class Activity_Login extends AppCompatActivity {
 
 
-    Button login,register;
+    Button btn_login,btn_register;
     EditText edt_email, edt_password;
-    CheckBox remember;
     ProgressBar progressBar;
 
     private static String ip = "140.131.114.241";
@@ -53,12 +46,12 @@ public class Class_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_login);
 
-        ActivityCompat.requestPermissions(Class_Login.this,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(Activity_Login.this,new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
 
-        login = findViewById(R.id.btn_visit);
+        btn_login = findViewById(R.id.btn_visit);
         edt_email= findViewById(R.id.edtEmailLogin);
         edt_password = findViewById(R.id.editPasswordLogin);
-        register = findViewById(R.id.registerar_button);
+        btn_register = findViewById(R.id.registerar_button);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -120,21 +113,21 @@ public class Class_Login extends AppCompatActivity {
 
         }
 
-        login.setOnClickListener(new View.OnClickListener() {
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                checkLogin checkLogin = new checkLogin();
+                server_checkLogin checkLogin = new server_checkLogin();
                 checkLogin.execute();
 
 
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
+        btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Class_Login.this, Class_Registeration.class);
+                Intent intent = new Intent(Activity_Login.this, Activity_Registeration.class);
                 startActivity(intent);
 
             }
@@ -142,7 +135,7 @@ public class Class_Login extends AppCompatActivity {
 
     }
 
-    class checkLogin extends AsyncTask<String, String, String> {
+    class server_checkLogin extends AsyncTask<String, String, String> {
 
         String z = null;
         Boolean isSuccess = false;
@@ -171,6 +164,7 @@ public class Class_Login extends AppCompatActivity {
                 if (rs.next()) {
                     gv.setUserID(rs.getString(1).toString().trim());
                     gv.setUserName(rs.getString(2).toString().trim());
+                    gv.setBig_Pic(rs.getString(8).toString().trim());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -190,14 +184,14 @@ public class Class_Login extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Intent intent = new Intent(Class_Login.this, Main.class);
+                    Intent intent = new Intent(Activity_Login.this, Main_Activity.class);
                     startActivity(intent);
                     finish();
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(Class_Login.this, "帳號或密碼有誤", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Activity_Login.this, "帳號或密碼有誤", Toast.LENGTH_LONG).show();
                         }
                     });
 

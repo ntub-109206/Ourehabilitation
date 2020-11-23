@@ -49,7 +49,7 @@ public class RecordFragment_Main extends Fragment {
                 case 0:
                     return "正在進行的復健";
                 case 1:
-                    return "完成的復健";
+                    return "已完成的復健";
                 default:
                     return null;
             }

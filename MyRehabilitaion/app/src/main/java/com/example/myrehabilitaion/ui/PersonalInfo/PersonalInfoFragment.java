@@ -1,6 +1,7 @@
 package com.example.myrehabilitaion.ui.PersonalInfo;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +27,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +41,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.myrehabilitaion.Activity_Registeration;
+import com.example.myrehabilitaion.Encrypt;
 import com.example.myrehabilitaion.Frag_ColorfulCalendar;
 import com.example.myrehabilitaion.GlobalVariable;
 import com.example.myrehabilitaion.R;
@@ -55,6 +60,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class PersonalInfoFragment extends Fragment {
  //---------------------SQL---------------------
+    ResultSet resultSet01;
 
     private static String ip = "140.131.114.241";
     private static String port = "1433";
@@ -69,10 +75,28 @@ public class PersonalInfoFragment extends Fragment {
     TextView psinfo_name;
     TextView psinfo_email;
     TextView psinfo_phonenum;
+    ImageButton psinfo_imgbtn;
+    Dialog mdlg_changeinfo;
+    Dialog mdlg_changepasswd;
+
+    EditText minfoname_change;
+    EditText minfoemail_change;
+    EditText minfophonenum_change;
+
+    EditText minfo_originpasswd;
+    EditText minfo_newpasswd;
+    EditText minfo_newpasswdagain;
+
+    String info_name;
+    String info_email;
+    String info_phone;
 
 
     Statement statement = null;
     Statement statement_pic = null;
+    Statement statement_info = null;
+    Statement statement_passwd = null;
+    Statement statement_chkemail =null;
 
     Button btn;
 
@@ -112,6 +136,7 @@ public class PersonalInfoFragment extends Fragment {
         psinfo_name = root.findViewById(R.id.psinfo_name);
         psinfo_email = root.findViewById(R.id.psinfo_email);
         psinfo_phonenum = root.findViewById(R.id.info_phonenum);
+
         bigPic = root.findViewById(R.id.bigPic);
         registerForContextMenu(bigPic);
 
@@ -140,12 +165,15 @@ public class PersonalInfoFragment extends Fragment {
                 userid = gv.getUserID();
 
                 statement = connection.createStatement();
-                ResultSet resultSet01 = statement.executeQuery("SELECT username, email, phone,pic FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
+                resultSet01 = statement.executeQuery("SELECT username, email, phone,pic FROM dbo.registered WHERE user_id = " + String.valueOf(userid) +";");
 
                 while (resultSet01.next()){
                     psinfo_name.setText(resultSet01.getString(1).toString().trim());
                     psinfo_email.setText(resultSet01.getString(2).toString().trim());
                     psinfo_phonenum.setText(resultSet01.getString(3).toString().trim());
+                    info_name=resultSet01.getString(1).toString().trim();
+                    info_email=resultSet01.getString(2).toString().trim();
+                    info_phone=resultSet01.getString(3).toString().trim();
 
                     byte[] decodeString = Base64.decode(resultSet01.getString(4).toString().trim(), Base64.DEFAULT);
                     Bitmap decodebitmap = BitmapFactory.decodeByteArray(
@@ -164,6 +192,82 @@ public class PersonalInfoFragment extends Fragment {
             Toast toast = Toast.makeText(getActivity(),"connection is null", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        psinfo_imgbtn = root.findViewById(R.id.imgbtn_changeinfo);
+        psinfo_imgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mdlg_changeinfo = new Dialog(v.getContext());
+                mdlg_changeinfo.setContentView(R.layout.dlg_changeinfo);
+                mdlg_changeinfo.setCancelable(true);
+                mdlg_changeinfo.show();
+                minfoname_change = mdlg_changeinfo.findViewById(R.id.edt_infoname);
+                minfoemail_change = mdlg_changeinfo.findViewById(R.id.edt_infoemail);
+                minfophonenum_change = mdlg_changeinfo.findViewById(R.id.edt_infophonenum);
+
+                minfoname_change.setText(info_name);
+                minfoemail_change.setText(info_email);
+                minfophonenum_change.setText(info_phone);
+
+                Button minfo_chginfo = mdlg_changeinfo.findViewById(R.id.btn_chginfo);
+                minfo_chginfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chginfo_sync_todb chginfo_sync_todb = new chginfo_sync_todb();
+                        chginfo_sync_todb.execute();
+
+                    }
+                });
+
+                Button btn_changepasswd = mdlg_changeinfo.findViewById(R.id.btn_changepasswd);
+                btn_changepasswd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mdlg_changepasswd = new Dialog(v.getContext());
+                        mdlg_changepasswd.setContentView(R.layout.dlg_changepasswd);
+                        mdlg_changepasswd.setCancelable(true);
+                        mdlg_changepasswd.show();
+
+                        minfo_originpasswd = mdlg_changepasswd.findViewById(R.id.edt_oldpasswd);
+                        minfo_newpasswd = mdlg_changepasswd.findViewById(R.id.edt_newpasswd);
+                        minfo_newpasswdagain = mdlg_changepasswd.findViewById(R.id.edt_newpasswdagain);
+                        Button mbtn_chgpasswd = mdlg_changepasswd.findViewById(R.id.btn_checkconfirm);
+                        mbtn_chgpasswd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(Encrypt.SHA512(minfo_originpasswd.getText().toString().trim()).equals(gv.getUserPassword())){
+                                    if(minfo_newpasswd.length() < 6){
+                                        Toast.makeText(getContext(), "密碼太短", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        if(minfo_newpasswd.getText().toString().trim().equals("") || minfo_newpasswdagain.getText().toString().trim().equals("")){
+
+                                            Toast.makeText(getContext(),"請輸入密碼或確認密碼",Toast.LENGTH_SHORT).show();
+                                        }else {
+                                            if(minfo_newpasswd.getText().toString().trim().equals(minfo_newpasswdagain.getText().toString().trim())){
+                                                chgpasswd_sync_todb chgpasswd_sync_todb = new chgpasswd_sync_todb();
+                                                chgpasswd_sync_todb.execute();
+
+                                                Toast.makeText(getContext(),"密碼更改完成",Toast.LENGTH_SHORT).show();
+
+                                            }else{
+                                                Toast.makeText(getContext(),"密碼輸入不一致",Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                    }
+                                }else{
+                                    Toast.makeText(getContext(),"舊密碼輸入錯誤",Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+
+
+                    }
+                });
+
+            }
+        });
  //--------------------SQL--------------------
 
 
@@ -470,8 +574,119 @@ public class PersonalInfoFragment extends Fragment {
                 }).start();
             }
             else {
-                Toast toast = Toast.makeText(getContext(),"目標數據傳輸失敗", Toast.LENGTH_SHORT);
-                toast.show();
+            }
+            return z;
+        }
+    }
+
+    public class chginfo_sync_todb extends AsyncTask<String, String , String> {
+
+        String z = "";
+        Boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            if (connection!=null){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            statement_chkemail = connection.createStatement();
+                            statement_info = connection.createStatement();
+                            ResultSet rs = statement_chkemail.executeQuery("SELECT * FROM dbo.registered WHERE email = '" + minfoemail_change.getText().toString().trim() +  "';");
+                            if(minfoemail_change.getText().toString().trim().equals("")||minfoname_change.getText().toString().trim().equals("")||minfophonenum_change.getText().toString().trim().equals("")){
+                                Toast.makeText(getContext(), "請填入資料", Toast.LENGTH_SHORT).show();
+                            }else{
+                                if(minfoemail_change.getText().toString().trim().equals(gv.getUserEmail().toString().trim()) ){
+                                    statement_info.executeQuery("UPDATE dbo.registered SET username='"+minfoname_change.getText()+"', email='"+minfoemail_change.getText()+"', phone='"+minfophonenum_change.getText()+"' WHERE user_id="+Integer.valueOf(gv.getUserID())+";");
+                                }else{
+                                    if (rs.next()) {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getContext(), "此Email已被註冊", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        minfoemail_change.setText("");
+                                    }else{
+                                        statement_info.executeQuery("UPDATE dbo.registered SET username='"+minfoname_change.getText()+"', email='"+minfoemail_change.getText()+"', phone='"+minfophonenum_change.getText()+"' WHERE user_id="+Integer.valueOf(gv.getUserID())+";");
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getContext(),"成功更改資料",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+
+                                    }
+                                }
+                            }
+
+                        }catch (Exception e){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"成功更改資料",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            isSuccess = false;
+                            z = e.getMessage();
+
+                        }
+
+                    }
+                }).start();
+            }
+            else {
+            }
+            return z;
+        }
+    }
+
+    public class chgpasswd_sync_todb extends AsyncTask<String, String , String> {
+
+        String z = "";
+        Boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            if (connection!=null){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            statement_passwd = connection.createStatement();
+                            statement_passwd.executeQuery("UPDATE dbo.registered SET password='"+  Encrypt.SHA512(String.valueOf(minfo_newpasswd.getText()))+"' WHERE user_id="+Integer.valueOf(gv.getUserID())+";");
+
+                        }catch (Exception e){
+
+                            isSuccess = false;
+                            z = e.getMessage();
+
+                        }
+
+                    }
+                }).start();
+            }
+            else {
             }
             return z;
         }

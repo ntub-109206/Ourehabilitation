@@ -8,11 +8,12 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_05"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,52 +26,53 @@
             android:background="@drawable/btn_design01"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/bigPic"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:src="@drawable/man"
                 android:padding="20dp"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#FFffffff"/>
+                android:src="@drawable/man"
+                app:civ_border_color="#FFffffff"
+                app:civ_border_width="2dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/btn_design02"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/btn_design02"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/psinfo_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="name"
                     android:layout_weight="1"
-                    android:textAlignment="center"
                     android:gravity="center_vertical"
+                    android:text="name"
+                    android:textAlignment="center"
                     android:textColor="#BF111111"
                     android:textSize="20dp"
                     tools:ignore="RtlCompat" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/psinfo_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="e-mail"
                         android:gravity="center_vertical"
-                        android:textSize="14sp"
-                        android:textColor="#BF111111"
+                        android:text="e-mail"
                         android:textAlignment="center"
+                        android:textColor="#BF111111"
+                        android:textSize="14sp"
                         tools:ignore="RtlCompat" />
 
                     <TextView
@@ -78,11 +80,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="phone number"
                         android:gravity="center_vertical"
-                        android:textSize="14sp"
-                        android:textColor="#BF111111"
+                        android:text="phone number"
                         android:textAlignment="center"
+                        android:textColor="#BF111111"
+                        android:textSize="14sp"
                         tools:ignore="RtlCompat" />
 
                 </LinearLayout>
@@ -94,38 +96,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_design01"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
-            android:padding="5dp"
-            android:orientation="vertical">
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_design01"
+            android:orientation="vertical"
+            android:padding="5dp">
+
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textAlignment="center"
                 android:gravity="center_vertical"
+                android:text="看診日程紀錄"
+                android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="24sp"
-                android:text="看診日程紀錄"
                 tools:ignore="RtlCompat" />
 
-    <!--        <com.google.android.material.tabs.TabLayout-->
-    <!--            android:id="@+id/tabLayout"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="50dp"-->
-    <!--            android:background="@drawable/bg_06"-->
-    <!--            app:tabIndicatorColor="#ffffff" />-->
+            <!--        <com.google.android.material.tabs.TabLayout-->
+            <!--            android:id="@+id/tabLayout"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="50dp"-->
+            <!--            android:background="@drawable/bg_06"-->
+            <!--            app:tabIndicatorColor="#ffffff" />-->
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
-                android:padding="5dp"
-                android:background="@drawable/btn_design02"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_design02"
+                android:padding="5dp" />
         </LinearLayout>
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/imgbtn_changeinfo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/edit"
+        android:padding="7dp"
+        android:background="@drawable/btn_design02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

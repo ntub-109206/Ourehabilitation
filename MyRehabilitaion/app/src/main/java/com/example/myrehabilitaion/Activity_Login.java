@@ -170,7 +170,7 @@ public class Activity_Login extends AppCompatActivity {
                         public void run() {
 //                            Toast.makeText(Class_Login.this, "登入成功", Toast.LENGTH_LONG).show();
                             gv.setUserEmail(edt_email.getText().toString().trim());
-                            gv.setUserPassword(edt_password.getText().toString().trim());
+                            gv.setUserPassword(Encrypt.SHA512(edt_password.getText().toString().trim()));
 
                         }
                     });

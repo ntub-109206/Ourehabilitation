@@ -379,6 +379,8 @@ public class BT_Test extends Fragment {
                     if (mConnectedThread != null) {
                         mConnectedThread.write("b");
                         onStop();
+                        Toast.makeText(getContext(), "暫停!",
+                                Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), "設備未連接!",
                                 Toast.LENGTH_SHORT).show();

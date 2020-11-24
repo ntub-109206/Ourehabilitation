@@ -235,14 +235,13 @@ public class PersonalInfoFragment extends Fragment {
                         mbtn_chgpasswd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(Encrypt.SHA512(minfo_originpasswd.getText().toString().trim()).equals(gv.getUserPassword())){
-                                    if(minfo_newpasswd.length() < 6){
-                                        Toast.makeText(getContext(), "密碼太短", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        if(minfo_newpasswd.getText().toString().trim().equals("") || minfo_newpasswdagain.getText().toString().trim().equals("")){
-
-                                            Toast.makeText(getContext(),"請輸入密碼或確認密碼",Toast.LENGTH_SHORT).show();
-                                        }else {
+                                if(minfo_newpasswd.getText().toString().trim().equals("") || minfo_newpasswdagain.getText().toString().trim().equals("")||minfo_originpasswd.getText().toString().trim().equals("")){
+                                    Toast.makeText(getContext(), "請填入資料", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    if(Encrypt.SHA512(minfo_originpasswd.getText().toString().trim()).equals(gv.getUserPassword())){
+                                        if(minfo_newpasswd.length() < 6){
+                                            Toast.makeText(getContext(), "密碼太短", Toast.LENGTH_SHORT).show();
+                                        }else{
                                             if(minfo_newpasswd.getText().toString().trim().equals(minfo_newpasswdagain.getText().toString().trim())){
                                                 chgpasswd_sync_todb chgpasswd_sync_todb = new chgpasswd_sync_todb();
                                                 chgpasswd_sync_todb.execute();
@@ -253,10 +252,10 @@ public class PersonalInfoFragment extends Fragment {
                                                 Toast.makeText(getContext(),"密碼輸入不一致",Toast.LENGTH_SHORT).show();
                                             }
                                         }
-
+                                    }else{
+                                        Toast.makeText(getContext(),"舊密碼輸入錯誤",Toast.LENGTH_SHORT).show();
                                     }
-                                }else{
-                                    Toast.makeText(getContext(),"舊密碼輸入錯誤",Toast.LENGTH_SHORT).show();
+
                                 }
 
                             }

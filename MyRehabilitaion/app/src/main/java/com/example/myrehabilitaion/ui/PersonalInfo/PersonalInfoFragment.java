@@ -210,6 +210,13 @@ public class PersonalInfoFragment extends Fragment {
                 minfophonenum_change.setText(info_phone);
 
                 Button minfo_chginfo = mdlg_changeinfo.findViewById(R.id.btn_chginfo);
+                Button minfo_canceldlg = mdlg_changeinfo.findViewById(R.id.btn_checkcancel);
+                minfo_canceldlg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mdlg_changeinfo.dismiss();
+                    }
+                });
                 minfo_chginfo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -232,6 +239,13 @@ public class PersonalInfoFragment extends Fragment {
                         minfo_newpasswd = mdlg_changepasswd.findViewById(R.id.edt_newpasswd);
                         minfo_newpasswdagain = mdlg_changepasswd.findViewById(R.id.edt_newpasswdagain);
                         Button mbtn_chgpasswd = mdlg_changepasswd.findViewById(R.id.btn_checkconfirm);
+                        Button mbtn_canceldlg = mdlg_changepasswd.findViewById(R.id.btn_checkcancel);
+                        mbtn_canceldlg.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mdlg_changepasswd.dismiss();
+                            }
+                        });
                         mbtn_chgpasswd.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

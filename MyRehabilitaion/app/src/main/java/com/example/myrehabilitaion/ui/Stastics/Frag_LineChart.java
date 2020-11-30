@@ -190,6 +190,7 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
                 for(int i= listStr01.size()-7;i<listStr01.size() ;i++){
                     values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
                 }
+
                 // greenLine
                 values01_end = new ArrayList<>();
                 values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(listStr01.size()-1))));
@@ -232,10 +233,10 @@ public class Frag_LineChart extends Fragment implements OnChartGestureListener, 
         for(int i= listStr01.size()-7;i<listStr01.size() ;i++){
             values01.add(new Entry(i,Integer.valueOf(listStr01.get(i))));
         }
-        Log.d("test", String.valueOf(values01));
+
         // greenLine
         ArrayList<Entry> values01_end = new ArrayList<>();
-        values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(listStr01.size() -1))));
+        values01_end.add(new Entry(6, Integer.valueOf(listStr01.get(listStr01.size()-1))));
 
         ArrayList<Entry> values02 = new ArrayList<>();
 //        for(int i=0;i < listStr02.size();i++){
@@ -388,7 +389,7 @@ HORIZONTAL_BEZIER水平曲線
         }
 
         int max_num = Collections.max(int_array);
-        Log.d("test", String.valueOf(max_num));
+
         YAxis rightAxis = chart.getAxisRight();//獲取右側的軸線
         rightAxis.setEnabled(false);//不顯示右側Y軸
         YAxis leftAxis = chart.getAxisLeft();//獲取左側的軸線

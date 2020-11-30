@@ -40,10 +40,10 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
 
     private List<String> mListString01;
     private List<String> mListString02;
-    private List<String> mListString03 ;
-    private List<String> mListString04 ;
-    private List<String> mListString05 ;
-    private List<String> mListString06 ;
+    private List<String> mListString03;
+    private List<String> mListString04;
+    private List<String> mListString05;
+    private List<String> mListString06;
     private List<Integer> mListImage;
 
     Dialog mDlog_case;
@@ -169,6 +169,7 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
                             dataPickerDialog.setMessage("請選擇您預計完成的日期");
                             dataPickerDialog.setCancelable(true);
                             dataPickerDialog.show();
+
                         }
                     });
 
@@ -197,7 +198,7 @@ public class RecyclerINGViewAdapter extends RecyclerView.Adapter<RecyclerINGView
                         @Override
                         public void onClick(View v) {
 
-                            Snackbar snackbar = Snackbar.make(v.getRootView(),"確定刪除復健?",Snackbar.LENGTH_SHORT)
+                            Snackbar snackbar = Snackbar.make(v.getRootView(),"確定儲存編輯?",Snackbar.LENGTH_SHORT)
                                     .setAction("ok", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {

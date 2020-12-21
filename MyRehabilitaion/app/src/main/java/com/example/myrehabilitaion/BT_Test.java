@@ -52,6 +52,7 @@ import javax.xml.transform.Result;
 
 
 public class BT_Test extends Fragment {
+    Long spentTime;
 
     protected static String ip = "140.131.114.241";
     protected static String port = "1433";
@@ -539,7 +540,7 @@ public class BT_Test extends Fragment {
     private Runnable updateTimer = new Runnable() {
         public void run() {
 
-            Long spentTime = System.currentTimeMillis() - startTime;
+            spentTime = System.currentTimeMillis() - startTime;
             //計算目前已過分鐘數
             Long minius = (spentTime / 1000) / 60;
             //計算目前已過秒數
@@ -642,7 +643,7 @@ public class BT_Test extends Fragment {
                         choose_service_count = Integer.valueOf(resultSet.getString(1).toString().trim());
                     }
 
-                    statement02.executeQuery("INSERT INTO dbo.case_data (user_id,service_id,case_name,num_count,builddate) VALUES ("+Integer.valueOf(userid)+","+Integer.valueOf(servcie_id)+",'"+choose_service.toString().trim() + "\n(紀錄" + (choose_service_count+1) + ")','"+Integer.valueOf(BluetoothCount.getText().toString().trim())+"','"+str+"');");
+                    statement02.executeQuery("INSERT INTO dbo.case_data (user_id,service_id,case_name,num_count,builddate, timer) VALUES ("+Integer.valueOf(userid)+","+Integer.valueOf(servcie_id)+",'"+choose_service.toString().trim() + "\n(紀錄" + (choose_service_count+1) + ")','"+Integer.valueOf(BluetoothCount.getText().toString().trim())+"','"+str+"','"+spentTime.toString().trim()+"');");
 
                 }catch (Exception e){
                     isSuccess = false;
